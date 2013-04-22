@@ -27,17 +27,14 @@
 
 
 	//setting values for the order by and order type variables
-	isset($_REQUEST['orderBy']) ? $orderBy = $_REQUEST['orderBy'] : $orderBy = "time";
-	isset($_REQUEST['orderType']) ? $orderType = $_REQUEST['orderType'] : $orderType = "desc";
+	isset($_REQUEST['orderBy']) ? $orderBy = $_REQUEST['orderBy'] : $orderBy = "id";
+	isset($_REQUEST['orderType']) ? $orderType = $_REQUEST['orderType'] : $orderType = "asc";
 
 
 	include_once('library/config_read.php');
 	$log = "visited page: ";
 	$logQuery = "performed query on page: ";
 	$logDebugSQL = "";
-	
-	$softDelay = $configValues['CONFIG_DASHBOARD_DALO_DELAYSOFT'];
-	$hardDelay = $configValues['CONFIG_DASHBOARD_DALO_DELAYHARD'];
 
 ?>
 
@@ -84,7 +81,6 @@
 			$configValues['CONFIG_DB_TBL_DALONODE'].".lan_ip,".
 			$configValues['CONFIG_DB_TBL_DALONODE'].".uptime,".
 			$configValues['CONFIG_DB_TBL_DALONODE'].".memfree,".
-			$configValues['CONFIG_DB_TBL_DALONODE'].".cpu,".
 			$configValues['CONFIG_DB_TBL_DALONODE'].".wan_bup,".
 			$configValues['CONFIG_DB_TBL_DALONODE'].".wan_bdown,".
 			$configValues['CONFIG_DB_TBL_DALONODE'].".firmware,".
@@ -123,8 +119,7 @@
 			$configValues['CONFIG_DB_TBL_DALONODE'].".firmware,".
 			$configValues['CONFIG_DB_TBL_DALONODE'].".firmware_revision,".
 			$configValues['CONFIG_DB_TBL_DALONODE'].".mac,".
-			$configValues['CONFIG_DB_TBL_DALONODE'].".time, ".
-			$configValues['CONFIG_DB_TBL_DALONODE'].".cpu ".
+			$configValues['CONFIG_DB_TBL_DALONODE'].".time ".
 			" FROM ".$configValues['CONFIG_DB_TBL_DALONODE'].
 			" LEFT JOIN ".$configValues['CONFIG_DB_TBL_DALOHOTSPOTS'].
 			" ON ".
@@ -146,7 +141,7 @@
 	echo "
 					<thead>
 							<tr>
-							<th colspan='11' align='left'> 
+							<th colspan='10' align='left'> 
 
 							<br/><br/>
 		";
@@ -194,10 +189,6 @@
 		".$l['all']['Uptime']."
 		</th>
 
-		<th scope='col'> 
-		".$l['all']['CPU']."
-		</th>
-		
 		<th scope='col'> 
 		".$l['all']['Memfree']."
 		</th>
@@ -307,39 +298,11 @@
 							
 		echo "<td> $str </td>";
 	
-		
-		// calculate time delay
-		$currTime = time(); 
-		$checkinTime = strtotime($row['time']);
-		if ($currTime - $checkinTime >= (60*$hardDelay)) {
-
-			// this is hard delay
-			$delayColor = 'red';
-			
-		} elseif ( 
-			($currTime - $checkinTime >= (60*$softDelay))
-			&& ($currTime - $checkinTime < (60*$hardDelay))
-			)
-		{
-
-			// this is soft delay
-			$delayColor = 'orange';
-			
-		} else {
-			
-			// this is no delay at all, meaning not above 5 minutes delay
-			$delayColor = 'green';
-		}
-			
 		echo "
 				<td>".
 					time2str($row['uptime'])."
 				</td>
 
-				<td>".
-					$row['cpu']."
-				</td>
-				
 				<td>".
 					$row['memfree']."
 				</td>
@@ -352,20 +315,50 @@
 					toxbyte($row['wan_bdown'])."
 				</td>
 
-				<td> <font color='$delayColor'> ".
+				<td>".
 					$row['time']."
-					</font>
 				</td>
 				
 			</tr>
 		";
+		
+		/*
+		printqn("
+			<td> <input type='checkbox' name='username[]' value='$row[0]'>$row[2]</td>
+			<td> 
+		");
+
+
+		if ( ($row[1] == "Reject") && ($row[4] == "Auth-Type") )
+			echo "<img title='user is disabled' src='images/icons/userStatusDisabled.gif' alt='[disabled]'>";
+		else
+			echo "<img title='user is enabled' src='images/icons/userStatusActive.gif' alt='[enabled]'>";
+
+
+		printqn("
+				<a class='tablenovisit' href='javascript:return;'
+                                onClick='javascript:ajaxGeneric(\"include/management/retUserInfo.php\",\"retBandwidthInfo\",\"divContainerUserInfo\",\"username=$row[0]\");
+					javascript:__displayTooltip();'
+                                tooltipText='
+	                                <a class=\"toolTip\" href=\"mng-edit.php?username=$row[0]\">
+						{$l['Tooltip']['UserEdit']}</a>
+					<br/><br/>
+
+					<div id=\"divContainerUserInfo\">
+						Loading...
+					</div>
+                                        <br/>'
+				>$row[0]</a>
+			</td>
+		");
+		*/
 
 	}
 	
 	echo "
 					<tfoot>
 							<tr>
-							<th colspan='11' align='left'> 
+							<th colspan='10' align='left'> 
 	";
 	setupLinks($pageNum, $maxPage, $orderBy, $curOrderType);
 	echo "							</th>

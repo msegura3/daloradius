@@ -37,8 +37,10 @@ function daily($username, $orderBy, $orderType) {
 
 	include 'opendb.php';
 
-	$sql = "SELECT sum(AcctInputOctets) as Uploads, day(AcctStartTime) AS day, UserName from ".
-			$configValues['CONFIG_DB_TBL_RADACCT']." where UserName='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())-1) DAY) AND AcctStartTime< now() group by day ORDER BY $orderBy $orderType;";
+        $sql="SELECT  sum(AcctInputOctets) as Uploads, day(AcctStartTime) AS day FROM ".
+		$configValues['CONFIG_DB_TBL_RADACCT']." WHERE username='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())+30) DAY) AND AcctStartTime< now() GROUP BY day ORDER BY $orderBy $orderType;";
+//	$sql = "SELECT sum(AcctInputOctets) as Uploads, day(AcctStartTime) AS day, UserName from ".
+//			$configValues['CONFIG_DB_TBL_RADACCT']." where UserName='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())-1) DAY) AND AcctStartTime< now() group by day ORDER BY $orderBy $orderType;";
 	$res = $dbSocket->query($sql);
 
 	$total_uploads = 0;		// initialize variables
@@ -54,7 +56,7 @@ function daily($username, $orderBy, $orderType) {
 		// | Upload | Day  |
 		// +--------+------+
 
-		$uploads = floor($row[0]/1024/1024);	// total uploads on that specific day
+		$uploads =  number_format(($row[0]/1024/1024), 2, '.', '');	// total uploads on that specific day
 		$day = $row[1];		// day of the month [1-31]
 
 		$total_uploads = $total_uploads + $uploads;
@@ -70,17 +72,17 @@ function daily($username, $orderBy, $orderType) {
 	echo "
 		<thead>
 			<tr>
-				<th colspan='10'>All-time Upload statistics</th>
+				<th colspan='10'>Tráfico de subida</th>
 			</tr>
 		</thead>
 			";
 	echo "<thread> <tr>
-			<th scope='col'> Uploads count in MB
+			<th scope='col'> Tráfico de subida en Megabytes
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=uploads&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=uploads&orderType=desc\"> < </a>
 			</th>
-			<th scope='col'> Day of month
+			<th scope='col'> Día del mes
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=day&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=day&orderType=desc\"> < </a>
@@ -129,7 +131,7 @@ function monthly($username, $orderBy, $orderType) {
 		// | Upload | Month  |
 		// +--------+--------+
 
-		$uploads = floor($row[0]/1024/1024);	// total uploads on that specific month
+		$uploads =  number_format(($row[0]/1024/1024), 2, '.', '');	// total uploads on that specific month
 		$month = $row[1];	// Month of year [1-12]
 
 		$total_uploads = $total_uploads + $uploads;
@@ -145,18 +147,18 @@ function monthly($username, $orderBy, $orderType) {
 	echo "
 		<thead>
 			<tr>
-				<th colspan='10'>All-time Upload statistics</th>
+				<th colspan='10'>Tráfico de subida</th>
 			</tr>
 		</thead>
 	";
 
 	echo "<thread> <tr>
-				<th scope='col'> Uploads count in MB
+				<th scope='col'> Tráfico de subida en Megabytes
 				<br/>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=monthly&orderBy=uploads&orderType=asc\"> > </a>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=monthly&orderBy=uploads&orderType=desc\"> < </a>
 				</th>
-				<th scope='col'> Month of year
+				<th scope='col'> Mes del año
 				<br/>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=monthly&orderBy=month&orderType=asc\"> > </a>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=monthly&orderBy=month&orderType=desc\"> < </a>
@@ -209,7 +211,7 @@ function yearly($username, $orderBy, $orderType) {
 		// | Upload | Year  |
 		// +--------+-------+
 
-		$uploads = floor($row[0]/1024/1024);	// total uploads on that specific month
+		$uploads =  number_format(($row[0]/1024/1024), 2, '.', '');	// total uploads on that specific month
 		$year = $row[1];	// Year
 
 		$total_uploads = $total_uploads + $uploads;
@@ -226,7 +228,7 @@ function yearly($username, $orderBy, $orderType) {
 	echo "
 		<thead>
 			<tr>
-				<th colspan='10'>All-Time Upload statistics</th>
+				<th colspan='10'>Tráfico de subida</th>
 			</tr>
 		</thead>
 			";
@@ -237,7 +239,7 @@ function yearly($username, $orderBy, $orderType) {
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=uploads&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=uploads&orderType=desc\"> < </a>
 			</th>
-			<th scope='col'> Year
+			<th scope='col'> Año
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=year&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=year&orderType=desc\"> < </a>

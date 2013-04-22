@@ -40,6 +40,8 @@
 		
 		$html = prepareNotificationTemplate($customerInfo);
 		$pdfDocument = createPDF($html);
+
+		file_put_contents("$base/out2.pdf", $pdfDocument);
 		
 		return $pdfDocument;
 		

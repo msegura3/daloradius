@@ -54,7 +54,7 @@ function daily() {
 		$chart->addPoint(new Point("$row[1]", "$row[0]"));
 	}
 
-	$chart->setTitle("Alltime Login records based on Daily distribution");
+	$chart->setTitle("Distribución de ingresos por día");
 	$chart->render();
 
 	include 'closedb.php';
@@ -85,7 +85,7 @@ function monthly() {
 		$chart->addPoint(new Point("$row[1]", "$row[0]"));
 	}
 
-	$chart->setTitle("Alltime Login records based on Monthly distribution");
+	$chart->setTitle("Distribución de ingresos por mes");
 	$chart->render();
 
 	include 'closedb.php';
@@ -116,7 +116,7 @@ function yearly() {
 		$chart->addPoint(new Point("$row[1]", "$row[0]"));
 	}
 
-	$chart->setTitle("Alltime Login records based on Yearily distribution");
+	$chart->setTitle("Distribución de ingresos por año");
 	$chart->render();
 
 	include 'closedb.php';

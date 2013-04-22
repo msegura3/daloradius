@@ -37,11 +37,9 @@
 		if (isset($_REQUEST['config_mail_smtpaddr']))
 			$configValues['CONFIG_MAIL_SMTPADDR'] = $_REQUEST['config_mail_smtpaddr'];
 		
+		// this should probably move to some other page at some point
 		if (isset($_REQUEST['config_mail_smtpport']))
 			$configValues['CONFIG_MAIL_SMTPPORT'] = $_REQUEST['config_mail_smtpport'];
-			
-		if (isset($_REQUEST['config_mail_smtp_fromemail']))
-			$configValues['CONFIG_MAIL_SMTPFROM'] = $_REQUEST['config_mail_smtp_fromemail'];
 		
         include ("library/config_write.php");
     }	
@@ -94,10 +92,6 @@
 		<input type='text' value="<?php echo $configValues['CONFIG_MAIL_SMTPPORT'] ?>" name="config_mail_smtpport" />
 		</li>
 
-		<li class='fieldset'>
-		<label for='config_mail_smtp_fromemail' class='form'><?php echo $l['all']['SMTPServerFromEmail'] ?></label>
-		<input type='text' value="<?php echo $configValues['CONFIG_MAIL_SMTPFROM'] ?>" name="config_mail_smtp_fromemail" />
-		</li>
 
 
 		<li class='fieldset'>

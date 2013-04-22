@@ -12,27 +12,28 @@
 <?php
     $m_active = "Management";
     include_once("include/menu/menu-items.php");
-	include_once("include/menu/management-subnav.php");
+    include_once("include/menu/management-subnav.php");
 ?>
 
 <div id="sidebar">
 
-	<h2>Management</h2>
+	<h2>Administración</h2>
 	
-	<h3>Users Management</h3>
+	<h3>Usuarios</h3>
 	<ul class="subnav">
 	
 		<li><a href="mng-list-all.php"><b>&raquo;</b>
 			<img src='images/icons/userList.gif' border='0'>
 			<?php echo $l['button']['ListUsers'] ?></a>
 		</li>
-		<li><a href="mng-new.php"><b>&raquo;</b>
+	<!--	<li><a href="mng-new.php"><b>&raquo;</b>
+			<img src='images/icons/userNew.gif' border='0'>
+			<?php// echo $l['button']['NewUser'] ?></a>
+		</li>
+-->
+	<li><a href="mng-new-quick.php"><b>&raquo;</b>
 			<img src='images/icons/userNew.gif' border='0'>
 			<?php echo $l['button']['NewUser'] ?></a>
-		</li>
-		<li><a href="mng-new-quick.php"><b>&raquo;</b>
-			<img src='images/icons/userNew.gif' border='0'>
-			<?php echo $l['button']['NewUserQuick'] ?></a>
 		</li>
 		<li><a href="javascript:document.mngedit.submit();""><b>&raquo;</b>
 			<img src='images/icons/userEdit.gif' border='0'>
@@ -62,7 +63,7 @@
 	</ul>
 
 	<br/>
-	<h3>Extended Capabilities</h3>
+	<h3>Herramientas</h3>
 	<ul class="subnav">
 	
 		<li><a href="mng-import-users.php"><b>&raquo;</b>
@@ -73,9 +74,7 @@
 	</ul>
 		
 	<br/><br/>
-	<h2>Search</h2>
-	
-	<input name="" type="text" value="Search" tabindex=4 />
+
 
 </div>
 
@@ -87,8 +86,10 @@
 			/** Making usernameEdit interactive **/
 	              autoComEdit = new DHTMLSuite.autoComplete();
 	              autoComEdit.add('usernameEdit','include/management/dynamicAutocomplete.php','_small','getAjaxAutocompleteUsernames');
+
 			/** Making usernameSearch interactive **/
-	              autoComEdit.add('usernameSearch','include/management/dynamicAutocomplete.php','_small','getAjaxAutocompleteUsernames');
+	              autoComSearch = new DHTMLSuite.autoComplete();
+	              autoComSearch.add('usernameSearch','include/management/dynamicAutocomplete.php','_small','getAjaxAutocompleteUsernames');
 	              </script>";
 	} 
 ?>

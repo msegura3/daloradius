@@ -142,11 +142,11 @@
 				}
 				
 
-				$successMsg = "Deleted batch(s): <b> $allBatches </b>";
+				$successMsg = "Se ha borrado el lotw: <b> $allBatches </b>";
 				$logAction .= "Successfully deleted batch(s) [$allBatches] on page: ";
 
 			}  else { 
-				$failureMsg = "no batch was entered, please specify a batch name to remove from database";		
+				$failureMsg = "No se ingreso ningún lote";
 				$logAction .= "Failed deleting batch(s) [$allBatches] on page: ";
 			}
 
@@ -162,6 +162,8 @@
 	include_once('library/config_read.php');
     $log = "visited page: ";
 
+    include_once ("lang/main.php");
+
 ?>
 
 
@@ -169,7 +171,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>daloRADIUS</title>
+<title><?php echo $l['header']['titles']; ?></title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/1.css" type="text/css" media="screen,projection" />
 

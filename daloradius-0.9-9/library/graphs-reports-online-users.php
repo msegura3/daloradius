@@ -35,7 +35,7 @@
 	$res = $dbSocket->query($sql);
 	$totalUsers = $res->numRows();
 
-	$chart->addPoint(new Point("$totalUsers ($totalUsers users total)", "$totalUsers"));
+	$chart->addPoint(new Point("$totalUsers  usuarios totales", "$totalUsers"));
 
 	// get total users online
 	$sql = "SELECT DISTINCT(UserName) FROM ".$configValues['CONFIG_DB_TBL_RADACCT']." WHERE (AcctStopTime is NULL OR AcctStopTime = '0000-00-00 00:00:00')";
@@ -43,9 +43,9 @@
 	$totalUsersOnline = $res->numRows();
 
 
-	$chart->addPoint(new Point("$totalUsersOnline ($totalUsersOnline users online)", "$totalUsersOnline"));
+	$chart->addPoint(new Point("$totalUsersOnline usuarios en linea", "$totalUsersOnline"));
 
-	$chart->setTitle("Online users");
+	$chart->setTitle("Usuarios en linea");
 	$chart->render();
 
 	include 'closedb.php';

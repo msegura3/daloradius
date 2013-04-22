@@ -38,7 +38,7 @@ function daily($username, $orderBy, $orderType) {
 	include 'opendb.php';
 
 	$sql = "SELECT sum(AcctOutputOctets) as Downloads, day(AcctStartTime) AS day, UserName from ".
-		$configValues['CONFIG_DB_TBL_RADACCT']." where UserName='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())-1) DAY) AND AcctStartTime< now() group by day ORDER BY $orderBy $orderType;";
+		$configValues['CONFIG_DB_TBL_RADACCT']." where UserName='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())+30) DAY) AND AcctStartTime< now() group by day ORDER BY $orderBy $orderType;";
 
 
 	$res = $dbSocket->query($sql);
@@ -56,7 +56,7 @@ function daily($username, $orderBy, $orderType) {
 		// | Download | Day  |
 		// +--------+------+
 
-		$downloads = floor($row[0]/1024/1024);	// total downloads on that specific day
+		$downloads = number_format(($row[0]/1024/1024), 2, '.', '');	// total downloads on that specific day
 		$day = $row[1];		// day of the month [1-31]
 
 		$total_downloads = $total_downloads + $downloads;
@@ -78,12 +78,12 @@ function daily($username, $orderBy, $orderType) {
 			</thead>
 		";
         echo "<thread> <tr>
-				<th scope='col'> Downloads count in MB
+				<th scope='col'> Descargas en Megabytes
 				<br/>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=downloads&orderType=asc\"> > </a>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=downloads&orderType=desc\"> < </a>
 				</th>
-				<th scope='col'> Day of month
+				<th scope='col'> Día del mes
 				<br/>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=day&orderType=asc\"> > </a>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=day&orderType=desc\"> < </a>
@@ -130,7 +130,7 @@ function monthly($username, $orderBy, $orderType) {
 		// | Download | Month  |
 		// +--------+--------+
 
-		$downloads = floor($row[0]/1024/1024);	// total downloads on that specific month
+		$downloads = number_format(($row[0]/1024/1024), 2, '.', '');	// total downloads on that specific month
 		$month = $row[1];	// Month of year [1-12]
 
 		$total_downloads = $total_downloads + $downloads;
@@ -153,12 +153,12 @@ function monthly($username, $orderBy, $orderType) {
 	";
 	
 	echo "<thread> <tr>
-			<th scope='col'> Downloads count in MB
+			<th scope='col'> Descargas en Megabytes
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=monthly&orderBy=downloads&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=monthly&orderBy=downloads&orderType=desc\"> < </a>
 			</th>
-			<th scope='col'> Month of year
+			<th scope='col'> Mes del año
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=monthly&orderBy=month&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=monthly&orderBy=month&orderType=desc\"> < </a>
@@ -211,7 +211,7 @@ function yearly($username, $orderBy, $orderType) {
 		// | Download | Year  |
 		// +--------+-------+
 
-		$downloads = floor($row[0]/1024/1024);	// total downloads on that specific month
+		$downloads =number_format(($row[0]/1024/1024), 2, '.', '');	// total downloads on that specific month
 		$year = $row[1];	// Year
 
 		$total_downloads = $total_downloads + $downloads;
@@ -233,12 +233,12 @@ function yearly($username, $orderBy, $orderType) {
 	";
 
 	echo "<thread> <tr>
-				<th scope='col'> Downloads count in MB
+				<th scope='col'> Descargas en Megabytes
 				<br/>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=downloads&orderType=asc\"> > </a>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=downloads&orderType=desc\"> < </a>
 				</th>
-				<th scope='col'> Year
+				<th scope='col'> Año
 				<br/>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=year&orderType=asc\"> > </a>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=year&orderType=desc\"> < </a>

@@ -39,9 +39,6 @@
 	
 		if (isset($_REQUEST['config_dbhost']))
 			$configValues['CONFIG_DB_HOST'] = $_REQUEST['config_dbhost'];
-			
-		if (isset($_REQUEST['config_dbport']))
-			$configValues['CONFIG_DB_PORT'] = $_REQUEST['config_dbport'];
 
 		if (isset($_REQUEST['config_dbuser']))
 			$configValues['CONFIG_DB_USER'] = $_REQUEST['config_dbuser'];
@@ -52,8 +49,6 @@
 		if (isset($_REQUEST['config_dbname']))
 			$configValues['CONFIG_DB_NAME'] = $_REQUEST['config_dbname'];
 
-		if (isset($_REQUEST['config_dbtbl_node']))
-			$configValues['CONFIG_DB_TBL_DALONODE'] = $_REQUEST['config_dbtbl_node'];
 
 		if (isset($_REQUEST['config_dbtbl_radcheck']))
 			$configValues['CONFIG_DB_TBL_RADCHECK'] = $_REQUEST['config_dbtbl_radcheck'];
@@ -109,9 +104,6 @@
 		if (isset($_REQUEST['config_dbtbl_proxys']))
 			$configValues['CONFIG_DB_TBL_DALOPROXYS'] = $_REQUEST['config_dbtbl_proxys'];
 
-		if (isset($_REQUEST['config_dbtbl_billingmerchant']))
-			$configValues['CONFIG_DB_TBL_DALOBILLINGMERCHANT'] = $_REQUEST['config_dbtbl_billingmerchant'];
-			
 		if (isset($_REQUEST['config_dbtbl_billingpaypal']))
 			$configValues['CONFIG_DB_TBL_DALOBILLINGPAYPAL'] = $_REQUEST['config_dbtbl_billingpaypal'];
 
@@ -206,11 +198,6 @@
 		<li class='fieldset'>
 		<label for='config_dbhost' class='form'><?php echo $l['all']['DatabaseHostname'] ?></label>
 		<input type='text' value="<?php echo $configValues['CONFIG_DB_HOST'] ?>" name="config_dbhost" />
-		</li>
-		
-		<li class='fieldset'>
-		<label for='config_dbport' class='form'><?php echo $l['all']['DatabasePort'] ?></label>
-		<input type='text' value="<?php echo $configValues['CONFIG_DB_PORT'] ?>" name="config_dbport" />
 		</li>
 
 		<li class='fieldset'>
@@ -320,11 +307,6 @@
 		<input value="<?php echo $configValues['CONFIG_DB_TBL_DALOPROXYS'] ?>" name="config_dbtbl_proxys" />
 		</li>
 
-				<li class='fieldset'>
-                <label for='config_dbtbl_billingmerchant' class='form'><?php echo $l['all']['billingmerchant']?></label>
-		<input value="<?php echo $configValues['CONFIG_DB_TBL_DALOBILLINGMERCHANT'] ?>" name="config_dbtbl_billingmerchant" />
-		</li>
-		
                 <li class='fieldset'>
                 <label for='config_dbtbl_billingpaypal' class='form'><?php echo $l['all']['billingpaypal']?></label>
 		<input value="<?php echo $configValues['CONFIG_DB_TBL_DALOBILLINGPAYPAL'] ?>" name="config_dbtbl_billingpaypal" />
@@ -400,11 +382,6 @@
                 <li class='fieldset'>
                 <label for='config_dbtbl_hotspots' class='form'><?php echo $l['all']['hotspots']?></label>
 		<input value="<?php echo $configValues['CONFIG_DB_TBL_DALOHOTSPOTS'] ?>" name="config_dbtbl_hotspots" />
-		</li>
-		
-                <li class='fieldset'>
-                <label for='config_dbtbl_node' class='form'><?php echo $l['all']['node']?></label>
-		<input value="<?php echo $configValues['CONFIG_DB_TBL_DALONODE'] ?>" name="config_dbtbl_node" />
 		</li>
 
                 <li class='fieldset'>

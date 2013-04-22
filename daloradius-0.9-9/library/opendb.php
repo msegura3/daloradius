@@ -33,14 +33,10 @@
 		$mydbUser = $configValues['CONFIG_DB_USER'];
 		$mydbPass = $configValues['CONFIG_DB_PASS'];
 		$mydbHost = $configValues['CONFIG_DB_HOST'];
-		$mydbPort = $configValues['CONFIG_DB_PORT'];
 		$mydbName = $configValues['CONFIG_DB_NAME'];
 
-		if (!$mydbPort)
-			$mydbPort = '3306';
-		
 		$dbConnectString = $mydbEngine . "://".$mydbUser.":".$mydbPass."@".
-					$mydbHost.":".$mydbPort."/".$mydbName;
+					$mydbHost."/".$mydbName;
 
 	} elseif ((isset($_SESSION['location_name'])) && ($_SESSION['location_name'] != "default")) {
 
@@ -48,32 +44,24 @@
 		$mydbUser = $configValues['CONFIG_LOCATIONS'][$_SESSION['location_name']]['Username'];
 		$mydbPass = $configValues['CONFIG_LOCATIONS'][$_SESSION['location_name']]['Password'];
 		$mydbHost = $configValues['CONFIG_LOCATIONS'][$_SESSION['location_name']]['Hostname'];
-		$mydbPort = $configValues['CONFIG_LOCATIONS'][$_SESSION['location_name']]['Port'];
 		$mydbName = $configValues['CONFIG_LOCATIONS'][$_SESSION['location_name']]['Database'];
 
-		if (!$mydbPort)
-			$mydbPort = '3306';
-		
 		$dbConnectString = $mydbEngine . "://".$mydbUser.":".$mydbPass."@".
-					$mydbHost.":".$mydbPort."/".$mydbName;	
+					$mydbHost."/".$mydbName;	
 	} else {
 		// TODO
 		// requires handling of un-initialized session variable incase opendb.php is called not inside
 		// a session for some reason. requires further handling, possibly a log file entry
-	    //exit;
+	        //exit;
 
 		$mydbEngine = $configValues['CONFIG_DB_ENGINE'];
 		$mydbUser = $configValues['CONFIG_DB_USER'];
 		$mydbPass = $configValues['CONFIG_DB_PASS'];
 		$mydbHost = $configValues['CONFIG_DB_HOST'];
-		$mydbPort = $configValues['CONFIG_DB_PORT'];
 		$mydbName = $configValues['CONFIG_DB_NAME'];
 
-		if (!$mydbPort)
-			$mydbPort = '3306';
-		
 		$dbConnectString = $mydbEngine . "://".$mydbUser.":".$mydbPass."@".
-					$mydbHost.":".$mydbPort."/".$mydbName;
+					$mydbHost."/".$mydbName;
 	}
 
 
@@ -87,11 +75,11 @@
 
 	if (DB::isError ($dbSocket))
 		die ("<b>Database connection error</b><br/>
-			<b>Error Message</b>: " . $dbSocket->getMessage () . "<br/>" 
-			);
+			<b>Error Message</b>: " . $dbSocket->getMessage () . "<br/>" . 
+			"<b>Debug</b>: " . $dbSocket->getDebugInfo() . "<br/>");
 
 	
 	include_once (dirname(__FILE__).'/errorHandling.php');		// we declare the errorHandler() function in errorHandling.php
 
 	$dbSocket->setErrorHandling(PEAR_ERROR_CALLBACK, 'errorHandler');	// setting errorHandler function for the dbSocket obj
-
+?>

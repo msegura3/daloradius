@@ -39,12 +39,16 @@
 	
 ?>
 
+<?php
+        include_once ("lang/main.php");
+?>
+
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>daloRADIUS</title>
+<title><?php echo $l['header']['titles']; ?></title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/1.css" type="text/css" media="screen,projection" />
 <link rel="stylesheet" href="css/form-field-tooltip.css" type="text/css" media="screen,projection" />
@@ -89,14 +93,8 @@
 	$res = $dbSocket->query($sql);
 	$numrows = $res->numRows();
 
-	$sql = "SELECT distinct(".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".Username) as UserName,
-			concat(coalesce(".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".firstname,''),' ',coalesce(".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".lastname,'')) as value,
-			".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".id, IFNULL(disabled.username,0) as disabled
-			FROM userinfo
-			LEFT JOIN ".$configValues['CONFIG_DB_TBL_RADUSERGROUP']." disabled
-			 ON disabled.username=".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".username AND disabled.groupname = 'daloRADIUS-Disabled-Users'
-			WHERE ".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".firstname like '".$dbSocket->escapeSimple($username)."%' or ".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".lastname like '".$dbSocket->escapeSimple($username)."%' or ".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".username like '".$dbSocket->escapeSimple($username)."%' or ".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".homephone  like '".$dbSocket->escapeSimple($username)."%' or ".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".workphone  like '".$dbSocket->escapeSimple($username)."%'  or ".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".mobilephone  like '".$dbSocket->escapeSimple($username)."%'" .
-			" GROUP BY ".$configValues['CONFIG_DB_TBL_DALOUSERINFO'].".UserName ORDER BY $orderBy $orderType LIMIT $offset, $rowsPerPage";
+	$sql = "SELECT distinct(Username) as UserName, concat(coalesce(firstname,''),' ',coalesce(lastname,'')) as value, id FROM userinfo  WHERE firstname like '".$dbSocket->escapeSimple($username)."%' or lastname like '".$dbSocket->escapeSimple($username)."%' or username like '".$dbSocket->escapeSimple($username)."%' or homephone  like '".$dbSocket->escapeSimple($username)."%' or workphone  like '".$dbSocket->escapeSimple($username)."%'  or mobilephone  like '".$dbSocket->escapeSimple($username)."%'" .
+			" GROUP BY UserName ORDER BY $orderBy $orderType LIMIT $offset, $rowsPerPage";
 	$res = $dbSocket->query($sql);
 	$logDebugSQL = "";
 	$logDebugSQL .= $sql . "\n";
@@ -114,12 +112,12 @@
 			<tr>
 			<th colspan='10' align='left'>
 
-			Select:
-			<a class=\"table\" href=\"javascript:SetChecked(1,'username[]','searchusers')\">All</a>
-			<a class=\"table\" href=\"javascript:SetChecked(0,'username[]','searchusers')\">None</a>
+			Seleccionar:
+			<a class=\"table\" href=\"javascript:SetChecked(1,'username[]','searchusers')\">Todos</a>
+			<a class=\"table\" href=\"javascript:SetChecked(0,'username[]','searchusers')\">Ninguno</a>
 			<br/>
-			<input class='button' type='button' value='Delete' onClick='javascript:removeCheckbox(\"searchusers\",\"mng-del.php\")' />
-			<input class='button' type='button' value='CSV Export'
+			<input class='button' type='button' value='Borrar' onClick='javascript:removeCheckbox(\"searchusers\",\"mng-del.php\")' />
+			<input class='button' type='button' value='Exportar CSV'
 				onClick=\"javascript:window.location.href='include/management/fileExport.php?reportFormat=csv'\" />
 
 			<br/><br/>
@@ -151,29 +149,19 @@
 
 		<th scope='col'> 
 		<a title='Sort' class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&orderBy=Value&orderType=$orderTypeNextPage\">
-		Full name</a>
+		Nombre</a>
 		</th>
 	</tr> </thread>";
 	while($row = $res->fetchRow()) {
-		
-		if ($row[3] !== '0')
-			$img = "<img title='user is disabled' src='images/icons/userStatusDisabled.gif' alt='[disabled]'>";
-		else
-			$img = "<img title='user is enabled' src='images/icons/userStatusActive.gif' alt='[enabled]'>";
-		
 		printqn("<tr>
 			<td> <input type='checkbox' name='username[]' value='$row[0]'> $row[2] </td>
-                        <td> $img <a class='tablenovisit' href='javascript:return;'
+                        <td> <a class='tablenovisit' href='javascript:return;'
                                 onClick='javascript:ajaxGeneric(\"include/management/retUserInfo.php\",\"retBandwidthInfo\",\"divContainerUserInfo\",\"username=$row[0]\");
                                         javascript:__displayTooltip();'
                                 tooltipText='
                                         <a class=\"toolTip\" href=\"mng-edit.php?username=$row[0]\">
 	                                        {$l['Tooltip']['UserEdit']}</a>
                                         &nbsp
-					<br/>
-					<a class=\"toolTip\" href=\"config-maint-test-user.php?username=$row[0]&password=$row[1]\">
-						{$l['all']['TestUser']}</a>
-					&nbsp
 					<br/>
 					 <a class=\"toolTip\" href=\"acct-username.php?username=$row[0]\">
 						{$l['all']['Accounting']}</a>

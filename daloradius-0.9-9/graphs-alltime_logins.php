@@ -41,7 +41,7 @@
 
 <div class="tabber">
 
-     <div class="tabbertab" title="Graph">
+     <div class="tabbertab" title="Gráfico">
         <br/>
 <?php
         echo "<center>";
@@ -49,7 +49,7 @@
         echo "</center>";
 ?>
 	</div>
-     <div class="tabbertab" title="Statistics">	
+     <div class="tabbertab" title="Estadísticas">
 	<br/>
 <?php
         include 'library/tables-alltime-users-login.php';

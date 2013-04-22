@@ -19,398 +19,306 @@
  *
  *********************************************************************************************************
  */
-
     include ("library/checklogin.php");
     $operator = $_SESSION['operator_user'];
-
-	include('library/check_operator_perm.php');
-
-	$profile = $_REQUEST['profile'];
-	$logAction = "";
-	$logDebugSQL = "";
-
-	if (isset($_REQUEST['submit'])) {
-		$profile = $_REQUEST['profile'];
-
-		include 'library/opendb.php';
-	
-		if ($profile != "") {
-			foreach( $_POST as $element=>$field ) { 
-				switch ($element) {
-					case "submit":
-					case "profile":
-							$skipLoopFlag = 1; 
-							break;
-				}
-		
-				if ($skipLoopFlag == 1) {
-					$skipLoopFlag = 0;             
-					continue;
-				}
-
-                                if (isset($field[0])) {
-                                        if (preg_match('/__/', $field[0]))
-                                                list($columnId, $attribute) = split("__", $field[0]);
-                                        else {
-                                                $columnId = 0;                          // we need to set a non-existent column id so that the attribute would
-                                                                                        // not match in the database (as it is added from the Attributes tab)
-                                                                                        // and the if/else check will result in an INSERT instead of an UPDATE for the
-                                                                                        // the last attribute
-                                                $attribute = $field[0];
+    include('library/check_operator_perm.php');
+    include 'library/opendb.php';
+    
+    $logAction = "";
+    $logDebugSQL = "";
+        //// addedit(VALOR_NUEVO, VALOR_DB, NOMBRE_ATRIBUTO, TABLA)
+    function addedit($value,$value_db,$attribute_name,$table){
+        if($value!=$value_db)
+        {
+            global $profile, $configValues,$dbSocket;
+            if(isset ($value) && isset ($value_db)){
+                $sql= "UPDATE ".$configValues[$table]." SET Value='".$dbSocket->escapeSimple($value)."' WHERE groupname='".$dbSocket->escapeSimple($profile)."' AND Attribute='$attribute_name'";
                                         }
-                                }
+            elseif(!isset ($value) || ($value==0)){
+                $sql="DELETE FROM ".$configValues[$table]." WHERE groupname='".$dbSocket->escapeSimple($profile)."' AND Attribute='$attribute_name'";
+            }
+                else{
+                    $sql="INSERT INTO ".$configValues[$table]." (id,groupname,Attribute,op,Value) ".
+                                    " VALUES (0, '".$dbSocket->escapeSimple($profile)."', '$attribute_name', ':=', '".                                                   $dbSocket->escapeSimple($value)."')";
+                }
+                $res = $dbSocket->query($sql);
+                $logDebugSQL .= $sql . "\n";
+        }
+    }
+    if (isset($_POST['submit'])) {
+	$profile = $_POST['profile'];
 
-				if (isset($field[1]))
-					$value = $field[1];
-				if (isset($field[2]))
-					$op = $field[2];
-				if (isset($field[3]))
-					$table = $field[3];
-
-				if ($table == 'check')
-					$table = $configValues['CONFIG_DB_TBL_RADGROUPCHECK'];
-				if ($table == 'reply')
-					$table = $configValues['CONFIG_DB_TBL_RADGROUPREPLY'];
-
-				if (!($value))
-					continue;
-
-				$value = $dbSocket->escapeSimple($value);
-
-				$sql = "SELECT Attribute FROM $table WHERE GroupName='".$dbSocket->escapeSimple($profile).
-						"' AND Attribute='".$dbSocket->escapeSimple($attribute)."' AND id=".$dbSocket->escapeSimple($columnId);
-				$res = $dbSocket->query($sql);
-				$logDebugSQL .= $sql . "\n";
-				if ($res->numRows() == 0) {
-
-					/* if the returned rows equal 0 meaning this attribute is not found and we need to add it */
-					$sql = "INSERT INTO $table (id,GroupName,Attribute,op,Value) ".
-							" VALUES (0,'".$dbSocket->escapeSimple($profile)."', '".
-							$dbSocket->escapeSimple($attribute)."','".$dbSocket->escapeSimple($op)."', '$value')";
-					$res = $dbSocket->query($sql);
-					$logDebugSQL .= $sql . "\n";
-
-				} else {
-
-					/* we update the $value[0] entry which is the attribute's value */
-					$sql = "UPDATE $table SET Value='$value' WHERE GroupName='".
-							$dbSocket->escapeSimple($profile)."' AND Attribute='".$dbSocket->escapeSimple($attribute)."'".
-							" AND id=".$dbSocket->escapeSimple($columnId);
-					$res = $dbSocket->query($sql);
-					$logDebugSQL .= $sql . "\n";
-
-					/* then we update $value[1] which is the attribute's operator */
-					$sql = "UPDATE $table SET Op='".$dbSocket->escapeSimple($op).
-							"' WHERE GroupName='".$dbSocket->escapeSimple($profile)."' AND Attribute='".
-							$dbSocket->escapeSimple($attribute)."' AND id=".$dbSocket->escapeSimple($columnId);
-					$res = $dbSocket->query($sql);
-					$logDebugSQL .= $sql . "\n";
-
-				}
-
-			} //foreach $_POST
-
-			$successMsg = "Updated attributes for: <b> $profile </b>";
-			$logAction .= "Successfully updates attributes for profile [$profile] on page:";
-
-		include 'library/closedb.php';
-
-		} else { // $profile is empty
-
-			$failureMsg = "profile name is empty";
-			$logAction .= "Failed adding (possibly empty) profile name [$profile] on page: ";
-
-		}
+        $sql="SELECT Attribute, Value FROM ".$configValues['CONFIG_DB_TBL_RADGROUPREPLY']." WHERE GroupName='".$dbSocket->escapeSimple($profile)."'
+                UNION SELECT Attribute, Value FROM ".$configValues['CONFIG_DB_TBL_RADGROUPCHECK']." WHERE GroupName='".$dbSocket->escapeSimple($profile)."'";
+        $res = $dbSocket->query($sql);
+        while($row = $res->fetchRow()) {
+            $attributes[$row[0]]=$row[1];
+        }
 
 
-	} 
 
 
-	include_once('library/config_read.php');
-    $log = "visited page: ";
+        $speedown=$_POST[speedown]*$_POST[speedownFactor];
+        $expiration = $_POST['expiration'];
+        $sessiontimeout = $_POST['sessiontimeout']*$_POST['sessiontimeoutFactor'];
+        $simultaneoususe = $_POST['simultaneoususe'];
+
+        $downDaily = $_POST['downDaily']*$_POST['downDailyFactor'];
+        $downWeekly = $_POST['downWeekly']* $_POST['downWeeklyFactor'];
+        $downMontly = $_POST['downMontly']*$_POST['downMontlyFactor'] ;
+        $downAll = $_POST['downAll']*$_POST['downAllFactor'];
+
+
+        $timeDaily = $_POST['timeDaily']* $_POST['timeDailyFactor'];
+        $timeWeekly = $_POST['timeWeekly']* $_POST['timeWeeklyFactor'] ;
+        $timeMontly = $_POST['timeMontly']* $_POST['timeMontlyFactor'];
+        $timeAll = $_POST['timeAll']* $_POST['timeAllFactor'] ;
+
+                    if (trim($profile) == "" ) {
+                        $failureMsg = "El nombre del perfil no puede quedar vacio";
+                        $logAction .= "Failed adding (possible empty user/pass) new user [$profile] on page: ";
+                    }
+                    else{
+
+                              addedit($speedown, $attributes['WISPr-Bandwidth-Max-Down'],'WISPr-Bandwidth-Max-Down','CONFIG_DB_TBL_RADGROUPREPLY');
+
+                               addedit($downDaily, $attributes['CS-Input-Octets-Daily'],'CS-Input-Octets-Daily','CONFIG_DB_TBL_RADGROUPCHECK');
+
+                               addedit($downWeekly, $attributes['CS-Input-Octets-Weekly'],'CS-Input-Octets-Weekly','CONFIG_DB_TBL_RADGROUPCHECK');
+
+                               addedit($downMontly, $attributes['CS-Input-Octets-Monthly'],'CS-Input-Octets-Monthly','CONFIG_DB_TBL_RADGROUPCHECK');
+
+                            addedit($downAll, $attributes['CS-Input-Octet'],'CS-Input-Octet','CONFIG_DB_TBL_RADGROUPCHECK');
+
+                            addedit($timeDaily, $attributes['Max-Daily-Session'],'Max-Daily-Session','CONFIG_DB_TBL_RADGROUPCHECK');
+
+                            addedit($timeWeekly, $attributes['Max-Weekly-Session'],'Max-Weekly-Session','CONFIG_DB_TBL_RADGROUPCHECK');
+
+                             addedit($timeMontly, $attributes['Max-Monthly-Session'],'Max-Monthly-Session','CONFIG_DB_TBL_RADGROUPCHECK');
+
+                              addedit($timeAll, $attributes['Max-All-Session'],'Max-All-Session','CONFIG_DB_TBL_RADGROUPCHECK');
+
+                                addedit($expiration, $attributes['Expiration'],'Expiration','CONFIG_DB_TBL_RADGROUPCHECK');
+
+                                addedit($sessiontimeout, $attributes['Session-Timeout'],'Session-Timeout','CONFIG_DB_TBL_RADGROUPREPLY');
+
+                            addedit($simultaneoususe, $attributes['Simultaneous-Use'],'Simultaneous-Use','CONFIG_DB_TBL_RADGROUPCHECK');
+
+
+                                $successMsg = "Se ha agregado el perfil: <b> $profile </b>";
+                                $logAction .= "Successfully added new profile [$profile] on page: ";
+                            }
+
+
+	}
+        include_once('library/config_read.php');
+        $log = "visited page: ";
+
+
+                                   $profile = $_GET['profile'];
+
+                $sql="SELECT Attribute, Value FROM ".$configValues['CONFIG_DB_TBL_RADGROUPREPLY']." WHERE GroupName='".$dbSocket->escapeSimple($profile)."'
+                        UNION SELECT Attribute, Value FROM ".$configValues['CONFIG_DB_TBL_RADGROUPCHECK']." WHERE GroupName='".$dbSocket->escapeSimple($profile)."'";
+                $res = $dbSocket->query($sql);
+                while($row = $res->fetchRow()) {
+                    $attributes[$row[0]]=$row[1];
+                }
+
+                            include 'library/closedb.php';
+
+
+
+
+function  timefactor($value,$tipo){
+
+    $ret[0]="";
+    $ret[1]="";
+
+
+    if(($value%3600)==0){
+       $ret[0]=$value/3600;
+       $ret[1]="h";
+    }
+    elseif($value%60==0){
+        $ret[0]=$value/60;
+        $ret[1]="m";
+    }
+
+    if($tipo=='n'){
+        if($ret[0]!=0)
+            echo $ret[0];
+    }
+    elseif($ret[1]== $tipo){
+        echo  "selected";
+    }
+}
+
+function  getspeed($value,$tipo){
+
+    $ret[0]="";
+    $ret[1]="";
+
+
+    if(($value%1000000)==0){
+       $ret[0]=$value/1000000;
+       $ret[1]="m";
+    }
+    elseif($value%1000==0){
+        $ret[0]=$value/1000;
+        $ret[1]="k";
+    }
+
+    if($tipo=='n'){
+        if($ret[0]!=0)
+            echo $ret[0];
+    }
+    elseif($ret[1]== $tipo){
+        echo  "selected";
+    }
+}
+
+
+function  getsize($value,$tipo){
+
+    $ret[0]="";
+    $ret[1]="";
+
+
+    if(($value%1073741824)==0){
+       $ret[0]=$value/1073741824;
+       $ret[1]="g";
+    }
+    elseif($value%1048576==0){
+        $ret[0]=$value/1048576;
+        $ret[1]="m";
+    }
+
+    if($tipo=='n'){
+        if($ret[0]!=0)
+            echo $ret[0];
+    }
+    elseif($ret[1]== $tipo){
+        echo  "selected";
+    }
+}
+
+
+
+function  getuse($value,$tipo){
+    if($value==1){
+       $ret[1]="p";
+    }
+    elseif($value>1){
+        $ret[1]="c";
+    }
+    else{
+       $ret[1]="u";
+    }
+
+    if($tipo=='n'){
+        if($value!=0)
+            echo $value;
+    }
+    elseif($ret[1]== $tipo){
+        echo  "selected";
+    }
+}
 
 
 ?>
+
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-
-<script src="library/javascript/pages_common.js" type="text/javascript"></script>
-
-<script type="text/javascript" src="library/javascript/ajax.js"></script>
-<script type="text/javascript" src="library/javascript/dynamic_attributes.js"></script>
-
-
-<title>daloRADIUS</title>
+<title>Linbox Manager</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/1.css" type="text/css" media="screen,projection" />
-<link rel="stylesheet" href="css/auto-complete.css" media="screen" type="text/css">
+<link rel="stylesheet" type="text/css" href="library/js_date/datechooser.css">
+<!--[if lte IE 6.5]>
+<link rel="stylesheet" type="text/css" href="library/js_date/select-free.css"/>
+<![endif]-->
 </head>
- 
-<?php   
-        include_once ("library/tabber/tab-layout.php");
-?>
- 
-<?php
-	include ("menu-mng-rad-profiles.php");
-?>
+<script src="library/js_date/date-functions.js" type="text/javascript"></script>
+<script src="library/js_date/datechooser.js" type="text/javascript"></script>
+<script src="library/javascript/pages_common.js" type="text/javascript"></script>
+<script src="library/javascript/productive_funcs.js" type="text/javascript"></script>
+
+<script type="text/javascript" src="library/javascript/ajax.js"></script>
+<script type="text/javascript" src="library/javascript/ajaxGeneric.js"></script>
+
+<script type="text/javascript">
+
+function showinput(value){
+    var simultaneoususe =document.getElementById("simultaneoususe");
+    switch (value){
+        case "personal":
+            simultaneoususe.value = 1;
+            simultaneoususe.style.display= "none";
+            break;
+        case "public":
+            simultaneoususe.value = '';
+            simultaneoususe.style.display= "none";
+            break;
+        case "custom":
+            simultaneoususe.value = '';
+            simultaneoususe.style.display= "inline";
+            simultaneoususe.focus();
+            break;
+    }
+}
+
+function numbercheck(simultaneoususe){
+
+    if(isNaN(simultaneoususe.value) && simultaneoususe.value!=''){
+        alert( 'Ingrese un número válido');
+        simultaneoususe.focus();
+    }
+
+}
+</script>
+
+<?php include_once ("library/tabber/tab-layout.php"); ?>
+
+<?php include ("menu-mng-rad-profiles.php"); ?>
 
 	<div id="contentnorightbar">
 
 		<h2 id="Intro"><a href="#" onclick="javascript:toggleShowDiv('helpPage')"><?php echo $l['Intro']['mngradprofilesedit.php'] ?>
-		:: <?php if (isset($profile)) { echo $profile; } ?><h144>+</h144></a></h2>
-		
+		<h144>+</h144></a></h2>
 
 		<div id="helpPage" style="display:none;visibility:visible" >
-			<?php echo $l['helpPage']['mngradprofilesedit'] ?>
+			<?php echo $l['helpPage']['mngnewquick'] ?>
 			<br/>
 		</div>
 		<?php
 			include_once('include/management/actionMessages.php');
-		?>
-		
-		<form name="mngradprofiles" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
+                                                if(isset($_GET['profile']) && $_GET['profile']!=''){
 
-			<input type="hidden" value="<?php echo $profile ?>" name="profile" />
-
-
-<div class="tabber">
-
-     <div class="tabbertab" title="<?php echo $l['title']['RADIUSCheck']; ?>">
-
-        <fieldset>
-
-                <h302> <?php echo $l['title']['RADIUSCheck']?> </h302>
-                <br/>
-
-		<ul>
-<?php
-
-
-        include 'library/opendb.php';
-        include 'include/management/pages_common.php';
-
-        $editCounter = 0;
-
-        $sql = "SELECT ".$configValues['CONFIG_DB_TBL_RADGROUPCHECK'].".Attribute, ".
-                $configValues['CONFIG_DB_TBL_RADGROUPCHECK'].".op, ".$configValues['CONFIG_DB_TBL_RADGROUPCHECK'].".Value, ".
-                $configValues['CONFIG_DB_TBL_DALODICTIONARY'].".Type, ".
-                $configValues['CONFIG_DB_TBL_DALODICTIONARY'].".RecommendedTooltip, ".
-                $configValues['CONFIG_DB_TBL_RADGROUPCHECK'].".id ".
-                " FROM ".
-                $configValues['CONFIG_DB_TBL_RADGROUPCHECK']." LEFT JOIN ".$configValues['CONFIG_DB_TBL_DALODICTIONARY'].
-                " ON ".$configValues['CONFIG_DB_TBL_RADGROUPCHECK'].".Attribute=".
-                $configValues['CONFIG_DB_TBL_DALODICTIONARY'].".attribute ".
-		" AND ".$configValues['CONFIG_DB_TBL_DALODICTIONARY'].".Value=NULL ".
-		" WHERE ".
-                $configValues['CONFIG_DB_TBL_RADGROUPCHECK'].".GroupName='".$dbSocket->escapeSimple($profile)."'";
-        $res = $dbSocket->query($sql);
-        $logDebugSQL .= $sql . "\n";
-
-        if ($numrows = $res->numRows() == 0) {  
-			echo "<center>";
-			echo $l['messages']['noCheckAttributesForGroup'];
-			echo "</center>";
-        }
-
-        while($row = $res->fetchRow()) {
-
-                echo "<label class='attributes'>";
-                echo "<a class='tablenovisit' href='mng-rad-profiles-del.php?profile=$profile&attribute=$row[5]__$row[0]&tablename=radgroupcheck'>
-                                <img src='images/icons/delete.png' border=0 alt='Remove' /> </a>";
-		echo "</label>";
-                echo "<label for='attribute' class='attributes'>&nbsp;&nbsp;&nbsp;$row[0]</label>";
-
-                echo "<input type='hidden' name='editValues".$editCounter."[]' value='$row[5]__$row[0]' />";
-
-                        if ( ($configValues['CONFIG_IFACE_PASSWORD_HIDDEN'] == "yes") and (preg_match("/.*-Password/", $row[0])) ) {
-                                echo "<input type='hidden' value='$row[2]' name='passwordOrig' />";
-                                echo "<input type='password' value='$row[2]' name='editValues".$editCounter."[]'  style='width: 115px' />";
-                                echo "&nbsp;";
-                                echo "<select name='editValues".$editCounter."[]' style='width: 45px' class='form'>";
-                                echo "<option value='$row[1]'>$row[1]</option>";
-                                drawOptions();
-                                echo "</select>";
-                        } else {
-                                echo "<input value='$row[2]' name='editValues".$editCounter."[]' style='width: 115px' />";
-                                echo "&nbsp;";
-                                echo "<select name='editValues".$editCounter."[]' style='width: 45px' class='form'>";
-                                echo "<option value='$row[1]'>$row[1]</option>";
-                                drawOptions();
-                                echo "</select>";
+                        include_once('editProfile.php');
                         }
+		?>
 
-                echo "  
-                        <input type='hidden' name='editValues".$editCounter."[]' value='radgroupcheck' style='width: 90px'>
-                ";
 
-                $editCounter++;                 // we increment the counter for the html elements of the edit attributes
-
-                if (!$row[3])
-                        $row[3] = "unavailable";
-                if (!$row[4])
-                        $row[4] = "unavailable";
-
-                printq("
-                        <img src='images/icons/comment.png' alt='Tip' border='0' onClick=\"javascript:toggleShowDiv('$row[0]Tooltip')\" />
-                        <br/>
-                        <div id='$row[0]Tooltip'  style='display:none;visibility:visible' class='ToolTip2'>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i><b>Type:</b> $row[3]</i><br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i><b>Tooltip Description:</b> $row[4]</i><br/>
-                                <br/>
-                        </div>
-                ");
-
-	}
-?>
-
-        <br/><br/>
-        <hr><br/>
-        <br/>
-        <input type='submit' name='submit' value='<?php echo $l['buttons']['apply']?>' class='button' />
-
-	</ul>
-
-        </fieldset>
+                <?php
+                include('include/config/logging.php');
+                ?>
         </div>
+<div id="footer">
 
-        <div class='tabbertab' title='<?php echo $l['title']['RADIUSReply']?>' >
-
-        <fieldset>
-
-                <h302> <?php echo $l['title']['RADIUSReply']?> </h302>
-                <br/>
-
-		<ul>
-
-<?php
-
-        $sql = "SELECT ".$configValues['CONFIG_DB_TBL_RADGROUPREPLY'].".Attribute, ".
-                $configValues['CONFIG_DB_TBL_RADGROUPREPLY'].".op, ".$configValues['CONFIG_DB_TBL_RADGROUPREPLY'].".Value, ".
-                $configValues['CONFIG_DB_TBL_DALODICTIONARY'].".Type, ".
-                $configValues['CONFIG_DB_TBL_DALODICTIONARY'].".RecommendedTooltip, ".
-                $configValues['CONFIG_DB_TBL_RADGROUPREPLY'].".id ".
-                " FROM ".
-                $configValues['CONFIG_DB_TBL_RADGROUPREPLY']." LEFT JOIN ".$configValues['CONFIG_DB_TBL_DALODICTIONARY'].
-                " ON ".$configValues['CONFIG_DB_TBL_RADGROUPREPLY'].".Attribute=".
-                $configValues['CONFIG_DB_TBL_DALODICTIONARY'].".attribute ".
-		" AND ".$configValues['CONFIG_DB_TBL_DALODICTIONARY'].".Value=NULL ".
-		" WHERE ".
-                $configValues['CONFIG_DB_TBL_RADGROUPREPLY'].".GroupName='".$dbSocket->escapeSimple($profile)."'";
-        $res = $dbSocket->query($sql);
-        $logDebugSQL .= $sql . "\n";
-
-        if ($numrows = $res->numRows() == 0) {
-                echo "<center>";
-                echo $l['messages']['noReplyAttributesForGroup'];
-                echo "</center>";
-        }
-
-        while($row = $res->fetchRow()) {
-
-
-                echo "<label class='attributes'>";
-                echo "<a class='tablenovisit' href='mng-rad-profiles-del.php?profile=$profile&attribute=$row[5]__$row[0]&tablename=radgroupreply'>
-                                <img src='images/icons/delete.png' border=0 alt='Remove' /> </a>";
-		echo "</label>";
-                echo "<label for='attribute' class='attributes'>&nbsp;&nbsp;&nbsp;$row[0]</label>";
-
-                echo "<input type='hidden' name='editValues".$editCounter."[]' value='$row[5]__$row[0]' />";
-
-                if ( ($configValues['CONFIG_IFACE_PASSWORD_HIDDEN'] == "yes") and (preg_match("/.*-Password/", $row[0])) ) {
-                        echo "<input type='password' value='$row[2]' name='editValues".$editCounter."[]'  style='width: 115px' />";
-                        echo "&nbsp;";
-                        echo "<select name='editValues".$editCounter."[]' style='width: 45px' class='form'>";
-                        echo "<option value='$row[1]'>$row[1]</option>";
-                        drawOptions();
-                        echo "</select>";
-                } else {
-                        echo "<input value='$row[2]' name='editValues".$editCounter."[]' style='width: 115px' />";
-                        echo "&nbsp;";
-                        echo "<select name='editValues".$editCounter."[]' style='width: 45px' class='form'>";
-                        echo "<option value='$row[1]'>$row[1]</option>";
-                        drawOptions();
-                        echo "</select>";
-                }
-
-                echo "       
-                        <input type='hidden' name='editValues".$editCounter."[]' value='radgroupreply' style='width: 90px'>
-                ";
-
-                $editCounter++;                 // we increment the counter for the html elements of the edit attributes
-
-                if (!$row[3])
-                        $row[3] = "unavailable";
-                if (!$row[4])
-                        $row[4] = "unavailable";
-
-                printq("
-                        <img src='images/icons/comment.png' alt='Tip' border='0' onClick=\"javascript:toggleShowDiv('$row[0]Tooltip')\" />
-                        <br/>
-                        <div id='$row[0]Tooltip'  style='display:none;visibility:visible' class='ToolTip2'>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i><b>Type:</b> $row[3]</i><br/>
-                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i><b>Tooltip Description:</b> $row[4]</i><br/>
-                                <br/>
-                        </div>
-                ");
-
-        }
-
-?>
-
-
-        <br/><br/>
-        <hr><br/>
-        <br/>
-        <input type='submit' name='submit' value='<?php echo $l['buttons']['apply']?>' class='button' />
-        <br/>
-
-	</ul>
-
-        </fieldset>
-	</div>
-
-<?php   
-	include 'library/closedb.php';
-?>  
-
-
-
-     <div class="tabbertab" title="<?php echo $l['title']['Attributes']; ?>">
-        <?php
-			include_once('include/management/attributes.php');
-        ?>
-     </div>
-
-
+                <?php
+                include 'page-footer.php';
+                ?>
 </div>
-
-                                </form>
-
-
-
-<?php
-	include('include/config/logging.php');
-?>
-
-		</div>
-
-		<div id="footer">
-
-<?php
-	include 'page-footer.php';
-?>
-
-
-		</div>
 
 </div>
 </div>
-
 
 </body>
 </html>
+
+
+
+
+

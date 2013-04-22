@@ -87,7 +87,7 @@
                         <tr>
                         <th colspan='12' align='left'>
 
-                        <input class='button' type='button' value='CSV Export'
+                        <input class='button' type='button' value='Exportar CSV'
                         onClick=\"javascript:window.location.href='include/management/fileExport.php?reportFormat=csv'\"
                         />
                         <br/>
@@ -113,11 +113,7 @@
 		<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?orderBy=radacctid&orderType=$orderTypeNextPage\">
 		".$l['all']['ID']."</a>
 		</th>
-		<th scope='col'> 
-		<br/>
-		<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?orderBy=hotspot&orderType=$orderTypeNextPage\">
-		".$l['all']['HotSpot']."</a>
-		</th>
+
 		<th scope='col'> 
 		<br/>
 		<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?orderBy=username&orderType=$orderTypeNextPage\">
@@ -168,7 +164,7 @@
 	while($row = $res->fetchRow()) {
 
 		printqn("<tr>
-				<td> $row[0] </td>
+			
 
                         <td> <a class='tablenovisit' href='javascript:return;'
                                 onClick='javascript:ajaxGeneric(\"include/management/retHotspotInfo.php\",\"retHotspotGeneralStat\",\"divContainerHotspotInfo\",\"hotspot=$row[1]\");

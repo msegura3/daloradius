@@ -21,45 +21,6 @@ function changeInteger(dstObj,action) {
 }
 
 
-function toggleAttributeCustom() {
-
-	// disable the custom attributes
-	var elem1 = document.getElementById('dictAttributesCustom');
-	var elem2 = document.getElementById('addAttributesCustom');
-	elem1.disabled = false;
-	elem2.disabled = false;
-	
-	var elem3 = document.getElementById('dictVendors0');
-	var elem4 = document.getElementById('reloadAttributes');
-	var elem5 = document.getElementById('dictAttributesDatabase');
-	var elem6 = document.getElementById('addAttributesVendor');
-	elem3.disabled = true;
-	elem4.disabled = true;
-	elem5.disabled = true;
-	elem6.disabled = true;
-
-}
-
-
-function toggleAttributeSelectbox() {
-
-	// disable the custom attributes
-	var elem1 = document.getElementById('dictAttributesCustom');
-	var elem2 = document.getElementById('addAttributesCustom');
-	elem1.disabled = true;
-	elem2.disabled = true;
-	
-	var elem3 = document.getElementById('dictVendors0');
-	var elem4 = document.getElementById('reloadAttributes');
-	var elem5 = document.getElementById('dictAttributesDatabase');
-	var elem6 = document.getElementById('addAttributesVendor');
-	elem3.disabled = false;
-	elem4.disabled = false;
-	elem5.disabled = false;
-	elem6.disabled = false;
-}
-
-
 
 function toggleRandomUsers() {
 
@@ -378,54 +339,6 @@ function disableCheckbox(formName,pageDst) {
 
 
 
-
-
-/***********************************************************************
- * enableCheckbox
- * submits a form using ajax to enable a user
- * 
- * formName	- the form name
- * pageDst	- the page destination to be submitted 
- *
- ***********************************************************************/
-function enableCheckbox(formName,pageDst) {
-
-        var count = 0;
-        var form = document.getElementsByTagName('input');
-	var values = "";
-
-        for (var i=0; i < form.length; ++i) {
-                var e = form[i];
-                if (e.type == 'checkbox' && e.checked) {
-			values += "username[]=" + e.value + "&";
-	                ++count;
-		}
-        }
-
-	var strUsernames = values.substr(0,values.length-1);
-
-
-	// if no items were checked there's no reason to submit the form
-	if (count == 0) {
-		alert("No items selected");
-		return;
-	}
-
-
-        if (confirm("You are about to enable " + count + " users\nDo you want to continue?"))  {
-
-		ajaxGeneric("include/management/userOperations.php","userEnable","returnMessages",strUsernames);
-
-		return true;
-
-        }
-
-        return false;
-}
-
-
-
-
 /***********************************************************************
  * backupRollback
  * performs rollback
@@ -493,7 +406,7 @@ function refillSessionTimeCheckbox(formName,pageDst) {
 	}
 
 
-        if (confirm("You are about to refill session time for a total of " + count + " users\nDo you want to continue?\n\nSuch action will also bill the user!"))  {
+        if (confirm("You are about to refill session time fora total of " + count + " users\nDo you want to continue?\n\nSuch action will also bill the user!"))  {
 
 		ajaxGeneric("include/management/userOperations.php","refillSessionTime","returnMessages",strUsernames);
 

@@ -63,7 +63,7 @@ $centerencrypted="Login must use encrypted connection";
 
 
 # If she did not use https tell her that it was wrong.
-if (!($_ENV['HTTPS'] == 'on')) {
+if (!($_ENV['HTTPS'] != 'on')) {
 #    echo "Content-type: text/html\n\n";
 echo "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
 <html>

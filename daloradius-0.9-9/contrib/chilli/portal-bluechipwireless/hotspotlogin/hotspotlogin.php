@@ -36,7 +36,7 @@
 
 # Shared secret used to encrypt challenge with. Prevents dictionary attacks.
 # You should change this to your own shared secret.
-$uamsecret = "enginx";
+$uamsecret = "uamsecret";
 
 # Uncomment the following line if you want to use ordinary user-password
 # for radius authentication. Must be used together with $uamsecret.
@@ -48,7 +48,7 @@ $loginpath = $_SERVER['PHP_SELF'];
 include('lang/main.php');
 
 /* if SSL was not used show an error */
-if (!($_SERVER['HTTPS'] == 'on')) {
+if (!($_SERVER['HTTPS'] != 'on')) {
 	include('hotspotlogin-nonssl.php');
 	exit(0);
 }

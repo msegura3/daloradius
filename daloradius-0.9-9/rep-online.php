@@ -80,7 +80,7 @@
 
 <div class="tabber">
 
-     <div class="tabbertab" title="Statistics">
+     <div class="tabbertab" title="Estadísticas">
         <br/>	
 	
 <?php
@@ -147,13 +147,13 @@
 			<tr>
 			<th colspan='10' align='left'>
 
-                                Select:
-                                <a class=\"table\" href=\"javascript:SetChecked(1,'clearSessionsUsers[]','usersonline')\">All</a>
+                                Seleccionar:
+                                <a class=\"table\" href=\"javascript:SetChecked(1,'clearSessionsUsers[]','usersonline')\">Todos</a>
 
-                                <a class=\"table\" href=\"javascript:SetChecked(0,'clearSessionsUsers[]','usersonline')\">None</a>
+                                <a class=\"table\" href=\"javascript:SetChecked(0,'clearSessionsUsers[]','usersonline')\">Ninguno</a>
                         <br/>
                                 <input class='button' type='button' value='".$l['button']['ClearSessions']."' onClick='javascript:removeCheckbox(\"usersonline\",\"mng-del.php\")' />
-                                <input class='button' type='button' value='CSV Export'
+                                <input class='button' type='button' value='Exportar CSV'
                                         onClick=\"javascript:window.location.href='include/management/fileExport.php?reportFormat=csv'\"
                                         />
                                 <br/><br/>
@@ -198,11 +198,6 @@
 		</th>
 
 
-		<th scope='col'>
-		<a title='Sort' class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?usernameOnline=$usernameOnline&orderBy=NASshortname&orderType=$orderTypeNextPage\">
-			".$l['all']['HotSpot']." / 
-			".$l['all']['NasShortname']."
-		</th>
 
 		<th scope='col'>
 			".$l['all']['TotalTraffic']."
@@ -247,7 +242,6 @@
 				<td> IP: $ip<br/>MAC: $usermac</td>
 				<td> $start </td>
 				<td> $totalTime </td>
-				<td> $hotspot $nasshortname </td>
 				<td> ".$l['all']['Upload'].": $upload <br/> ".$l['all']['Download'].": $download <br/> ".$l['all']['TotalTraffic'].": <b>$traffic</b> </td>
 		</tr>";
 	}
@@ -272,7 +266,7 @@
 	</div>
 
 
-     <div class="tabbertab" title="Graph">
+     <div class="tabbertab" title="Gráfico">
         <br/>
 
 
@@ -286,13 +280,7 @@
 	
 	
 	
-    <div class="tabbertab" title="Online Nas">
-       <br/>
 
-
-<?php
-       echo "<img src=\"library/graphs-reports-online-nas.php\" />";
-?>
 
        </div>
 

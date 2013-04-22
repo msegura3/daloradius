@@ -112,11 +112,11 @@
 		<thead>
 			<tr>
 			<th colspan='10' align='left'>
-			Select:
-			<a class=\"table\" href=\"javascript:SetChecked(1,'profile[]','listprofiles')\">All</a>
-			<a class=\"table\" href=\"javascript:SetChecked(0,'profile[]','listprofiles')\">None</a>
+			Seleccionar:
+			<a class=\"table\" href=\"javascript:SetChecked(1,'profile[]','listprofiles')\">Todos</a>
+			<a class=\"table\" href=\"javascript:SetChecked(0,'profile[]','listprofiles')\">Ninguno</a>
 			<br/>
-			<input class='button' type='button' value='Delete' onClick='javascript:removeCheckbox(\"listprofiles\",\"mng-rad-profiles-del.php\")' />
+			<input class='button' type='button' value='Borrar' onClick='javascript:removeCheckbox(\"listprofiles\",\"mng-rad-profiles-del.php\")' />
 			<br/><br/>
 	";
 

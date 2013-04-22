@@ -29,13 +29,6 @@
 	isset($_REQUEST['attribute']) ? $attribute = $_REQUEST['attribute'] : $attribute = "";
 	isset($_REQUEST['tablename']) ? $tablename = $_REQUEST['tablename'] : $tablename = "";
 
-	isset($_REQUEST['profile_delete_assoc']) ? $removeProfileAssoc = $_REQUEST['profile_delete_assoc'] : $removeProfileAssoc = "";
-	if ($removeProfileAssoc == '1')
-		$removeProfileAssoc = true;
-	else
-		$removeProfileAssoc = false;
-	
-	
 	$logAction = "";
 	$logDebugSQL = "";
 
@@ -69,18 +62,10 @@
 				$res = $dbSocket->query($sql);
 				$logDebugSQL .= $sql . "\n";
 
-				// delete all user associations with the profile
-				if ($removeProfileAssoc == true) {
-					$sql = "DELETE FROM ".$configValues['CONFIG_DB_TBL_RADUSERGROUP'].
-						" WHERE GroupName='".$dbSocket->escapeSimple($profile)."'";
-					$res = $dbSocket->query($sql);
-					$logDebugSQL .= $sql . "\n";
-				}
-				
-				
 				$successMsg = "Deleted profile(s): <b> $allProfiles </b>";
-				$logAction .= "Successfully deleted profile(s) [$allProfiles] on page: ";				
-				
+				$logAction .= "Successfully deleted profile(s) [$allProfiles] on page: ";
+
+
 				include 'library/closedb.php';
 
 			}  else { 
@@ -162,12 +147,8 @@
                 <h302> <?php echo $l['title']['ProfileInfo'] ?> </h302>
                 <br/>
 
-                <label for='profile' class='form'>Profile Name</label>
+                <label for='profile' class='form'>Nombre del perfil</label>
                 <input name='profile[]' type='text' id='profile' value='<?php echo $profile ?>' tabindex=100 />
-                <br/>
-                
-                <label for='profile' class='form'>Remove all user associations with this profile(s)</label>
-                <input name='profile_delete_assoc' type='checkbox' id='profile_delete_assoc' value='1' tabindex=100 />
                 <br/>
 
                 <br/><br/>

@@ -25,7 +25,6 @@
 
 $configValues['CONFIG_DB_ENGINE'] = 'mysql';
 $configValues['CONFIG_DB_HOST'] = '127.0.0.1';
-$configValues['CONFIG_DB_PORT'] = '3306';
 $configValues['CONFIG_DB_USER'] = 'root';
 $configValues['CONFIG_DB_PASS'] = '';
 $configValues['CONFIG_DB_NAME'] = 'radius';
@@ -42,12 +41,6 @@ $configValues['CONFIG_DB_TBL_DALOOPERATORS'] = 'operators';
 $configValues['CONFIG_DB_TBL_DALOOPERATORS_ACL'] = 'operators_acl';
 $configValues['CONFIG_DB_TBL_DALOOPERATORS_ACL_FILES'] = 'operators_acl_files';
 $configValues['CONFIG_DB_TBL_DALOBATCHHISTORY'] = 'batch_history';
-$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICE'] = 'invoice';
-$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICEITEMS'] = 'invoice_items';
-$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICESTATUS'] = 'invoice_status';
-$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICETYPE'] = 'invoice_type';
-$configValues['CONFIG_DB_TBL_DALOPAYMENTS'] = 'payment';
-$configValues['CONFIG_DB_TBL_DALOPAYMENTTYPES'] = 'payment_type';
 $configValues['CONFIG_DB_TBL_DALOBILLINGPLANSPROFILES'] = 'billing_plans_profiles';
 $configValues['CONFIG_DB_TBL_DALOBILLINGPAYPAL'] = 'billing_paypal';
 $configValues['CONFIG_DB_TBL_DALOBILLINGMERCHANT'] = 'billing_merchant';

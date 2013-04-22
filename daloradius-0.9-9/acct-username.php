@@ -79,9 +79,9 @@
 	include 'library/closedb.php';
 
         include_once('include/management/userReports.php');
-        userPlanInformation($username, 1);
-        userSubscriptionAnalysis($username, 1);                 // userSubscriptionAnalysis with argument set to 1 for drawing the table
-       	userConnectionStatus($username, 1);                     // userConnectionStatus (same as above)
+    // //   userPlanInformation($username, 1);
+       // userSubscriptionAnalysis($username, 1);                 // userSubscriptionAnalysis with argument set to 1 for drawing the table
+       	//userConnectionStatus($username, 1);                     // userConnectionStatus (same as above)
 
 
 	include 'library/opendb.php';
@@ -133,7 +133,7 @@
 			<tr>
 				<th colspan='12' align='left'>
 
-			<input class='button' type='button' value='CSV Export'
+			<input class='button' type='button' value='Exportar CSV'
 			onClick=\"javascript:window.location.href='include/management/fileExport.php?reportFormat=csv'\"
 			/>
 			<br/>
@@ -158,11 +158,7 @@
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&orderBy=radacctid&orderType=$orderTypeNextPage\">
 			".$l['all']['ID']."</a>
 			</th>
-			<th scope='col'> 
-			<br/>
-			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&orderBy=hotspot&orderType=$orderTypeNextPage\">
-			".$l['all']['HotSpot']."</a>
-			</th>
+
 			<th scope='col'> 
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&orderBy=username&orderType=$orderTypeNextPage\">
@@ -213,7 +209,7 @@
 			while($row = $res->fetchRow()) {
 
 				printqn("<tr>
-						<td> $row[0] </td>
+						
 						<td> <a class='tablenovisit' href='javascript:return;'
 								onClick='javascript:ajaxGeneric(\"include/management/retHotspotInfo.php\",\"retHotspotGeneralStat\",\"divContainerHotspotInfo\",\"hotspot=$row[1]\");
 										javascript:__displayTooltip();'

@@ -26,13 +26,13 @@
 $configValues['CONFIG_DB_ENGINE'] = 'mysql';
 $configValues['CONFIG_DB_HOST'] = '127.0.0.1';
 $configValues['CONFIG_DB_USER'] = 'root';
-$configValues['CONFIG_DB_PASS'] = '';
-$configValues['CONFIG_DB_NAME'] = 'radius097';
+$configValues['CONFIG_DB_PASS'] = 'marco';
+$configValues['CONFIG_DB_NAME'] = 'clhotspot1';
 $configValues['CONFIG_DB_TBL_RADCHECK'] = 'radcheck';
 $configValues['CONFIG_DB_TBL_RADREPLY'] = 'radreply';
 $configValues['CONFIG_DB_TBL_RADGROUPREPLY'] = 'radgroupreply';
 $configValues['CONFIG_DB_TBL_RADGROUPCHECK'] = 'radgroupcheck';
-$configValues['CONFIG_DB_TBL_RADUSERGROUP'] = 'usergroup';
+$configValues['CONFIG_DB_TBL_RADUSERGROUP'] = 'radusergroup';
 $configValues['CONFIG_DB_TBL_RADNAS'] = 'nas';
 $configValues['CONFIG_DB_TBL_RADPOSTAUTH'] = 'radpostauth';
 $configValues['CONFIG_DB_TBL_RADACCT'] = 'radacct';

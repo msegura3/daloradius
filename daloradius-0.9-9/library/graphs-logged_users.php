@@ -97,7 +97,7 @@ function graph_day($day,$month,$year) {
 			$i = 24;
 		}
 	}
-	$chart->setTitle("Logged users by hour on $day/$month/$year");
+	$chart->setTitle("Usuarios loegueados por hora en $day/$month/$year");
 	$chart->render();
 
 	include 'closedb.php';
@@ -135,7 +135,7 @@ function graph_month($month,$year) {
 		$chart->addPoint(new Point("$i - Min",$measure[$i]['min']));
 		$chart->addPoint(new Point("$i - Max",$measure[$i]['max']));
 	}
-	$chart->setTitle("Logged users by month");
+	$chart->setTitle("Usuario logueados por mes");
 	$chart->render();
 
 	include 'closedb.php';

@@ -52,14 +52,14 @@ function daily($username) {
 	$chart = new VerticalChart(680,500);
 
 	$sql = "SELECT UserName, count(AcctStartTime), DAY(AcctStartTime) AS Day FROM ".
-		$configValues['CONFIG_DB_TBL_RADACCT']." WHERE username='$username' AND acctstoptime>0 GROUP BY Day;";
+		$configValues['CONFIG_DB_TBL_RADACCT']." WHERE username='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())+30) DAY) AND AcctStartTime< now() GROUP BY Day";
 	$res = $dbSocket->query($sql);
 
 	while($row = $res->fetchRow()) {
 		$chart->addPoint(new Point("$row[2]", "$row[1]"));
 	}
 
-	$chart->setTitle("Total Users");
+	$chart->setTitle("Ingresos Totales");
 	$chart->render();
 
 	include 'closedb.php';
@@ -93,7 +93,7 @@ function monthly($username) {
 		$chart->addPoint(new Point("$row[2]", "$row[1]"));
 	}
 
-	$chart->setTitle("Total Users");
+	$chart->setTitle("Ingresos Totales");
 	$chart->render();
 
 	include 'closedb.php';
@@ -126,7 +126,7 @@ function yearly($username) {
 		$chart->addPoint(new Point("$row[2]", "$row[1]"));
 	}
 
-	$chart->setTitle("Total Users");
+	$chart->setTitle("Ingresos Totales");
 	$chart->render();
 
 	include 'closedb.php';

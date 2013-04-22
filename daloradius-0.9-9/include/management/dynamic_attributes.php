@@ -155,10 +155,6 @@ if(isset($_GET['getValuesForAttribute'])) {
 		case "bitspersecond":
 			drawBitPerSecond($num);
 			break;
-			
-		case "mikrotikRateLimit":
-			mikrotikRateLimit($num);
-			break;
 
 		case "kbitspersecond":
 			drawKBitPerSecond($num);
@@ -173,7 +169,7 @@ if(isset($_GET['getValuesForAttribute'])) {
 	/* RecommendedTooltip
 	/* setting the tooltip 
 	/*******************************************************************************************************/
-	echo "objTooltip.innerHTML = \"<b>Description:</b> ".str_replace("\"", "\\\"", $RecommendedTooltip)."\";";
+	echo "objTooltip.innerHTML = \"<b>Description:</b> $RecommendedTooltip\";";
 	/*******************************************************************************************************/
 
 
@@ -221,10 +217,9 @@ function populateOPs() {
 function drawHelperDateTime($num) {
 
 	$inputId = "dictValues".$num;
-	$currYear = date('Y', time());
 
         echo <<<EOF
-	objHelper.innerHTML = "<img src='library/js_date/calendar.gif' onClick=\"showChooser(this, '$inputId', 'chooserSpan$num', 1950, $currYear, 'Y-m-d H:i:s', true);\">";
+	objHelper.innerHTML = "<img src='library/js_date/calendar.gif' onClick=\"showChooser(this, '$inputId', 'chooserSpan$num', 1950, 2010, 'Y-m-d H:i:s', true);\">";
 
 EOF;
 
@@ -235,10 +230,9 @@ EOF;
 function drawHelperDate($num) {
 
 	$inputId = "dictValues".$num;
-	$currYear = date('Y', time());
 
         echo <<<EOF
-	objHelper.innerHTML = "<img src='library/js_date/calendar.gif' onClick=\"showChooser(this, '$inputId', 'chooserSpan$num', 1950, $currYear, 'd M Y', false);\">";
+	objHelper.innerHTML = "<img src='library/js_date/calendar.gif' onClick=\"showChooser(this, '$inputId', 'chooserSpan$num', 1950, 2010, 'd M Y', false);\">";
 
 EOF;
 
@@ -314,34 +308,6 @@ function drawBitPerSecond($num) {
                                 "<option value='5242880'>5mbps</option>"+
                                 "<option value='8388608'>8mbps</option>"+
                                 "<option value='10485760'>10mbps</option>"+
-                              "</select>";
-
-EOF;
-
-}
-
-
-function mikrotikRateLimit($num) {
-
-        $inputId = "dictValues".$num;
-
-        echo <<<EOF
-        objHelper.innerHTML = "<select onClick=\"setStringText(this.id,'$inputId');\" id='drawBitPerSecond$num' "+
-                                "style='width: 100px' class='form'>"+
-                                "<option value=''>Select...</option>"+
-                                "<option value='128k/128k'>128k/128k</option>"+
-                                "<option value='128k/256k'>128k/256k</option>"+
-                                "<option value='128k/512k'>128k/512k</option>"+
-                                "<option value='128k/1M'>128k/1M</option>"+
-                                "<option value='256k/256k'>256k/256k</option>"+
-                                "<option value='256k/1M'>256k/1M</option>"+
-                                "<option value='512k/512k'>512k/512k</option>"+
-                                "<option value='512k/1M'>512k/1M</option>"+
-                                "<option value='512k/2M'>512k/2M</option>"+
-                                "<option value='1M/1M'>1M/1M</option>"+
-                                "<option value='1M/2M'>1M/2M</option>"+
-                                "<option value='2M/2M'>2M/2M</option>"+
-                                "<option value='1M/5M'>1M/5M</option>"+
                               "</select>";
 
 EOF;

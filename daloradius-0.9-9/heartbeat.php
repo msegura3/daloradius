@@ -22,15 +22,15 @@
 
 
 require_once('library/opendb.php');
-require_once('library/config_read.php');
 
-$secret_key = $configValues['CONFIG_DASHBOARD_DALO_SECRETKEY'];
-$debug_mode = $configValues['CONFIG_DASHBOARD_DALO_DEBUG'];
+$secretKey = "sillykey";
 
-isset($_GET['secret_key']) ? $secretKey = $dbSocket->escapeSimple($_GET['secret_key']) : $secretKey = "";
+isset($_GET['secret_key']) ? $secret_key = $dbSocket->escapeSimple($_GET['secret_key']) : $secret_key = "";
 if ($secretKey != $secret_key) {
-	die("authorization denied\n");
+	die("get out\n");
 }
+
+
 
 isset($_GET['wan_iface']) ? $wan_iface = $dbSocket->escapeSimple($_GET['wan_iface']) : $wan_iface = "";
 isset($_GET['wan_ip']) ? $wan_ip = $dbSocket->escapeSimple($_GET['wan_ip']) : $wan_ip = "";
@@ -52,7 +52,6 @@ isset($_GET['wan_bdown']) ? $wan_bdown = $dbSocket->escapeSimple($_GET['wan_bdow
 isset($_GET['nas_mac']) ? $nas_mac = $dbSocket->escapeSimple($_GET['nas_mac']) : $nas_mac = "";
 isset($_GET['firmware']) ? $firmware = $dbSocket->escapeSimple($_GET['firmware']) : $firmware = "";
 isset($_GET['firmware_revision']) ? $firmware_revision = $dbSocket->escapeSimple($_GET['firmware_revision']) : $firmware_revision = "";
-isset($_GET['cpu']) ? $cpu = $dbSocket->escapeSimple($_GET['cpu']) : $cpu = "";
 //isset($_GET['checkin_date']) ? $checkin_date = $dbSocket->escapeSimple($_GET['checkin_date']) : $checkin_date = "";
 
 $currDate = date('Y-m-d H:i:s');
@@ -63,7 +62,7 @@ $sql = "SELECT mac FROM ".$configValues['CONFIG_DB_TBL_DALONODE']." WHERE mac='$
 $res = $dbSocket->query($sql);
 if ($res->numRows() >= 1) {
 	// we update
-	$sql = "UPDATE ".$configValues['CONFIG_DB_TBL_DALONODE']." SET ".
+	$sql = "UPDATE nodes_data SET ".
 			"wan_iface='".$wan_iface."',".
 			"wan_ip='".$wan_ip."',".
 			"wan_mac='".$wan_mac."',".
@@ -84,8 +83,7 @@ if ($res->numRows() >= 1) {
 			"firmware='".$firmware."',".
 			"firmware_revision='".$firmware_revision."',".
 			"mac='".$nas_mac."',".
-			"time='".$currDate."',".
-			"cpu='".$cpu."'".
+			"time='".$currDate."'".
 			" WHERE mac='$nas_mac'";
 			;
 } else {
@@ -93,7 +91,7 @@ if ($res->numRows() >= 1) {
 	$sql = "INSERT INTO ".$configValues['CONFIG_DB_TBL_DALONODE']." (".
 			" id, wan_iface, wan_ip, wan_mac, wan_gateway, wifi_iface, wifi_ip, wifi_mac, wifi_ssid, wifi_key, wifi_channel, ".
 			" lan_iface, lan_mac, lan_ip, uptime, memfree, wan_bup, wan_bdown, firmware, firmware_revision, ".
-			" mac, `time`, cpu ".
+			" mac, `time` ".
 			" ) ".
 			" VALUES (0, ".
 			"'".$wan_iface."',".
@@ -116,20 +114,19 @@ if ($res->numRows() >= 1) {
 			"'".$firmware."',".
 			"'".$firmware_revision."',".
 			"'".$nas_mac."',".
-			"'".$currDate."',".
-			"'".$cpu."'".
+			"'".$currDate."'".
 			" ) ";
 }
 
+echo "\n\n$sql\n\n";
 
 $res = $dbSocket->query($sql);
+
+
+echo "things are ok\n";
+
 require_once('library/closedb.php');
 
-if (isset($debug_mode) && $debug_mode == 1) {
-	echo "Debug: \n";
-	var_dump($_GET);
-	echo "\n\n$sql\n\n";	
-}
 
-echo "success";
 
+?>

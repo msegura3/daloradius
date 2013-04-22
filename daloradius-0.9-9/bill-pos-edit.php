@@ -41,7 +41,6 @@
         isset($_POST['bi_address']) ? $bi_address = $_POST['bi_address'] : $bi_address = "";
         isset($_POST['bi_city']) ? $bi_city = $_POST['bi_city'] : $bi_city = "";
         isset($_POST['bi_state']) ? $bi_state = $_POST['bi_state'] : $bi_state = "";
-        isset($_POST['bi_country']) ? $bi_country = $_POST['bi_country'] : $bi_country = "";
         isset($_POST['bi_zip']) ? $bi_zip = $_POST['bi_zip'] : $bi_zip = "";
         isset($_POST['bi_paymentmethod']) ? $bi_paymentmethod = $_POST['bi_paymentmethod'] : $bi_paymentmethod = "";
         isset($_POST['bi_cash']) ? $bi_cash = $_POST['bi_cash'] : $bi_cash = "";
@@ -253,7 +252,7 @@
                         if ($res->numRows() == 0) {
                                 $sql = "INSERT INTO ".$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].
                                         " (id, planname, username, contactperson, company, email, phone, ".
-                                        " address, city, state, country, zip, ".
+                                        " address, city, state, zip, ".
                                         " paymentmethod, cash, creditcardname, creditcardnumber, creditcardverification, creditcardtype, creditcardexp, ".
                                         " notes, changeuserbillinfo, ".
 	                                " lead, coupon, ordertaker, billstatus, lastbill, nextbill, nextinvoicedue, billdue, postalinvoice, faxinvoice, emailinvoice, ".
@@ -263,7 +262,6 @@
                                         $dbSocket->escapeSimple($bi_company)."', '".$dbSocket->escapeSimple($bi_email)."', '".
                                         $dbSocket->escapeSimple($bi_phone)."', '".$dbSocket->escapeSimple($bi_address)."', '".
                                         $dbSocket->escapeSimple($bi_city)."', '".$dbSocket->escapeSimple($bi_state)."', '".
-                                        $dbSocket->escapeSimple($bi_country)."', '".
                                         $dbSocket->escapeSimple($bi_zip)."', '".$dbSocket->escapeSimple($bi_paymentmethod)."', '".
                                         $dbSocket->escapeSimple($bi_cash)."', '".$dbSocket->escapeSimple($bi_creditcardname)."', '".
                                         $dbSocket->escapeSimple($bi_creditcardnumber)."', '".$dbSocket->escapeSimple($bi_creditcardverification)."', '".
@@ -297,7 +295,6 @@
                                         "', address='".$dbSocket->escapeSimple($bi_address).
                                         "', city='".$dbSocket->escapeSimple($bi_city).
                                         "', state='".$dbSocket->escapeSimple($bi_state).
-                                        "', country='".$dbSocket->escapeSimple($bi_country).
                                         "', zip='".$dbSocket->escapeSimple($bi_zip).
                                         "', notes='".$dbSocket->escapeSimple($bi_notes).
                                         "', changeuserbillinfo='".$dbSocket->escapeSimple($bi_changeuserbillinfo).
@@ -422,7 +419,7 @@
 
 	
         /* fill-in all the user info details */
-        $sql = "SELECT firstname, lastname, email, department, company, workphone, homephone, mobilephone, address, city, state, country, zip, notes, ".
+        $sql = "SELECT firstname, lastname, email, department, company, workphone, homephone, mobilephone, address, city, state, zip, notes, ".
                 " changeuserinfo, portalloginpassword, enableportallogin, creationdate, creationby, updatedate, updateby FROM ".
                 $configValues['CONFIG_DB_TBL_DALOUSERINFO'].
                 " WHERE UserName='".
@@ -443,22 +440,21 @@
         $ui_address = $row[8];
         $ui_city = $row[9];
         $ui_state = $row[10];
-        $ui_country = $row[11];
-        $ui_zip = $row[12];
-        $ui_notes = $row[13];
-        $ui_changeuserinfo = $row[14];
-		$ui_PortalLoginPassword = $row[15];
-		$ui_enableUserPortalLogin = $row[16];
-        $ui_creationdate = $row[17];
-        $ui_creationby = $row[18];
-        $ui_updatedate = $row[19];
-        $ui_updateby = $row[20];
+        $ui_zip = $row[11];
+        $ui_notes = $row[12];
+        $ui_changeuserinfo = $row[13];
+		$ui_PortalLoginPassword = $row[14];
+		$ui_enableUserPortalLogin = $row[15];
+        $ui_creationdate = $row[16];
+        $ui_creationby = $row[17];
+        $ui_updatedate = $row[18];
+        $ui_updateby = $row[19];
 
 
         /* fill-in all the user bill info details */
         $sql = "SELECT ".
                " id, planName, contactperson, company, email, phone, ".
-               " address, city, state, country, zip, ".
+               " address, city, state, zip, ".
                " paymentmethod, cash, creditcardname, creditcardnumber, creditcardverification, creditcardtype, creditcardexp, ".
                " notes, changeuserbillinfo, ".
                " lead, coupon, ordertaker, billstatus, lastbill, nextbill, nextinvoicedue, billdue, postalinvoice, faxinvoice, emailinvoice, ".
@@ -480,7 +476,6 @@
         $bi_address = $row['address'];
         $bi_city = $row['city'];
         $bi_state = $row['state'];
-        $bi_country = $row['country'];
         $bi_zip = $row['zip'];
         $bi_paymentmethod = $row['paymentmethod'];
         $bi_cash = $row['cash'];
@@ -532,50 +527,6 @@
 <script type="text/javascript" src="library/javascript/ajax.js"></script>
 <script type="text/javascript" src="library/javascript/dynamic_attributes.js"></script>
 <script type="text/javascript" src="library/javascript/ajaxGeneric.js"></script>
-
-<script type="text/javascript">
-
-
-function disableUser() {
-	strUsername = "username=<?php echo $username?>";
-	if (confirm("You are about to disable this user account\nDo you want to continue?"))  {
-		ajaxGeneric("include/management/userOperations.php","userDisable","returnMessages",strUsername);
-		window.location.reload();
-		return true;
-	}
-}
-
-function enableUser() {
-	strUsername = "username=<?php echo $username?>";
-	if (confirm("You are about to enable this user account\nDo you want to continue?"))  {
-		ajaxGeneric("include/management/userOperations.php","userEnable","returnMessages",strUsername);
-		window.location.reload();
-		return true;
-	}
-}
-
-function refillSessionTime() {
-	strUsername = "username=<?php echo $username?>";
-	if (confirm("You are about to refill session time for this user account\nDo you want to continue?\n\nSuch action will also bill the user if set so in the plant the user is associated with!"))  {
-		ajaxGeneric("include/management/userOperations.php","refillSessionTime","returnMessages",strUsername);
-		window.location.reload();
-		return true;	
-    }
-}
-
-
-function refillSessionTraffic() {
-	strUsername = "username=<?php echo $username?>";
-	if (confirm("You are about to refill session traffic for this user account\nDo you want to continue?\n\nSuch action will also bill the user if set so in the plant the user is associated with!"))  {
-		ajaxGeneric("include/management/userOperations.php","refillSessionTraffic","returnMessages",strUsername);
-		window.location.reload();
-		return true;	
-    }
-}
-
-
-</script>
-
 <?php
 	include_once ("library/tabber/tab-layout.php");
 ?>
@@ -597,11 +548,6 @@ function refillSessionTraffic() {
 	</div>
 	<?php
 		include_once('include/management/actionMessages.php');
-	?>
-
-	<?php
-		include_once('include/management/userOperations.php');
-		checkDisabled($username);
 	?>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
@@ -681,25 +627,7 @@ function refillSessionTraffic() {
 		<li class='fieldset'>
 		<br/>
 		<hr><br/>
-			<br/>
-			
-	        <input class='button' type='button' value='Refill Session Time'
-				onClick='javascript:refillSessionTime()' />
-	        <input class='button' type='button' value='Refill Session Traffic'
-				onClick='javascript:refillSessionTraffic()' />
-			
-			<br/>
-			
-			<input class='button' type='button' value='Enable User'
-				onClick='javascript:enableUser()' />
-				
-			<input class='button' type='button' value='Disable User'
-				onClick='javascript:disableUser()' />
-				
-			<br/>		
-			
-			<input type='submit' name='submit' value='<?php echo $l['buttons']['apply'] ?>' tabindex=10000 class='button' />
-
+		<input type='submit' name='submit' value='<?php echo $l['buttons']['apply'] ?>' tabindex=10000 class='button' />
 		</li>
 
 		</ul>

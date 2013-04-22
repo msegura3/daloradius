@@ -1,8 +1,11 @@
 
+<?php
+	include_once ("lang/main.php");
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>daloRADIUS</title>
+<title><?php echo $l['header']['titles']; ?></title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/1.css" type="text/css" media="screen,projection" />
 <link rel="stylesheet" href="css/form-field-tooltip.css" type="text/css" media="screen,projection" />
@@ -12,9 +15,7 @@
 <script src="library/javascript/form-field-tooltip.js" type="text/javascript"></script>
 
 <body>
-<?php
-	include_once ("lang/main.php");
-?>
+
 
 <div id="wrapper">
 <div id="innerwrapper">
@@ -29,9 +30,9 @@
 
 <div id="sidebar">
 
-	<h2>Graphs</h2>
+	<h2>Gráficos</h2>
 
-	<h3>User Graph</h3>
+	<h3>Usuarios</h3>
 	<ul class="subnav">
 
 		<li><a href="javascript:document.overall_logins.submit();"><b>&raquo;</b>
@@ -94,7 +95,7 @@
 
 	</ul>
 
-	<h3>Statistics</h3>
+	<h3>Estadísticas</h3>
 	<ul class="subnav">
 
 
@@ -161,19 +162,18 @@
 			</select>
 			<?php echo $l['graphs']['Year']; ?>:</br>
 			<select class="generic" name="year" type="text">
-				<?php
-					for($i = 0; $i <= 10; $i++) {
-						$myDate = date('Y', mktime(0, 0, 0, 1, 1, (date('Y')-$i) ));
-						echo "<option value='$myDate'>$myDate</option>";
-					}
-				?>
+				<option value="2009"> 2009 </option>
+                                <option value="2010"> 2010 </option>
+                                <option value="2011"> 2011 </option>
+                                <option value="2012"> 2012 </option>
+                                <option value="2013"> 2013 </option>
 			</select>
 
 	</ul>
 
 	<br/><br/>
-	<h2>Search</h2>
-	<input name="" type="text" value="Search" />
+	<h2>Linbox Manager</h2>
+
 
 </div>
 

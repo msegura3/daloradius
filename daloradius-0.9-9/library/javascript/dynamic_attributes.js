@@ -21,12 +21,19 @@ function createVendors(index,sel) {
 }
 
 
-function getAttributesList(sel,attributesSel) {
+function getAttributesList(vendorName,attributesSel) {
 
-        var vendorName = sel.options[sel.selectedIndex].value;
+       // var vendorName = sel.options[sel.selectedIndex].value;
 
-        document.getElementById(attributesSel).options.length = 0;     // empty attributes list
-        if(vendorName.length>0) {
+
+//        document.getElementById(attributesSel).options.length = 0;     // empty attributes list
+ 
+
+
+
+        if(vendorName.length>0){
+
+
 
               var index = ajax.length;
                 ajax[index] = new sack();
@@ -81,19 +88,17 @@ function createValues(index,valuesSel,opSel,tableSel,attrTooltip,attrType,attrHe
 
 
 
-function parseAttribute(attrElement) {
+function parseAttribute(tag) {
 
-	//var enableTable = 1;
-	
-	var attributeCustom = document.getElementById('dictAttributesCustom');
+        var attributeCustom = document.getElementById('dictAttributesCustom');
 	var attributeCustomVal = attributeCustom.value;
 
-	if (attrElement == 1) {
+	if (attributeCustomVal == '') {
 	        var attributeOfDatabase = document.getElementById('dictAttributesDatabase');
 	        var attributeOfDatabaseVal = attributeOfDatabase.options[attributeOfDatabase.selectedIndex].value;
-		addElement(1, 'dictAttributesDatabase');
+		addElement(tag, 'dictAttributesDatabase');
 	} else {
-		addElement(1, 'dictAttributesCustom');
+		addElement(tag, 'dictAttributesCustom');
 	}
 
 }

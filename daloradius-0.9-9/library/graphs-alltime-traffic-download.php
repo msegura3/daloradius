@@ -69,7 +69,7 @@ function daily() {
 	}
 	
 
-	$chart->setTitle("Alltime Downloads based on Daily distribution ($size)");
+	$chart->setTitle("Distribución de volumen de trafico total diario ($size)");
 	$chart->render();
 
 	include 'closedb.php';
@@ -103,7 +103,7 @@ function monthly() {
 		$chart->addPoint(new Point("$row[1]", "$downloads"));
 	}
 
-	$chart->setTitle("Alltime Downloads based on Monthly distribution ($size)");
+	$chart->setTitle("Distribución de volumen de trafico total mensual ($size)");
 	$chart->render();
 
 	include 'closedb.php';
@@ -137,7 +137,7 @@ function yearly() {
 		$chart->addPoint(new Point("$row[1]", "$downloads"));
 	}
 
-	$chart->setTitle("Alltime Downloads based on Yearily distribution ($size)");
+	$chart->setTitle("Distribución de volumen de trafico total anual ($size)");
 	$chart->render();
 
 	include 'closedb.php';

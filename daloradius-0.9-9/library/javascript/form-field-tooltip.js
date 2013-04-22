@@ -62,8 +62,8 @@ function DHTMLgoodies_formTooltip()
 //	this.tooltipBgColor = '#99CC00';
 //	this.tooltipBgColor = '#336600';
 //	this.tooltipBgColor = '#CEE574';
-	this.closeMessage = 'Close';
-	this.disableTooltipMessage = 'Don\'t show this message again';
+	this.closeMessage = 'Cerrar';
+	this.disableTooltipMessage = 'No mostrar este mensaje otra vez';
 	this.activeInput = false;
 	this.tooltipPosition = 'right';
 	this.arrowRightWidth = 16;			// Default width of arrow when the tooltip is on the right side of the inputs.

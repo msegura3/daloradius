@@ -37,9 +37,9 @@
 
 <div id="sidebar">
 
-	<h2>Accounting</h2>
+	<h2>Registro</h2>
 	
-	<h3>Users Accounting</h3>
+	<h3>Usuarios</h3>
 	<ul class="subnav">
 	
 		<li><a href="javascript:document.acctusername.submit();"><b>&raquo;</b><?php echo $l['button']['UserAccounting'] ?></a>
@@ -50,21 +50,23 @@
 				value="<?php if (isset($accounting_username)) echo $accounting_username; ?>">
 			</form></li>
 
-		<li><a href="javascript:document.acctipaddress.submit();"><b>&raquo;</b><?php echo $l['button']['IPAccounting'] ?></a>
+		<!--<li><a href="javascript:document.acctipaddress.submit();"><b>&raquo;</b><?php// echo $l['button']['IPAccounting'] ?></a>
 			<form name="acctipaddress" action="acct-ipaddress.php" method="get" class="sidebar">
 			<input name="ipaddress" type="text" 
                                 onClick='javascript:__displayTooltip();'
-                                tooltipText='<?php echo $l['Tooltip']['IPAddress']; ?>'
-				value="<?php if (isset($accounting_ipaddress)) echo $accounting_ipaddress; ?>">
+                                tooltipText='<?php// echo $l['Tooltip']['IPAddress']; ?>'
+				value="<?php //if (isset($accounting_ipaddress)) echo $accounting_ipaddress; ?>">
 			</form></li>
+                -->
 
-		<li><a href="javascript:document.acctnasipaddress.submit();"><b>&raquo;</b><?php echo $l['button']['NASIPAccounting'] ?></a>
+		<!--<li><a href="javascript:document.acctnasipaddress.submit();"><b>&raquo;</b><?//php echo $l['button']['NASIPAccounting'] ?></a>
 			<form name="acctnasipaddress" action="acct-nasipaddress.php" method="get" class="sidebar">
 			<input name="nasipaddress" type="text" 
                                 onClick='javascript:__displayTooltip();'
-                                tooltipText='<?php echo $l['Tooltip']['IPAddress']; ?>'
-				value="<?php if (isset($accounting_nasipaddress)) echo $accounting_nasipaddress; ?>">
+                                tooltipText='<?//php echo $l['Tooltip']['IPAddress']; ?>'
+				value="<?//php if (isset($accounting_nasipaddress)) echo $accounting_nasipaddress; ?>">
 			</form></li>
+                 -->
 
 		<li><a href="javascript:document.acctdate.submit();"><b>&raquo;</b><?php echo $l['button']['DateAccounting'] ?></a>
 			<form name="acctdate" action="acct-date.php" method="get" class="sidebar">
@@ -79,7 +81,7 @@
 			else echo date("Y-m-01"); ?>">
 			
 			<img src="library/js_date/calendar.gif" 
-				onclick="showChooser(this, 'startdate', 'chooserSpan', 1950, <?= date('Y', time());?>, 'Y-m-d', false);">
+				onclick="showChooser(this, 'startdate', 'chooserSpan', 1950, 2010, 'Y-m-d', false);">
 			<div id="chooserSpan" class="dateChooser select-free" 
 				style="display: none; visibility: hidden; 	width: 160px;"></div>
 
@@ -89,7 +91,7 @@
 				value="<?php if (isset($accounting_date_enddate)){ echo $accounting_date_enddate;}
 				else { echo date("Y-m-t");} ?>">
 			<img src="library/js_date/calendar.gif" 
-				onclick="showChooser(this, 'enddate', 'chooserSpan', 1950, <?= date('Y', time());?>, 'Y-m-d', false);">
+				onclick="showChooser(this, 'enddate', 'chooserSpan', 1950, 2010, 'Y-m-d', false);">
 			<div id="chooserSpan" class="dateChooser select-free" 
 				style="display: none; visibility: hidden; width: 160px;"></div>
 
@@ -101,8 +103,8 @@
 	</ul>
 
 	<br/><br/>
-	<h2>Search</h2>
-	<input name="" type="text" value="Search" />
+	<h2>Linbox Manager</h2>
+	
 
 </div>
 

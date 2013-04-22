@@ -65,16 +65,16 @@ function daily($username) {
 	$chart = new VerticalChart(680,500);
 
 	$sql = "SELECT UserName, sum(AcctInputOctets) as Uploads, day(AcctStartTime) AS day FROM ".
-		$configValues['CONFIG_DB_TBL_RADACCT']." WHERE username='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())-1) DAY) AND AcctStartTime< now() GROUP BY day;";
+		$configValues['CONFIG_DB_TBL_RADACCT']." WHERE username='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())+30) DAY) AND AcctStartTime< now() GROUP BY day;";
 	$res = $dbSocket->query($sql);
 
 
 	while($row = $res->fetchRow()) {
-		$uploads = floor($row[1]/$sizeDivision);
+		$uploads = number_format(($row[1]/$sizeDivision), 2, '.', '');
 		$chart->addPoint(new Point("$row[2]", "$uploads"));
 	}
 
-	$chart->setTitle("Total Uploads based on Daily distribution ($size)");
+	$chart->setTitle("Tráfico total de subida ($size)");
 	$chart->render();
 
 	include 'closedb.php';
@@ -106,7 +106,7 @@ function monthly($username) {
 	$res = $dbSocket->query($sql);
 
 	while($row = $res->fetchRow()) {
-		$uploads = floor($row[1]/$sizeDivision);
+		$uploads = number_format(($row[1]/$sizeDivision), 2, '.', '');
 		$chart->addPoint(new Point("$row[2]", "$uploads"));
 	}
 
@@ -142,7 +142,7 @@ function yearly($username) {
 	$res = $dbSocket->query($sql);
 
 	while($row = $res->fetchRow()) {
-		$uploads = floor($row[1]/$sizeDivision);
+		$uploads = number_format(($row[1]/$sizeDivision), 2, '.', '');
 		$chart->addPoint(new Point("$row[2]", "$uploads"));
 	}
 

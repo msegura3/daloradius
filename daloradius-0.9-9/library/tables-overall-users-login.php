@@ -35,8 +35,8 @@ function daily($username, $orderBy, $orderType) {
 
 	include 'opendb.php';
 
-	$sql = "SELECT UserName, count(AcctStartTime) as logins, DAY(AcctStartTime) AS Day from ".
-			$configValues['CONFIG_DB_TBL_RADACCT']." where username='$username' AND acctstoptime>0  group by Day ORDER BY $orderBy $orderType;";
+        $sql = "SELECT UserName, count(AcctStartTime), DAY(AcctStartTime) AS Day FROM ".
+		$configValues['CONFIG_DB_TBL_RADACCT']." WHERE username='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())+30) DAY) AND AcctStartTime< now() GROUP BY Day ORDER BY $orderBy $orderType;";
 	$res = $dbSocket->query($sql);
 
 	$total_logins = 0;		// initialize variables
@@ -73,18 +73,18 @@ function daily($username, $orderBy, $orderType) {
 	echo "
 		<thead>
 			<tr>
-				<th colspan='10'>Logins/Hits statistics</th>
+				<th colspan='10'>Ingresos (logins)</th>
 			</tr>
 		</thead>
 			";
 	echo "<thread> <tr>
-					<th scope='col'> Username </th>
-					<th scope='col'> Logins/Hits count
+					<th scope='col'> Usuario </th>
+					<th scope='col'> Ingresos (logins)
 					<br/>
 					<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=logins&orderType=asc\"> > </a>
 					<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=logins&orderType=desc\"> < </a>
 					</th>
-					<th scope='col'> Day of month
+					<th scope='col'> Día del mes
 					<br/>
 					<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=day&orderType=asc\"> > </a>
 					<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=day&orderType=desc\"> < </a>
@@ -161,13 +161,13 @@ function monthly($username, $orderBy, $orderType) {
 			</thead>
                 ";
         echo "<thread> <tr>
-					<th scope='col'> Username </th>
-					<th scope='col'> Logins/Hits count
+					<th scope='col'> Usuario </th>
+					<th scope='col'> Ingresos (logins)
 					<br/>
 					<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=monthly&orderBy=logins&orderType=asc\"> > </a>
 					<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=monthly&orderBy=logins&orderType=desc\"> < </a>
 					</th>
-					<th scope='col'> Month of year
+					<th scope='col'> Mes del año
 					<br/>
 					<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=month&orderType=asc\"> > </a>
 					<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=daily&orderBy=month&orderType=desc\"> < </a>
@@ -241,19 +241,19 @@ function yearly($username, $orderBy, $orderType) {
 	echo "
 					<thead>
 							<tr>
-							<th colspan='10'>Logins/Hits statistics</th>
+							<th colspan='10'>Ingresos (logins)</th>
 							</tr>
 					</thead>
 			";
 
 	echo "<thread> <tr>
-				<th scope='col'> Username </th>
-				<th scope='col'> Logins/Hits count
+				<th scope='col'> Usuario</th>
+				<th scope='col'> Ingresos (logins)
 				<br/>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=logins&orderType=asc\"> > </a>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=logins&orderType=desc\"> < </a>
 				</th>
-				<th scope='col'> Year
+				<th scope='col'> Año
 				<br/>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=year&orderType=asc\"> > </a>
 				<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?username=$username&type=yearly&orderBy=year&orderType=desc\"> < </a>

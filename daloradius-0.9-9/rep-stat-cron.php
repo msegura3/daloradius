@@ -28,22 +28,20 @@
     $log = "visited page: ";
     $logQuery = "performed query on page: ";
     include('include/config/logging.php');
-    
+
+
     $cronUser = get_current_user();
     
     isset($_GET['cmd']) ? $cmd = $_GET['cmd'] : $cmd = "";
     
-    $dalo_crontab_file = dirname(__FILE__) . '/contrib/scripts/dalo-crontab';
-    
-    
     switch ($cmd) {
     	
     	case "disable":
-    		exec("`which crontab` -u $cronUser -r");
+    		exec("/usr/bin/crontab -u $cronUser -r");
     		break;
     	
     	case "enable":
-    		exec("`which crontab` -u $cronUser $dalo_crontab_file");
+    		exec("/usr/bin/crontab -u $cronUser /var/www/daloradius/contrib/scripts/dalo-CleanStaleSessions-crontab");
     		break;
     }
     
@@ -54,9 +52,8 @@
 <?php
 
     include ("menu-reports-status.php");
-    
+  	
 ?>	
-		
 		
 		
 		<div id="contentnorightbar">
@@ -98,7 +95,7 @@
 	$i = 0;
 		foreach($output as $text) {
 			$i++;
-			echo "<b>#$i:</b> " . $text . '<br/>';
+			echo "<b>#$i:</b> " . $text;
 		}
 		
 	endif;

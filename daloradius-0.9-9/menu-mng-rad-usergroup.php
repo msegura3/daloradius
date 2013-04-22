@@ -19,9 +19,9 @@
 <div id="sidebar">
 
 
-	<h2>Management</h2>
+	<h2>Administración</h2>
 
-	<h3>User-Group Management</h3>
+	<h3>Asociaciones</h3>
 	<ul class="subnav">
 
 		<li><a href="mng-rad-usergroup-list.php"><b>&raquo;</b><?php echo $l['button']['ListUserGroup'] ?></a></li>

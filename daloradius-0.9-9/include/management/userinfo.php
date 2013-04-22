@@ -13,7 +13,7 @@ echo "
 
 <fieldset>
 	
-	<h302> Contact Info </h302>
+	<h302> Inormación de contacto </h302>
 	<br/>
 
 	<h301> Personal </h301>
@@ -33,13 +33,9 @@ echo "
 
 		<br/>
 	 
-	<label for='copycontact' class='form'> Copy contact information to billing </label>
-		<input type='checkbox' name='copycontact' id='copycontact' onClick='copyUserBillInfo(this);'/>
-		<br/>
-		<br/>
-		
+
 	<br/>
-	<h301> Business </h301>
+	<h301> Trabajo </h301>
 	<br/>
 
 	<label for='department' class='form'>".$l['ContactInfo']['Department']."</label>
@@ -73,17 +69,13 @@ echo "
 	<label for='state' class='form'>".$l['ContactInfo']['State']."</label>
 	<input value='"; if (isset($ui_state)) echo $ui_state; echo "' name='state' id='state' tabindex=310 />
         <br/>
-        
-	<label for='country' class='form'>".$l['ContactInfo']['Country']."</label>
-	<input value='"; if (isset($ui_country)) echo $ui_country; echo "' name='country' id='country' tabindex=310 />
-        <br/>
 
 	<label for='zip' class='form'>".$l['ContactInfo']['Zip']."</label>
 	<input value='"; if (isset($ui_zip)) echo $ui_zip; echo "' name='zip' id='zip' tabindex=311 />
         <br/>
 
 	<br/>
-	<h301> Other </h301>
+	<h301> Otros </h301>
 	<br/>
 
 	<label for='notes' class='form'>".$l['ContactInfo']['Notes']."</label>

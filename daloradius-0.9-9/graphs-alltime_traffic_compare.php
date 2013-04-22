@@ -39,7 +39,7 @@
 
 <div class="tabber">
 
-     <div class="tabbertab" title="Download Graph">
+     <div class="tabbertab" title="Gráfico de descarga">
         <br/>
 <?php		
         echo "<center>";
@@ -47,7 +47,7 @@
 		echo "</center>";
 ?>
 	</div>
-     <div class="tabbertab" title="Upload Graph">
+     <div class="tabbertab" title="Gráfico de subida">
         <br/>
 
 <?php

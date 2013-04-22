@@ -28,19 +28,16 @@
 
 	include_once ('DB.php');
 
-	if (!$configValues['CONFIG_DB_PORT'])
-		$configValues['CONFIG_DB_PORT'] = '3306';
-	
-	$dbConnectString = $configValues['CONFIG_DB_ENGINE'] . "://".$configValues['CONFIG_DB_USER'].":".$configValues['CONFIG_DB_PASS']."@".$configValues['CONFIG_DB_HOST'].":".$configValues['CONFIG_DB_PORT']."/".$configValues['CONFIG_DB_NAME'];
+	$dbConnectString = $configValues['CONFIG_DB_ENGINE'] . "://".$configValues['CONFIG_DB_USER'].":".$configValues['CONFIG_DB_PASS']."@".$configValues['CONFIG_DB_HOST']."/".$configValues['CONFIG_DB_NAME'];
 	$dbSocket = DB::connect($dbConnectString);
 
 	if (DB::isError ($dbSocket))
 		die ("<b>Database connection error</b><br/>
-			<b>Error Message</b>: " . $dbSocket->getMessage () . "<br/>"
-			);
+			<b>Error Message</b>: " . $dbSocket->getMessage () . "<br/>" . 
+			"<b>Debug</b>: " . $dbSocket->getDebugInfo() . "<br/>");
 
 	
 	include_once ('errorHandling.php');		// we declare the errorHandler() function in errorHandling.php
 
 	$dbSocket->setErrorHandling(PEAR_ERROR_CALLBACK, 'errorHandler');	// setting errorHandler function for the dbSocket obj
-
+?>

@@ -29,7 +29,6 @@
 
 $configValues['CONFIG_DB_ENGINE'] = 'mysql';
 $configValues['CONFIG_DB_HOST'] = 'localhost';
-$configValues['CONFIG_DB_PORT'] = '3306';
 $configValues['CONFIG_DB_USER'] = 'root';
 $configValues['CONFIG_DB_PASS'] = 'dalodevPOLQWS1029';
 $configValues['CONFIG_DB_NAME'] = 'radius_bluechip';
@@ -70,11 +69,10 @@ function databaseConnect() {
     $mydbUser = $configValues['CONFIG_DB_USER'];
     $mydbPass = $configValues['CONFIG_DB_PASS'];
     $mydbHost = $configValues['CONFIG_DB_HOST'];
-    $mydbPort = $configValues['CONFIG_DB_Port'];
     $mydbName = $configValues['CONFIG_DB_NAME'];
 
     $dbConnectString = $mydbEngine . "://".$mydbUser.":".$mydbPass."@".
-               $mydbHost.":".$mydbPort."/".$mydbName;
+               $mydbHost."/".$mydbName;
 
     $dbSocket = DB::connect($dbConnectString);
 
@@ -96,10 +94,20 @@ function databaseDisconnect($dbSocket) {
 
 
 /**
- * 
+ *
+ *
  * Description:	The logic of cleaning stale sessions
  *
- *	Since interim updates are enabled, then the accounting information should			
+ *	Since interim updates are enabled, then the accounting information should
+ * 	be populated every U time. If a record exist with AcctStopTime
+ * 	equal to 0 or NULL and time elapsed since AcctStartTime+SessionTime is > U then this
+ * 	is a stale session. The query would then be:
+ *
+ * 		WHERE
+ * 			((UNIX_TIMESTAMP(NOW()) - (UNIX_TIMESTAMP(AcctStartTime) + AcctSessionTime)) > U+GRACEFUL)
+ * 		AND
+ * 			(AcctStopTime = '0000-00-00 00:00:00' OR AcctStopTime IS NULL)
+ *				
  *				
  */
 function clearExpiredAccumulative($dbSocket) {
@@ -361,11 +369,7 @@ function dbDeleteRecords($dbSocket, $tmpTableName) {
 
 
 $dbh = databaseConnect();
-
-// perform cleanup
 clearExpiredDueLogin($dbh);
-clearExpiredTimeToFinish($dbh);
-clearExpiredAccumulative($dbh);
 
 databaseDisconnect($dbh);
 

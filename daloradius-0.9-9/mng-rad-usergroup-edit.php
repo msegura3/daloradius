@@ -81,15 +81,15 @@ AND GroupName='".$dbSocket->escapeSimple($groupOld)."'";
 				$res = $dbSocket->query($sql);
 				$logDebugSQL .= $sql . "\n";
 						
-				$successMsg = "Updated User-Group mapping in database: User<b> $username </b> and Group: <b> $group </b> ";
+				$successMsg = "La asociación se realizó con éxito: Usuario<b> $username </b> y Perfil: <b> $group </b> ";
 				$logAction .= "Successfully updated attributes for user-group mapping of user [$username] with group [$group] on page: ";
 			} else {
-				$failureMsg = "no username or groupname was entered, it is required that you specify both username and groupname";
+				$failureMsg = "No se ingreso un usuario o perfil válido";
 				$logAction .= "Failed updating (missing attributes) attributes on page: ";
 			}
 		} else {
-			$failureMsg = "The user $username already exists in the user-group mapping database
-			<br/> It seems that you have duplicate entries for User-Group mapping. Check your database";
+			$failureMsg = "EL usuario $username ya esta asociado al perfil
+			";
 			$logAction .= "Failed updating already existing user [$username] with group [$group] on page: ";
 		} 
 
@@ -107,7 +107,7 @@ AND GroupName='".$dbSocket->escapeSimple($groupOld)."'";
 		$group = "";
 
 	if (trim($username) == "" OR trim($group) == "") {
-		$failureMsg = "no username or groupname was entered, please specify a username and groupname to edit ";
+		$failureMsg = "No se ingreso un usuario o perfil válido ";
 	}	
 
 
@@ -169,19 +169,18 @@ AND GroupName='".$dbSocket->escapeSimple($groupOld)."'";
                 <label for='groupOld' class='form'><?php echo $l['all']['CurrentGroupname'] ?></label>
                 <input type='hidden' name='groupOld' id='groupOld' value='<?php echo $groupOld ?>' tabindex=101 />
                 <input disabled type='text' id='groupOld' value='<?php echo $groupOld ?>' tabindex=101 />
-				Old Group Name
                 </li>
 
                 <li class='fieldset'>
                 <label for='group' class='form'><?php echo $l['all']['NewGroupname'] ?></label>
                 <?php   
 					include 'include/management/populate_selectbox.php';
-					populate_groups("Select Groups","group","form");
+					populate_groups("Elija un perfil","group","long");
                 ?>
-                <div id='groupTooltip'  style='display:none;visibility:visible' class='ToolTip'>
+       <!--         <div id='groupTooltip'  style='display:none;visibility:visible' class='ToolTip'>
 					<img src='images/icons/comment.png' alt='Tip' border='0' />
 					<?php echo $l['Tooltip']['groupTooltip'] ?>
-                </div>
+                </div> -->
                 </li>
 
 

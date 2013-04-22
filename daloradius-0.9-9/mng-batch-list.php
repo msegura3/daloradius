@@ -36,12 +36,14 @@
 	$logQuery = "performed query on page: ";
 	$logDebugSQL = "";
 
+             include_once ("lang/main.php");
+
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>daloRADIUS</title>
+<title><?php echo $l['header']['titles']; ?></title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/1.css" type="text/css" media="screen,projection" />
 <link rel="stylesheet" href="css/auto-complete.css" media="screen" type="text/css">
@@ -185,13 +187,13 @@
 							<tr>
 							<th colspan='10' align='left'> 
 							
-				Select:
-				<a class=\"table\" href=\"javascript:SetChecked(1,'batch_id[]','listbatches')\">All</a> 
-				<a class=\"table\" href=\"javascript:SetChecked(0,'batch_id[]','listbatches')\">None</a>
+				Seleccionar:
+				<a class=\"table\" href=\"javascript:SetChecked(1,'batch_id[]','listbatches')\">Todos</a>
+				<a class=\"table\" href=\"javascript:SetChecked(0,'batch_id[]','listbatches')\">Ninguno</a>
 				<br/>
-				<input class='button' type='button' value='Delete' onClick='javascript:removeCheckbox(\"listbatches\",\"mng-batch-del.php\")' />
-				<br/>
-				<input class='button' type='button' value='CSV Export'
+				<input class='button' type='button' value='Borrar' onClick='javascript:removeCheckbox(\"listbatches\",\"mng-batch-del.php\")' />
+	
+				<input class='button' type='button' value='Exportar CSV'
 					onClick=\"javascript:window.location.href='include/management/fileExport.php?reportFormat=csv'\"
 					/>
 				<br/><br/>
@@ -220,29 +222,14 @@
 		".$l['all']['BatchName']."</a>
 		</th>
 
-		<th scope='col'> 
-		".$l['all']['HotSpot']."
-		</th>
 
-		<th scope='col'> 
-		".$l['all']['BatchStatus']."
-		</th>
+
 		
 		<th scope='col'> 
 		".$l['all']['TotalUsers']."
 		</th>
 
-		<th scope='col'> 
-		".$l['all']['PlanName']."
-		</th>
 
-		<th scope='col'> 
-		".$l['all']['PlanCost']."
-		</th>
-
-		<th scope='col'> 
-		".$l['all']['BatchCost']."
-		</th>
 
 		<th scope='col'> 
 		<a title='Sort' class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?orderBy=creationdate&orderType=$orderType\">
@@ -293,28 +280,12 @@
 		");
 		
 		echo "
-		
-				<td>".$hotspot_name."
-					
-				</td>
-		
-				<td>".$batch_status."
-					
-				</td>
+
 				
 				<td>".$total_users."
 					
 				</td>
 
-				<td>".
-					$row['planname']."
-				</td>
-
-				<td>".$plancost."
-				</td>
-
-				<td>".$batch_cost."
-				</td>
 				
 				<td>".
 					$row['creationdate']."

@@ -62,7 +62,7 @@ if(isset($_GET['getGroups'])) {
 	printqn("
 		var divContainer = document.getElementById('$divContainer');
 		var groups = ''+
-	                '<label for=\'$name\' class=\'form\'>$name</label>'+
+	                '<label for=\'$name\' class=\'form\'>Grupo</label>'+
 	                '        <select class=\'form\' name=\'$elemName\' >'+
 	");
 			
@@ -78,7 +78,7 @@ if(isset($_GET['getGroups'])) {
         printqn("
 	        '        </select>'+
                 '&nbsp; <a class=\"tablenovisit\" href=\"#\"'+
-                '        onClick=\"javascript:ajaxGeneric(\'include/management/dynamic_groups.php\',\'delGroups\',\'$divContainer\',\'divCounter=$divCounter\');\">Del</a>';
+                '        onClick=\"javascript:ajaxGeneric(\'include/management/dynamic_groups.php\',\'delGroups\',\'$divContainer\',\'divCounter=$divCounter\');\">Borrar</a>';
 
 		var childGroup = document.createElement('div');
 		childGroup.setAttribute('id','divContainerGroups$divCounter');

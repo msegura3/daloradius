@@ -43,7 +43,6 @@
 	if (!$fp) {
 		// HTTP ERROR
 		// the program ends here
-		return false;
 	} else {
 		fputs ($fp, $header . $req);
 		$res = "";
@@ -52,8 +51,8 @@
 		}
 
 
-		/*
-		//uncomment for extended debugging 
+		/* //uncomment for extended debugging 
+		
 		$fh = fopen("/tmp/paypal-log.log", "a");
 		fwrite($fh, "\nREQUEST---------------\n");
 		fwrite($fh, $req."\n\n");
@@ -62,7 +61,6 @@
 		fclose($fh);
 		*/
 
-		
 		if (preg_match("/VERIFIED/", $res)) {
 
 			// we assume that this is a valid paypal response and we save the response details

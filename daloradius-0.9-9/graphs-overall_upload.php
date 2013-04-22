@@ -49,7 +49,7 @@
 
 <div class="tabber">
 
-     <div class="tabbertab" title="Graph">
+     <div class="tabbertab" title="Gráficos">
         <br/>
 
 <?php
@@ -58,7 +58,7 @@
     echo "</center>";
 ?>
 	</div>
-     <div class="tabbertab" title="Statistics">
+     <div class="tabbertab" title="Estadísticas">
 	<br/>
 <?php
     include 'library/tables-overall-users-upload.php';

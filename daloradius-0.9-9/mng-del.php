@@ -98,13 +98,13 @@
 					$logDebugSQL .= $sql . "\n";
 				}
 
-				$successMsg = "Deleted user(s): <b> $allUsernames </b>";
+				$successMsg = "Se ha borrado al usuario: <b> $allUsernames </b>";
 				$logAction .= "Successfully deleted user(s) [$allUsernames] on page: ";
 
 				include 'library/closedb.php';
 
 			}  else { 
-				$failureMsg = "no user was entered, please specify a username to remove from database";		
+				$failureMsg = "No se ingreso ningun usuario";
 				$logAction .= "Failed deleting user(s) [$allUsernames] on page: ";
 			}
 
@@ -183,6 +183,8 @@
 	include_once('library/config_read.php');
     $log = "visited page: ";
 
+      include_once ("lang/main.php");
+
 ?>
 
 
@@ -190,7 +192,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>daloRADIUS</title>
+<title><?php echo $l['header']['titles']; ?></title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/1.css" type="text/css" media="screen,projection" />
 
@@ -231,7 +233,7 @@
 		<label for='delradacct' class='form'><?php echo $l['all']['RemoveRadacctRecords']?></label>
 		<select class='form' tabindex=102 name='delradacct' tabindex=101>
 			<option value='no'>no</option>
-			<option value='yes'>yes</option>
+			<option value='yes'>Sí</option>
 		</select>
 		<br />
 

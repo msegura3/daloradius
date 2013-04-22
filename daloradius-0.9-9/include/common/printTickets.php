@@ -110,7 +110,7 @@ function printTicketsHTMLTable($accounts, $ticketCost, $ticketTime) {
 						</tr>
 						<tr>
 							<td>
-								<b>Login</b>: 
+								<b>Usuario</b>:
 							</td>
 							<td>
 								<font size='2'>
@@ -120,7 +120,7 @@ function printTicketsHTMLTable($accounts, $ticketCost, $ticketTime) {
 						</tr>
 						<tr>
 							<td>
-								<b>Password</b>:
+								<b>Clave</b>:
 							</td>
 							<td>
 								<font size='2'>
@@ -130,7 +130,7 @@ function printTicketsHTMLTable($accounts, $ticketCost, $ticketTime) {
 						</tr>
 						<tr>
 							<td>
-								<b>Validity</b>:
+								<b>Validez</b>:
 							</td>
 							<td>
 								<font size='2'>
@@ -140,7 +140,7 @@ function printTicketsHTMLTable($accounts, $ticketCost, $ticketTime) {
 						</tr>
 						<tr>
 							<td>
-								<b>Price</b>:
+								<b>Precio</b>:
 							</td>
 							<td>
 								<font size='2'>

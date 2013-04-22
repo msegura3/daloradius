@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `node` (
 -- Generic fields 
 
 `id` int(11) NOT NULL auto_increment,
-`time` datetime NOT NULL default '00-00-0000 00:00:00' COMMENT 'Time of last checkin',
+`time` varchar(20) NOT NULL COMMENT 'Time of last checkin',
 
 -- Fields used in the front end; ignored by checkin-batman
 
@@ -324,6 +324,54 @@ CREATE TABLE `nodes_settings` (
   
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+
+
+DROP TABLE IF EXISTS `nas_chilli`;
+CREATE TABLE `nas_chilli` (
+  `id` int(32) NOT NULL auto_increment,
+  `hotspot_id` int(32) default 0 COMMENT 'the hotspot business id associated with this chilli nas instance instance',  
+  
+  `creationdate` datetime default '0000-00-00 00:00:00',
+  `creationby` varchar(128) default NULL,
+  `updatedate` datetime default '0000-00-00 00:00:00',
+  `updateby` varchar(128) default NULL,
+  
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `nas_chilli_settings`;
+CREATE TABLE `nas_chilli_settings` (
+  `id` int(32) NOT NULL auto_increment,
+  `nas_chilli_id` varchar(128) default NULL COMMENT 'chilli nas id to which these settings belong',
+  
+  `key` varchar(256) default NULL COMMENT 'chilli configuration directive',
+  `value` varchar(256) default NULL COMMENT 'chilli configuration directive value',
+  
+  `creationdate` datetime default '0000-00-00 00:00:00',
+  `creationby` varchar(128) default NULL,
+  `updatedate` datetime default '0000-00-00 00:00:00',
+  `updateby` varchar(128) default NULL,
+  
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+INSERT INTO `nas_chilli_settings` (`id`, `nas_chilli_id`, `key`, `value`) VALUES
+(0,1,'dhcp_if','VALUE'),
+(0,1,'uamallowed','VALUE'),
+(0,1,'dns1','VALUE'),
+(0,1,'dns2','VALUE'),
+(0,1,'locationname','VALUE'),
+(0,1,'uamhomepage','VALUE'),
+(0,1,'uamserver','VALUE'),
+(0,1,'uamsecret','VALUE'),
+(0,1,'radiusserver1','VALUE'),
+(0,1,'radiusserver2','VALUE'),
+(0,1,'radiusauthport','VALUE'),
+(0,1,'radiusacctport','VALUE'),
+(0,1,'radiusnasid','VALUE');
+
+
 
 
 
@@ -608,40 +656,4 @@ INSERT INTO `operators_acl` VALUES
 INSERT INTO `operators_acl_files` (`file`, `category`, `section`) VALUES
 ('bill_invoice_report', 'Billing', 'Invoice');
 INSERT INTO `operators_acl` VALUES
-(0,6,'bill_invoice_report',1);
-
--- Adding ACL for the new Configuration options
-INSERT INTO `operators_acl_files` (`file`, `category`, `section`) VALUES
-('config_reports_dashboard', 'Configuration', 'Reporting');
-INSERT INTO `operators_acl` VALUES
-(0,6,'config_reports_dashboard',1);
-
-
-
--- Adding new custom daloRADIUS groups
-INSERT IGNORE INTO `radgroupcheck` (Groupname,Attribute,Op,Value) VALUES ('daloRADIUS-Disabled-Users','Auth-Type', ':=', 'Reject');
-
-
--- Adding ACL for Reports->Status->UPS page
-INSERT INTO `operators_acl_files` (`file`, `category`, `section`) VALUES
-('rep_stat_ups', 'Reporting', 'Status');
-INSERT INTO `operators_acl` VALUES
-(0,6,'rep_stat_ups',1);
-
--- Adding ACL for Reports->Status->RAID page
-INSERT INTO `operators_acl_files` (`file`, `category`, `section`) VALUES
-('rep_stat_raid', 'Reporting', 'Status');
-INSERT INTO `operators_acl` VALUES
-(0,6,'rep_stat_raid',1);
-
--- Adding ACL for Reports->Status->CRON page
-INSERT INTO `operators_acl_files` (`file`, `category`, `section`) VALUES
-('rep_stat_cron', 'Reporting', 'Status');
-INSERT INTO `operators_acl` VALUES
-(0,6,'rep_stat_cron',1);
-
-
-ALTER TABLE userbillinfo ADD country varchar(100) AFTER state;
-ALTER TABLE userinfo ADD country varchar(100) AFTER state;
-
-ALTER TABLE  `node` ADD  `cpu` FLOAT NOT NULL DEFAULT  '0' AFTER  `usershi` ;
+(0,6,'bill_invoice_report',1)

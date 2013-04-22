@@ -21,10 +21,11 @@ function createVendors(index,sel) {
 }
 
 
-function getAttributesList(sel,attributesSel) {
+function getAttributesList(vendorName,attributesSel) {
 
-        var vendorName = sel.options[sel.selectedIndex].value;
+        //var vendorName = sel.options[sel.selectedIndex].value;
 
+alert('vendorName');
         document.getElementById(attributesSel).options.length = 0;     // empty attributes list
         if(vendorName.length>0) {
 

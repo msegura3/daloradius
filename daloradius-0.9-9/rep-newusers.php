@@ -36,7 +36,7 @@
     $log = "visited page: ";
     $logQuery = "performed query for listing of records on page: ";
 
-
+  include_once ("lang/main.php");
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -45,7 +45,7 @@
 <script src="library/javascript/pages_common.js" type="text/javascript"></script>
 <script src="library/javascript/rounded-corners.js" type="text/javascript"></script>
 <script src="library/javascript/form-field-tooltip.js" type="text/javascript"></script>
-<title>daloRADIUS</title>
+<title><?php echo $l['header']['titles']; ?></title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/1.css" type="text/css" media="screen,projection" />
 <link rel="stylesheet" href="css/form-field-tooltip.css" type="text/css" media="screen,projection" />
@@ -79,7 +79,7 @@
 
 <div class="tabber">
 
-     <div class="tabbertab" title="Statistics">
+     <div class="tabbertab" title="Estadísticas">
         <br/>   
         
 <?php
@@ -103,11 +103,11 @@
            compatibility with version 0.7        */
 
            
-        $sql = "SELECT CONCAT(YEAR(CreationDate),'-',MONTH(Creationdate), '-01') AS Month, ".
+        $sql = "SELECT CONCAT(MONTH(CreationDate),'-',YEAR(Creationdate)) AS Month, ".
                         "COUNT(*) As Users FROM ".
                         $configValues['CONFIG_DB_TBL_DALOUSERINFO'].
                         " WHERE CreationDate >='$startdate' AND CreationDate <='$enddate' ".
-                        " GROUP BY Month ORDER BY Date(Month);";
+                        " GROUP BY Month(Creationdate) ";
         $res = $dbSocket->query($sql);
         $logDebugSQL = "";
         $logDebugSQL .= $sql . "\n";
@@ -170,7 +170,7 @@
         </div>
 
 
-     <div class="tabbertab" title="Graph">
+     <div class="tabbertab" title="Gráfico">
         <br/>
 
 

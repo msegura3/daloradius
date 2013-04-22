@@ -30,8 +30,8 @@
 
 	isset($_POST['csvdata']) ? $csvdata = $_POST['csvdata'] : $csvdata = "";
 	isset($_POST['groups']) ? $groups = $_POST['groups'] : $groups = "";
-	isset($_POST['planName']) ? $planName = $_POST['planName'] : $planName = "";
-	isset($_POST['userType']) ? $userType = $_POST['userType'] : $userType = "";
+        $planName = "";
+	$userType = "";
 
 	if (isset($_POST['submit'])) {
 
@@ -63,10 +63,10 @@
 						((isset($users[1]) && (!empty($users[1])))) )
 					{
 
-						$user = trim($dbSocket->escapeSimple($users[0]));
-						$pass = trim($dbSocket->escapeSimple($users[1]));
-						$planName = trim($dbSocket->escapeSimple($planName));
-						$userType = trim($dbSocket->escapeSimple($userType));
+						$user = $dbSocket->escapeSimple($users[0]);
+						$pass = $dbSocket->escapeSimple($users[1]);
+						$planName = $dbSocket->escapeSimple($planName);
+						$userType = $dbSocket->escapeSimple($userType);
 						
 						if ($userType == "userType") {
 							$passwordType = "Auth-Type";
@@ -123,13 +123,13 @@
 			
 			include 'library/closedb.php';
 
-		   $successMsg = "Successfully imported a total of <b>$userCount</b> users to database";
+		   $successMsg = "Se han importado con éxito un total de <b>$userCount</b> usuarios al sistema";
 		   $logAction .= "Successfully imported a total of <b>$userCount</b> users to database on page: ";
 	   
 		} else {
 			
-		   $failureMsg = "No CSV data was provided";
-		   $logAction .= "Failed importing users, no CSV data was provided on page: ";
+		   $failureMsg = "Se ingresaron datos CSV";
+		   $logAction .= "Fallo al importar los usuario, no se ingreso datos CSV al sistema: ";
 		}
 
 	} //if (isset)
@@ -138,13 +138,15 @@
 	include_once('library/config_read.php');
 	$log = "visited page: ";
 
+          include_once ("lang/main.php");
+
 ?>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>daloRADIUS</title>
+<title><?php echo $l['header']['titles']; ?></title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/1.css" type="text/css" media="screen,projection" />
 </head>
@@ -180,55 +182,24 @@
 		<br/>
 
 		<ul>
-
-		Paste a CSV-formatted data input of users, expected format is: user,password<br/>
-		Note: any CSV fields beyond the first 2 (user and password) are ignored<br/>
+                    Pegue los datos de entrada de los usuarios en formato CSV, el formato es: usuario,password<br/>
+                    Nota: Solo se conciderarán dos campos por usuario, el resto será ignorado.
 		<br/>
 		
-		
-		<li class='fieldset'>
-		<label for='passwordType' class='form'><?php echo $l['all']['PasswordType']?> </label>
-		<select class='form' tabindex=102 name='passwordType' >
-			<option value='Cleartext-Password'>Cleartext-Password</option>
-			<option value='User-Password'>User-Password</option>
-			<option value='Crypt-Password'>Crypt-Password</option>
-			<option value='MD5-Password'>MD5-Password</option>
-			<option value='SHA1-Password'>SHA1-Password</option>
-			<option value='CHAP-Password'>CHAP-Password</option>
-		</select>
-		</li>
-		
+	
 		<li class='fieldset'>
 		<label for='group' class='form'><?php echo $l['all']['Group']?></label>
 		<?php   
 			include_once 'include/management/populate_selectbox.php';
-			populate_groups("Select Groups","groups[]");
+			populate_groups("Elija Grupos","groups[]");
 		?>
 
 		<a class='tablenovisit' href='#'
-			onClick="javascript:ajaxGeneric('include/management/dynamic_groups.php','getGroups','divContainerGroups',genericCounter('divCounter')+'&elemName=groups[]');">Add</a>
+			onClick="javascript:ajaxGeneric('include/management/dynamic_groups.php','getGroups','divContainerGroups',genericCounter('divCounter')+'&elemName=groups[]');">Agregar</a>
 		<img src='images/icons/comment.png' alt='Tip' border='0' onClick="javascript:toggleShowDiv('group')" />
 		<div id='divContainerGroups'>
 		</div>
 
-
-		<li class='fieldset'>
-		<label for='planName' class='form'><?php echo $l['all']['PlanName'] ?></label>
-                <?php
-                       populate_plans("Select Plan","planName","form");
-                ?>
-		<img src='images/icons/comment.png' alt='Tip' border='0' onClick="javascript:toggleShowDiv('planNameTooltip')" /> 
-		
-		<div id='planNameTooltip'  style='display:none;visibility:visible' class='ToolTip'>
-			<img src='images/icons/comment.png' alt='Tip' border='0' />
-			<?php echo $l['Tooltip']['planNameTooltip'] ?>
-		</div>
-		</li>
-
-		<li class='fieldset'>
-		<label for='userType' class='form'><?php echo $l['all']['UserType'] ?></label>
-		<input type='checkbox' name='userType' value='userType' /> If users are MAC or PIN based authentication, check this box
-		</li>
 
 
 

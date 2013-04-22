@@ -43,7 +43,7 @@
 
 <div class="tabber">
 
-     <div class="tabbertab" title="Graph">
+     <div class="tabbertab" title="Gráfico">
         <br/>
 <?php
         echo "<center>";

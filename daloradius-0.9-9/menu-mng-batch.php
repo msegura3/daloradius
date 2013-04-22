@@ -17,9 +17,9 @@
 
 <div id="sidebar">
 
-	<h2>Management</h2>
+	<h2>Administración</h2>
 	
-	<h3>Batch Management</h3>
+	<h3>Lotes de usuarios</h3>
 	<ul class="subnav">
 	
 		<li><a href="mng-batch-list.php"><b>&raquo;</b>
@@ -40,8 +40,8 @@
 
 
 	<br/><br/>
-	<h2>Search</h2>
+	<h2>Linbox Manager</h2>
 	
-	<input name="" type="text" value="Search" tabindex=4 />
+
 
 </div>

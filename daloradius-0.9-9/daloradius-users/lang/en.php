@@ -20,10 +20,9 @@
  *********************************************************************************************************
  */
 
-$l['all']['daloRADIUS'] = "daloRADIUS 0.9-9";
-$l['all']['daloRADIUSVersion'] = "version 0.9-9";
+$l['all']['daloRADIUS'] = "daloRADIUS";
 $l['all']['copyright1'] = "Radius Reporting, Billing and Management by <a href=\"http://www.enginx.com\">Enginx</a>";
-$l['all']['copyright2'] = "daloRADIUS Copyright &copy; 2007 by Liran Tal of <a href=\"http://www.enginx.com\">Enginx</a> <br/>
+$l['all']['copyright2'] = "Copyright of <a href=\"http://www.enginx.com\">Enginx</a> and Liran Tal<br/>
 Template design by <a href=\"http://www.sixshootermedia.com\">Six Shooter Media</a>.";
 $l['all']['ID'] = "ID";
 
@@ -46,7 +45,6 @@ $l['all']['DeleteSessions'] = "Delete sessions older than";
 
 $l['all']['StartingDate'] = "Starting Date";
 $l['all']['EndingDate'] = "Ending Date";
-$l['all']['Date'] = "Date";
 
 $l['all']['Realm'] = "Realm";
 $l['all']['RealmName'] = "Realm Name";
@@ -196,43 +194,11 @@ $l['all']['CurrentPassword'] = "Current Password";
 $l['all']['NewPassword'] = "New Password";
 $l['all']['VerifyPassword'] = "Verify Password";
 
-$l['all']['ClientName'] = "Client Name";
-$l['all']['Date'] = "Date";
-
-
-$l['all']['Invoice'] = "Invoice";
-$l['all']['InvoiceID'] = "Invoice ID";
-$l['all']['InvoiceItems'] = "Invoice Items";
-$l['all']['InvoiceStatus'] = "Invoice Status";
-
-$l['all']['InvoiceType'] = "Invoice Type";
-$l['all']['Amount'] = "Amount";
-$l['all']['Total'] = "Total";
-$l['all']['Balance'] = "Balance";
-$l['all']['TotalInvoices'] = "Total Invoices";
-
-$l['all']['PayTypeName'] = "Payment Type Name";
-$l['all']['PayTypeNotes'] = "Payment Type Description";
-$l['all']['TotalPayed'] = "Total Payed";
-$l['all']['payment_type'] = "payment types";
-$l['all']['payments'] = "payments";
-$l['all']['PaymentId'] = "Payment ID";
-$l['all']['PaymentInvoiceID'] = "Invoice ID";
-$l['all']['PaymentAmount'] = "Amount";
-$l['all']['PaymentDate'] = "Date";
-$l['all']['PaymentType'] = "Payment Type";
-$l['all']['PaymentNotes'] = "Payment Notes";
-
 
 /* **********************************************************************************
  * Tooltips
  * Helper information such as tooltip text for mouseover events and popup tooltips
  ************************************************************************************/
-
-$l['Tooltip']['invoiceID'] = "Type the invoice id";
-$l['Tooltip']['InvoiceEdit'] = "Edit Invoice";
-$l['Tooltip']['invoiceTypeTooltip'] = "";
-$l['Tooltip']['invoiceStatusTooltip'] = "";
 
 $l['Tooltip']['proxyNameTooltip'] = "Example: <br/>&nbsp;&nbsp;&nbsp;
                                         .<br/>&nbsp;&nbsp;&nbsp;";
@@ -345,12 +311,6 @@ $l['Tooltip']['geocodeTooltip'] = "Example: -1.002,-2.201<br/>&nbsp;&nbsp;&nbsp;
 /* **********************************************************************************
  * Links and Buttons
  ************************************************************************************/
-
-$l['button']['ListInvoices'] = "List Invoices";
-$l['button']['ShowInvoice'] = "Show Invoice";
-$l['button']['EditInvoice'] = "Edit Invoice";
-$l['button']['GenerateReport'] = "Generate Report";
-
 
 $l['button']['ChangePortalPassword'] = "Change Portal Password";
 $l['button']['ChangeAuthPassword'] = "Change Auth Password";
@@ -483,9 +443,6 @@ $l['button']['ProcessQuery'] = "Process Query";
  * The text related to all the title headers in captions,tables and tabbed layout text
  ************************************************************************************/
 
-$l['title']['Invoice'] = "Invoice";
-$l['title']['Items'] = "Items";
-
 $l['title']['ChangePassword'] = "Change Password";
 
 $l['title']['CleanupRecords'] = "Cleanup Records";
@@ -568,7 +525,6 @@ $l['ContactInfo']['Address'] = "Address";
 $l['ContactInfo']['Address'] = "Address";
 $l['ContactInfo']['City'] = "City";
 $l['ContactInfo']['State'] = "State";
-$l['ContactInfo']['Country'] = "Country";
 $l['ContactInfo']['Zip'] = "Zip";
 $l['ContactInfo']['Phone1'] = "Phone 1";
 $l['ContactInfo']['Phone2'] = "Phone 2";
@@ -576,11 +532,6 @@ $l['ContactInfo']['HotspotType'] = "Hotspot Type";
 $l['ContactInfo']['Website'] = "Website";
 
 /* ********************************************************************************** */
-
-
-$l['Intro']['billmain.php'] = 'Billing';
-$l['Intro']['billinvoicereport.php'] = 'Invoice Report';
-$l['Intro']['billinvoiceedit.php'] = 'Showing Invoice';
 
 
 
@@ -739,8 +690,6 @@ $l['captions']['filldetailsofnewrate'] = "Fill below the details for the new rat
  * page, basically your expanded tool-tip.
  ************************************************************************************/
 
-$l['helpPage']['billmain'] = '';
-$l['helpPage']['billinvoicelist'] = '';
 
 $l['helpPage']['login'] = "";
 $l['helpPage']['loginUsersPortal'] = "

@@ -22,10 +22,10 @@
  *********************************************************************************************************
  */
  
-$l['all']['daloRADIUS'] = "daloRADIUS 0.9-9";
-$l['all']['daloRADIUSVersion'] = "version 0.9-9";
+$l['all']['daloRADIUS'] = "daloRADIUS 0.9-8-SVN";
+$l['all']['daloRADIUSVersion'] = "version 0.9-8-SVN";
 $l['all']['copyright1'] = "RADIUS Management, Reporting, Accounting and Billing by <a href=\"http://www.enginx.com\">Enginx</a>";
-$l['all']['copyright2'] = "daloRADIUS Copyright &copy; 2007 by Liran Tal of <a href=\"http://www.enginx.com\">Enginx</a> <br/>
+$l['all']['copyright2'] = "Copyright of <a href=\"http://www.enginx.com\">Enginx</a> and Liran Tal<br/>
 Template design by <a href=\"http://www.sixshootermedia.com\">Six Shooter Media</a>.";
 $l['all']['ID'] = "ID";
 $l['all']['PoolName'] = "Pool Name";
@@ -49,23 +49,13 @@ $l['all']['RecommendedHelper'] = "Recommended Helper";
 
 $l['all']['CSVData'] = "CSV-formatted data";
 
-$l['all']['CPU'] = "CPU";
-
 /* radius related text */
 $l['all']['RADIUSDictionaryPath'] = "RADIUS Dictionary Path";
-
-
-$l['all']['DashboardSecretKey'] = "Dashboard Secret Key";
-$l['all']['DashboardDebug'] = "Debug";
-$l['all']['DashboardDelaySoft'] = "Time in minutes to consider a 'soft' delay limit";
-$l['all']['DashboardDelayHard'] = "Time in minutes to consider a 'hard' delay limit";
-
 
 
 $l['all']['SendWelcomeNotification'] = "Send Welcome Notification";
 $l['all']['SMTPServerAddress'] = "SMTP Server Address";
 $l['all']['SMTPServerPort'] = "SMTP Server Port";
-$l['all']['SMTPServerFromEmail'] = "From Email Address";
 
 $l['all']['customAttributes'] = "Custom Attributes";
 
@@ -213,7 +203,7 @@ $l['all']['Billed'] = "Billed";
 $l['all']['TotalUsers'] = "Total Users";
 $l['all']['ActiveUsers'] = "Active Users";
 $l['all']['TotalBilled'] = "Total Billed";
-$l['all']['TotalPayed'] = "Total Paid";
+$l['all']['TotalPayed'] = "Total Payed";
 $l['all']['Balance'] = "Balance";
 $l['all']['CardBank'] = "Card Bank";
 $l['all']['Type'] = "Type";
@@ -262,7 +252,6 @@ $l['all']['Count'] = "Count";
 $l['all']['Requests'] = "Requests";
 
 $l['all']['DatabaseHostname'] = "Database Hostname";
-$l['all']['DatabasePort'] = "Database Port Number";
 $l['all']['DatabaseUser'] = "Database User";
 $l['all']['DatabasePass'] = "Database Pass";
 $l['all']['DatabaseName'] = "Database Name";
@@ -310,7 +299,6 @@ $l['all']['operators_acl'] = "operators_acl";
 $l['all']['operators_acl_files'] = "operators_acl_files";
 $l['all']['billingrates'] = "billing rates";
 $l['all']['hotspots'] = "hotspots";
-$l['all']['node'] = "node";
 $l['all']['nas'] = "nas";
 $l['all']['hunt'] = "radhuntgroup";
 $l['all']['radpostauth'] = "radpostauth";
@@ -320,7 +308,6 @@ $l['all']['dictionary'] = "dictionary";
 $l['all']['realms'] = "realms";
 $l['all']['proxys'] = "proxys";
 $l['all']['billingpaypal'] = "billing paypal";
-$l['all']['billingmerchant'] = "billing merchant";
 $l['all']['billingplans'] = "billing plans";
 $l['all']['billinghistory'] = "billing history";
 $l['all']['billinginfo'] = "billing user info";
@@ -580,7 +567,6 @@ $l['Tooltip']['hgGroupName'] = "Type the Groupname for the NAS";
 $l['Tooltip']['hgNasPortId'] = "Type the Nas Port Id";
 $l['Tooltip']['EditUserGroup'] = "Edit User Group";
 $l['Tooltip']['ListUserGroups'] = "List User Groups";
-$l['Tooltip']['DeleteUserGroup'] = "Delete User Group Association";
 
 $l['Tooltip']['EditProfile'] = "Edit Profile";
 
@@ -649,9 +635,6 @@ $l['Tooltip']['reassignplanprofiles'] = "If toggled on, when applying user infor
  * Links and Buttons
  ************************************************************************************/
 
-$l['button']['DashboardSettings'] = "Dashboard Settings";
-
-
 $l['button']['GenerateReport'] = "Generate Report";
 
 $l['button']['ListPayTypes'] = "List Payment Types";
@@ -717,7 +700,7 @@ $l['button']['CleanupStaleSessions'] = "Cleanup Stale Sessions";
 $l['button']['DeleteAccountingRecords'] = "Delete Accounting Records";
 
 $l['button']['ListUsers'] = "List Users";
-$l['button']['ListBatches'] = "List Batches";
+$l['button']['ListBatches'] = "Mostrar Lotes";
 $l['button']['RemoveBatch'] = "Remove Batch";
 $l['button']['ImportUsers'] = "Import Users";
 $l['button']['NewUser'] = "New User";
@@ -835,9 +818,6 @@ $l['button']['ProcessQuery'] = "Process Query";
 
 $l['title']['ImportUsers'] = "Import Users";
 
-
-$l['title']['Dashboard'] = "Dashboard";
-$l['title']['DashboardAlerts'] = "Alerts";
 
 $l['title']['Invoice'] = "Invoice";
 $l['title']['Invoices'] = "Invoices";
@@ -975,7 +955,6 @@ $l['ContactInfo']['Company'] = "Company";
 $l['ContactInfo']['Address'] = "Address";
 $l['ContactInfo']['City'] = "City";
 $l['ContactInfo']['State'] = "State";
-$l['ContactInfo']['Country'] = "Country";
 $l['ContactInfo']['Zip'] = "Zip";
 $l['ContactInfo']['Phone1'] = "Phone 1";
 $l['ContactInfo']['Phone2'] = "Phone 2";
@@ -996,10 +975,6 @@ $l['ContactInfo']['CreditCardType'] = "Credit Card Type";
 $l['ContactInfo']['CreditCardExpiration'] = "Credit Card Expiration";
 
 /* ********************************************************************************** */
-
-$l['Intro']['configdashboard.php'] = "Dashbard Settings";
-
-
 
 $l['Intro']['paymenttypesmain.php'] = "Payment Types Page";
 $l['Intro']['paymenttypesdel.php'] = "Delete Payment Type entry";
@@ -1221,9 +1196,6 @@ $l['captions']['filldetailsofnewrate'] = "Fill below the details for the new rat
  * it will reveal/hide a helpPage div content which is a description of a specific
  * page, basically your expanded tool-tip.
  ************************************************************************************/
-
-$l['helpPage']['configdashboard'] = "Dashboard Settings";
-
 
 $l['helpPage']['repnewusers'] = "The following table lists new users created each month.";
 

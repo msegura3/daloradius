@@ -30,14 +30,9 @@
 	isset($_GET['orderBy']) ? $orderBy = $_GET['orderBy'] : $orderBy = "id";
 	isset($_GET['orderType']) ? $orderType = $_GET['orderType'] : $orderType = "desc";
 
-	
 	isset($_GET['user_id']) ? $user_id = $_GET['user_id'] : $user_id = "";
-	isset($_GET['username']) ? $username = $_GET['username'] : $username = "";
-	isset($_GET['invoice_status_id']) ? $invoice_status_id = $_GET['invoice_status_id'] : $invoice_status_id = "";
+    
 
-	$edit_invoice_status_id = $invoice_status_id;
-	$edit_invoiceUsername = $username;	
-	
 
 	include_once('library/config_read.php');
     $log = "visited page: ";
@@ -80,35 +75,19 @@
 	include 'include/management/pages_common.php';
 	include 'include/management/pages_numbering.php';		// must be included after opendb because it needs to read the CONFIG_IFACE_TABLES_LISTING variable from the config file
 
-
-	// if provided username, we'll need to turn that into the userbillinfo user id
-	if (!empty($username)) {
-		$username = $dbSocket->escapeSimple($username);
-		$sql = 'SELECT id FROM '.$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].
-				' WHERE username="'.$username.'"';
-		$res = $dbSocket->query($sql);
-		$logDebugSQL .= $sql . "\n";
-		
-		$row = $res->fetchRow();
-		$user_id = $row[0];	
-	}
-	
-	
-	$sql_WHERE = ' WHERE 1=1 ';
+	$sql_WHERE = '';
 	if (!empty($user_id))
-		$sql_WHERE .= ' AND a.user_id = \''.$dbSocket->escapeSimple($user_id).'\'';
+		$sql_WHERE = ' WHERE a.user_id = \''.$dbSocket->escapeSimple($user_id).'\'';
 
-	if (!empty($edit_invoice_status_id))
-		$sql_WHERE .= ' AND a.status_id = '.$dbSocket->escapeSimple($edit_invoice_status_id);
-		
 	//orig: used as maethod to get total rows - this is required for the pages_numbering.php page
 	$sql = "SELECT a.id, a.date, a.status_id, a.type_id, b.contactperson, b.username, ".
 			" c.value AS status, COALESCE(e2.totalpayed, 0) as totalpayed, COALESCE(d2.totalbilled, 0) as totalbilled ".
 			" FROM ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICE']." AS a".
 			" INNER JOIN ".$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO']." AS b ON (a.user_id = b.id) ".
 			" INNER JOIN ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICESTATUS']." AS c ON (a.status_id = c.id) ".
-			" LEFT JOIN (SELECT SUM(d.amount + d.tax_amount) ".
+			" LEFT JOIN (SELECT SUM(d.amount + d.tax_amount + bp.planCost + bp.planTax) ".
 					" as totalbilled, invoice_id FROM ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICEITEMS']." AS d ".
+					" LEFT JOIN ".$configValues['CONFIG_DB_TBL_DALOBILLINGPLANS']." AS bp ON (d.plan_id = bp.id) ".
 			" GROUP BY d.invoice_id) AS d2 ON (d2.invoice_id = a.id) ".
 			" LEFT JOIN (SELECT SUM(e.amount) as totalpayed, invoice_id FROM ". 
 			$configValues['CONFIG_DB_TBL_DALOPAYMENTS']." AS e GROUP BY e.invoice_id) AS e2 ON (e2.invoice_id = a.id) ".
@@ -122,8 +101,9 @@
 			" FROM ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICE']." AS a".
 			" INNER JOIN ".$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO']." AS b ON (a.user_id = b.id) ".
 			" INNER JOIN ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICESTATUS']." AS c ON (a.status_id = c.id) ".
-			" LEFT JOIN (SELECT SUM(d.amount + d.tax_amount) ".
+			" LEFT JOIN (SELECT SUM(d.amount + d.tax_amount + bp.planCost + bp.planTax) ".
 					" as totalbilled, invoice_id FROM ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICEITEMS']." AS d ".
+					" LEFT JOIN ".$configValues['CONFIG_DB_TBL_DALOBILLINGPLANS']." AS bp ON (d.plan_id = bp.id) ".
 			" GROUP BY d.invoice_id) AS d2 ON (d2.invoice_id = a.id) ".
 			" LEFT JOIN (SELECT SUM(e.amount) as totalpayed, invoice_id FROM ". 
 			$configValues['CONFIG_DB_TBL_DALOPAYMENTS']." AS e GROUP BY e.invoice_id) AS e2 ON (e2.invoice_id = a.id) ".
@@ -229,15 +209,12 @@
 		
 							));
 							
-		$balance = ($row['totalpayed'] - $row['totalbilled']);
-		if ($balance < 0)
-			$balance = '<font color="red">'.$balance.'</font>';
 		echo '<td> <input type="checkbox" name="invoice_id[]" value="'.$row['id'].'"> '.$invoice_id.' </td>';
 		echo '<td> '.$contactperson.' </td>';
 		echo '<td> '.$row['date'].' </td>';
 		echo '<td> '.$row['totalbilled'].' </td>';
 		echo '<td> '.$row['totalpayed'].' </td>';
-		echo '<td> '.$balance.' </td>';
+		echo '<td> '.($row['totalpayed'] - $row['totalbilled']).' </td>';
 		echo '<td> '.$row['status'].' </td>';
 		
 		echo '</tr>';

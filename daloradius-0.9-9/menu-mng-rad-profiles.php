@@ -15,9 +15,9 @@
 <div id="sidebar">
 
 
-	<h2>Management</h2>
+	<h2>Administración</h2>
 
-	<h3>Profiles Management</h3>
+	<h3>Perfiles</h3>
 	<ul class="subnav">
 
 		<li><a href="mng-rad-profiles-list.php"><b>&raquo;</b>
@@ -32,29 +32,17 @@
 			<form name="mngradprofileedit" action="mng-rad-profiles-edit.php" method="get" class="sidebar">
 			<?php   
 				include 'include/management/populate_selectbox.php';
-				populate_groups("Select Profile","profile","generic");
+				populate_groups("Elija un perfil","profile","generic");
 			?>
 			</form></li>
 
-		<li><a href="mng-rad-profiles-duplicate.php"><b>&raquo;</b>
+		<!--<li><a href="mng-rad-profiles-duplicate.php"><b>&raquo;</b>
 			<img src='images/icons/groupsEdit.png' border='0'>
 			<?php echo $l['button']['DuplicateProfile'] ?></a></li>
-
+		-->
 		<li><a href="mng-rad-profiles-del.php"><b>&raquo;</b>
 			<img src='images/icons/groupsRemove.png' border='0'>
 			<?php echo $l['button']['RemoveProfile'] ?></a></li>
 	</ul>
 
 </div>
-
-
-<?php 
-	include_once("include/management/autocomplete.php");
-
-	if ($autoComplete) {
-		echo "<script type=\"text/javascript\">
-			/** Making usernameEdit interactive **/
-	              autoComEdit = new DHTMLSuite.autoComplete();
-              </script>";
-	} 
-?>

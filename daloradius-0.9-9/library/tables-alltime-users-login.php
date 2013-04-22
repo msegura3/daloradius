@@ -72,19 +72,19 @@ function daily($orderBy, $orderType) {
 	echo "
 		<thead>
 			<tr>
-				<th colspan='10'>All-time Logins/Hits statistics</th>
+				<th colspan='10'>Ingresos totales</th>
 			</tr>
 		</thead>
 	";
 	
 	echo "
 		<thread> <tr>
-			<th scope='col'> Logins/Hits count
+			<th scope='col'> Ingresos (logins)
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=daily&orderBy=numberoflogins&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=daily&orderBy=numberoflogins&orderType=desc\"> < </a>
 			</th>
-			<th scope='col'> Day of month
+			<th scope='col'> Día del mes
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=daily&orderBy=day&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=daily&orderBy=day&orderType=desc\"> < </a>
@@ -149,18 +149,18 @@ function monthly($orderBy, $orderType) {
 	echo "
 		<thead>
 			<tr>
-				<th colspan='10'>All-time Logins/Hits statistics</th>
+				<th colspan='10'>Ingresos totales</th>
 			</tr>
 		</thead>
 	";
 	echo "
 		<thread> <tr>
-			<th scope='col'> Logins/Hits count
+			<th scope='col'> Ingresos (logins)
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=monthly&orderBy=numberoflogins&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=monthly&orderBy=numberoflogins&orderType=desc\"> < </a>
 			</th>
-			<th scope='col'> Month of year
+			<th scope='col'> Mes del año
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=monthly&orderBy=month&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=monthly&orderBy=month&orderType=desc\"> < </a>
@@ -230,7 +230,7 @@ function yearly($orderBy, $orderType) {
 	echo "
 		<thead>
 			<tr>
-				<th colspan='10'>All-Time Logins/Hits statistics</th>
+				<th colspan='10'>Ingresos totales</th>
 			</tr>
 		</thead>
 	";
@@ -241,7 +241,7 @@ function yearly($orderBy, $orderType) {
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=yearly&orderBy=numberoflogins&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=yearly&orderBy=numberoflogins&orderType=desc\"> < </a>
 			</th>
-			<th scope='col'> Year </th>
+			<th scope='col'> Año </th>
 			<br/>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=yearly&orderBy=year&orderType=asc\"> > </a>
 			<a class='novisit' href=\"" . $_SERVER['PHP_SELF'] . "?type=yearly&orderBy=year&orderType=desc\"> < </a>

@@ -98,8 +98,9 @@
 			" FROM ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICE']." AS a".
 			" INNER JOIN ".$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO']." AS b ON (a.user_id = b.id) ".
 			" INNER JOIN ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICESTATUS']." AS c ON (a.status_id = c.id) ".
-			" LEFT JOIN (SELECT SUM(d.amount + d.tax_amount) ".
+			" LEFT JOIN (SELECT SUM(d.amount + d.tax_amount + bp.planCost + bp.planTax) ".
 					" as totalbilled, invoice_id FROM ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICEITEMS']." AS d ".
+					" LEFT JOIN ".$configValues['CONFIG_DB_TBL_DALOBILLINGPLANS']." AS bp ON (d.plan_id = bp.id) ".
 			" GROUP BY d.invoice_id) AS d2 ON (d2.invoice_id = a.id) ".
 			" LEFT JOIN (SELECT SUM(e.amount) as totalpayed, invoice_id FROM ". 
 			$configValues['CONFIG_DB_TBL_DALOPAYMENTS']." AS e GROUP BY e.invoice_id) AS e2 ON (e2.invoice_id = a.id) ".
@@ -120,8 +121,9 @@
 			" FROM ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICE']." AS a".
 			" INNER JOIN ".$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO']." AS b ON (a.user_id = b.id) ".
 			" INNER JOIN ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICESTATUS']." AS c ON (a.status_id = c.id) ".
-			" LEFT JOIN (SELECT SUM(d.amount + d.tax_amount) ".
+			" LEFT JOIN (SELECT SUM(d.amount + d.tax_amount + bp.planCost + bp.planTax) ".
 					" as totalbilled, invoice_id FROM ".$configValues['CONFIG_DB_TBL_DALOBILLINGINVOICEITEMS']." AS d ".
+					" LEFT JOIN ".$configValues['CONFIG_DB_TBL_DALOBILLINGPLANS']." AS bp ON (d.plan_id = bp.id) ".
 			" GROUP BY d.invoice_id) AS d2 ON (d2.invoice_id = a.id) ".
 			" LEFT JOIN (SELECT SUM(e.amount) as totalpayed, invoice_id FROM ". 
 			$configValues['CONFIG_DB_TBL_DALOPAYMENTS']." AS e GROUP BY e.invoice_id) AS e2 ON (e2.invoice_id = a.id) ".
@@ -229,15 +231,12 @@
 		
 							));
 							
-		$balance = ($row['totalpayed'] - $row['totalbilled']);
-		if ($balance < 0)
-			$balance = '<font color="red">'.$balance.'</font>';
 		echo '<td> '.$invoice_id.' </td>';
 		echo '<td> '.$contactperson.' </td>';
 		echo '<td> '.$row['date'].' </td>';
 		echo '<td> '.$row['totalbilled'].' </td>';
 		echo '<td> '.$row['totalpayed'].' </td>';
-		echo '<td> '.$balance.' </td>';
+		echo '<td> '.($row['totalpayed'] - $row['totalbilled']).' </td>';
 		echo '<td> '.$row['status'].' </td>';
 		
 		echo '</tr>';

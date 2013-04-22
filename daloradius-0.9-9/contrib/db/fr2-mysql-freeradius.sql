@@ -60,7 +60,7 @@ CREATE TABLE radacct (
 CREATE TABLE radcheck (
   id int(11) unsigned NOT NULL auto_increment,
   username varchar(64) NOT NULL default '',
-  attribute varchar(64)  NOT NULL default '',
+  attribute varchar(32)  NOT NULL default '',
   op char(2) NOT NULL DEFAULT '==',
   value varchar(253) NOT NULL default '',
   PRIMARY KEY  (id),
@@ -74,7 +74,7 @@ CREATE TABLE radcheck (
 CREATE TABLE radgroupcheck (
   id int(11) unsigned NOT NULL auto_increment,
   groupname varchar(64) NOT NULL default '',
-  attribute varchar(64)  NOT NULL default '',
+  attribute varchar(32)  NOT NULL default '',
   op char(2) NOT NULL DEFAULT '==',
   value varchar(253)  NOT NULL default '',
   PRIMARY KEY  (id),
@@ -88,7 +88,7 @@ CREATE TABLE radgroupcheck (
 CREATE TABLE radgroupreply (
   id int(11) unsigned NOT NULL auto_increment,
   groupname varchar(64) NOT NULL default '',
-  attribute varchar(64)  NOT NULL default '',
+  attribute varchar(32)  NOT NULL default '',
   op char(2) NOT NULL DEFAULT '=',
   value varchar(253)  NOT NULL default '',
   PRIMARY KEY  (id),
@@ -102,7 +102,7 @@ CREATE TABLE radgroupreply (
 CREATE TABLE radreply (
   id int(11) unsigned NOT NULL auto_increment,
   username varchar(64) NOT NULL default '',
-  attribute varchar(64) NOT NULL default '',
+  attribute varchar(32) NOT NULL default '',
   op char(2) NOT NULL DEFAULT '=',
   value varchar(253) NOT NULL default '',
   PRIMARY KEY  (id),
@@ -130,7 +130,7 @@ CREATE TABLE radpostauth (
   username varchar(64) NOT NULL default '',
   pass varchar(64) NOT NULL default '',
   reply varchar(32) NOT NULL default '',
-  authdate timestamp NOT NULL,
+  authdate timestamp(14) NOT NULL,
   PRIMARY KEY  (id)
 ) ;
 
@@ -147,10 +147,7 @@ CREATE TABLE radippool (
   expiry_time           DATETIME NULL default NULL,
   username              varchar(64) NOT NULL default '',
   pool_key              varchar(30) NOT NULL,
-  PRIMARY KEY (id),
-  KEY radippool_poolname_expire (pool_name, expiry_time),
-  KEY framedipaddress (framedipaddress),
-  KEY radippool_nasip_poolkey_ipaddress (nasipaddress, pool_key, framedipaddress)
+  PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
 #

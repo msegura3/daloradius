@@ -104,11 +104,11 @@
 			<tr>
 			<th colspan='10' align='left'>
 
-			Select:
-			<a class=\"table\" href=\"javascript:SetChecked(1,'usergroup[]','listallusergroup')\">All</a>
-			<a class=\"table\" href=\"javascript:SetChecked(0,'usergroup[]','listallusergroup')\">None</a>
+			Seleccionar:
+			<a class=\"table\" href=\"javascript:SetChecked(1,'usergroup[]','listallusergroup')\">Todos</a>
+			<a class=\"table\" href=\"javascript:SetChecked(0,'usergroup[]','listallusergroup')\">Ninguno</a>
 			<br/>
-			<input class='button' type='button' value='Delete' onClick='javascript:removeCheckbox(\"listallusergroup\",\"mng-rad-usergroup-del.php\")' />
+			<input class='button' type='button' value='Borrar' onClick='javascript:removeCheckbox(\"listallusergroup\",\"mng-rad-usergroup-del.php\")' />
 			<br/><br/>
 
 	";

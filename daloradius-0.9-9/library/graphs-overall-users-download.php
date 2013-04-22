@@ -65,15 +65,15 @@ function daily($username) {
 	$chart = new VerticalChart(680,500);
 
 	$sql = "SELECT UserName, sum(AcctOutputOctets) as Downloads, day(AcctStartTime) AS day FROM ".
-		$configValues['CONFIG_DB_TBL_RADACCT']." WHERE username='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())-1) DAY) AND AcctStartTime< now() GROUP BY day;";
+		$configValues['CONFIG_DB_TBL_RADACCT']." WHERE username='$username' AND acctstoptime>0 AND AcctStartTime>DATE_SUB(curdate(),INTERVAL (DAY(curdate())+30) DAY) AND AcctStartTime< now() GROUP BY day;";
 	$res = $dbSocket->query($sql);
 
 	while($row = $res->fetchRow()) {
-		$downloads = floor($row[1]/$sizeDivision);
+		$downloads = number_format(($row[1]/$sizeDivision), 2, '.', '');
 		$chart->addPoint(new Point("$row[2]", "$downloads"));
 	}
 
-	$chart->setTitle("Total Downloads based on Daily distribution ($size)");
+	$chart->setTitle("Distribución de la descarga total por día ($size)");
 	$chart->render();
 
 	include 'closedb.php';
@@ -105,11 +105,11 @@ function monthly($username) {
 	$res = $dbSocket->query($sql);
 
 	while($row = $res->fetchRow()) {
-		$downloads = floor($row[1]/$sizeDivision);
+		$downloads = number_format(($row[1]/$sizeDivision), 2, '.', '');
 		$chart->addPoint(new Point("$row[2]", "$downloads"));
 	}
 
-	$chart->setTitle("Total Downloads based on Monthly distribution ($size)");
+	$chart->setTitle("Distribución de la descarga total por mes ($size)");
 	$chart->render();
 
 	include 'closedb.php';
@@ -141,11 +141,11 @@ function yearly($username) {
 	$res = $dbSocket->query($sql);
 
 	while($row = $res->fetchRow()) {
-		$downloads = floor($row[1]/$sizeDivision);
+		$downloads = $downloads = number_format(($row[1]/$sizeDivision), 2, '.', '');
 		$chart->addPoint(new Point("$row[2]", "$downloads"));
 	}
 
-	$chart->setTitle("Total Downloads based on Yearly distribution ($size)");
+	$chart->setTitle("Distribución de la descarga total por año ($size)");
 	$chart->render();
 
 	include 'closedb.php';

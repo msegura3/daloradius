@@ -29,6 +29,8 @@
 				<p>
 	<table><center><br/>
 	<img src="library/chart-mng-total-users.php" />
+        <img src="library/chart-mng-total-users.php" />
+        mng-list-all.php
 	</table></center>
 
 				</p>

@@ -25,16 +25,16 @@
 	switch($configValues['CONFIG_LANG']) {
 	
 		case "en":
-			include (dirname(__FILE__)."/en.php");
+			include ("lang/en.php");
 			break;
 		case "ru":
-			include (dirname(__FILE__)."/ru.php");
+			include ("lang/ru.php");
 			break;
 		case "ro":
-			include (dirname(__FILE__)."/ro.php");
+			include ("lang/ro.php");
 			break;
 		default:
-			include (dirname(__FILE__)."/en.php");
+			include ("lang/en.php");
 			break;
 	}
 

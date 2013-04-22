@@ -44,13 +44,11 @@
 <head>
 
 <script src="library/javascript/pages_common.js" type="text/javascript"></script>
-<script src="library/javascript/rounded-corners.js" type="text/javascript"></script>
-<script src="library/javascript/form-field-tooltip.js" type="text/javascript"></script>
 
 <title>daloRADIUS</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <link rel="stylesheet" href="css/1.css" type="text/css" media="screen,projection" />
-<link rel="stylesheet" href="css/form-field-tooltip.css" type="text/css" media="screen,projection" />
+
 </head>
  
  
@@ -96,11 +94,11 @@
 		<thead>
 			<tr>
 			<th colspan='10' align='left'>
-			Select:
-			<a class=\"table\" href=\"javascript:SetChecked(1,'usergroup[]','listallusergroup')\">All</a>
-			<a class=\"table\" href=\"javascript:SetChecked(0,'usergroup[]','listallusergroup')\">None</a>
+			Seleccionar:
+			<a class=\"table\" href=\"javascript:SetChecked(1,'usergroup[]','listallusergroup')\">Todos</a>
+			<a class=\"table\" href=\"javascript:SetChecked(0,'usergroup[]','listallusergroup')\">Ninguno</a>
 			<br/>
-			<input class='button' type='button' value='Delete' onClick='javascript:removeCheckbox(\"listallusergroup\",\"mng-rad-usergroup-del.php\")' />
+			<input class='button' type='button' value='Borrar' onClick='javascript:removeCheckbox(\"listallusergroup\",\"mng-rad-usergroup-del.php\")' />
 			<br/><br/>
 	";
 
@@ -134,20 +132,16 @@
 		".$l['all']['Priority']."</a>
 		</th>
 
+		<th scope='col'> ".$l['all']['Action']." </th>
 	</tr> </thread>";
 	while($row = $res->fetchRow()) {
 		echo "<tr>
-				<td> <input type='checkbox' name='usergroup[]' value='$row[0]||$row[1]'> 
-					<a class='tablenovisit' href='javascript:return;'
-                        onclick=\"javascript:__displayTooltip();\"
-                        tooltipText=\"
-                        <a class='toolTip' href='mng-rad-usergroup-edit.php?username=$row[0]&group=$row[1]'>".$l['Tooltip']['EditUserGroup']."</a>
-					<br/><br/>
-                       <a class='toolTip' href='mng-rad-usergroup-del.php?username=$row[0]&group=$row[1]'>".$l['Tooltip']['DeleteUserGroup']."</a>
-                       <br/>\"
-					>$row[1]</a></td>
+				<td> <input type='checkbox' name='usergroup[]' value='$row[0]||$row[1]'> $row[0] </td>
 				<td> $row[1] </td>
 				<td> $row[2] </td>
+				<td> <a href='mng-rad-usergroup-edit.php?username=$row[0]&group=$row[1]'> ".$l['all']['edit']." </a>
+					 <a href='mng-rad-usergroup-del.php?username=$row[0]&group=$row[1]'> ".$l['all']['del']." </a>
+					 </td>
 
 		</tr>";
 	}
@@ -188,13 +182,6 @@
 </div>
 </div>
 
-<script type="text/javascript">
-var tooltipObj = new DHTMLgoodies_formTooltip();
-tooltipObj.setTooltipPosition('right');
-tooltipObj.setPageBgColor('#EEEEEE');
-tooltipObj.setTooltipCornerSize(15);
-tooltipObj.initFormFieldTooltip();
-</script>
 
 </body>
 </html>

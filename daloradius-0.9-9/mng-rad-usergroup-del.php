@@ -150,7 +150,7 @@
                 <input name='group' type='text' id='group' value='<?php echo $group ?>' tabindex=101 />
                 <?php   
                         include 'include/management/populate_selectbox.php';
-                        populate_groups("Select Groups","long");
+                        populate_groups("Elija el perfil","long");
                 ?>
                 <div id='groupTooltip'  style='display:none;visibility:visible' class='ToolTip'>
                         <img src='images/icons/comment.png' alt='Tip' border='0' />

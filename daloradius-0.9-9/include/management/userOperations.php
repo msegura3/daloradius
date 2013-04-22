@@ -31,12 +31,6 @@ if ((isset($_GET['userDisable'])) && (isset($_GET['username']))) {
 	userDisable($_GET['username'], $_GET['divContainer']);
 }
 
-/*
- * The following handles disabling the user
- */
-if ((isset($_GET['userEnable'])) && (isset($_GET['username']))) {
-	userEnable($_GET['username'], $_GET['divContainer']);
-}
 
 
 /*
@@ -60,65 +54,61 @@ function userDisable($username, $divContainer) {
 	//echo "alert('{$username}');";
 
 	if (!is_array($username))
-		$username = array($username);
+		$username = array($username, NULL);
+
+	$allUsers = "";
+	$allUsersSuccess = array();
+	$allUsersFailure = array();
 
 	foreach ($username as $variable=>$value) {
 	
-		$user = $dbSocket->escapeSimple($value);		// clean username argument from harmful code
+	        $user = $dbSocket->escapeSimple($value);		// clean username argument from harmful code
+		$allUsers .= $user . ", ";
 
-		$sql = "INSERT IGNORE INTO ".$configValues['CONFIG_DB_TBL_RADUSERGROUP']." (Username,Groupname,Priority) ".
-				" VALUES ('$user','daloRADIUS-Disabled-Users',0) ";		
+		$sql = "SELECT Value FROM ".$configValues['CONFIG_DB_TBL_RADCHECK'].
+			" WHERE Attribute='Auth-Type' AND Value='Reject' AND Username='$user'";
 		$res = $dbSocket->query($sql);
+		if ($numrows = $res->numRows() <= 0) {
 	
-	}
-
-	$users = implode(',', $username);
+		        $sql = "INSERT INTO ".$configValues['CONFIG_DB_TBL_RADCHECK'].
+		                " VALUES (0,'$user','Auth-Type',':=','Reject')";
+		        $res = $dbSocket->query($sql);
 	
-	printqn("
-    	var divContainer = document.getElementById('{$divContainer}');
-        divContainer.innerHTML += '<div class=\"success\">User(s) <b>$users</b> are now disabled.</div>';
-	");
-
-	include '../../library/closedb.php';
-
-}
-
-
-
-
-
-function userEnable($username, $divContainer) {
-
-	include 'pages_common.php';
-	include('../../library/checklogin.php');
-	include '../../library/opendb.php';
-
-	if (!is_array($username))
-		$username = array($username);
-
-	foreach ($username as $variable=>$value) {
-	
-		$user = $dbSocket->escapeSimple($value);		// clean username argument from harmful code
-		if ($user) {
-	        $sql = "DELETE FROM ".$configValues['CONFIG_DB_TBL_RADUSERGROUP'].
-	                " WHERE username='$user' AND groupname='daloRADIUS-Disabled-Users'";
-	        $res = $dbSocket->query($sql);
+			array_push($allUsersSuccess, $user);
+		} else {
+			array_push($allUsersFailure, $user);
 		}
+	
 	}
 
-	$users = implode(',', $username);
-	
-	printqn("
-    	var divContainer = document.getElementById('{$divContainer}');
-        divContainer.innerHTML += '<div class=\"success\">User(s) <b>$users</b> are now enabled.</div>';
-	");
+	if (count($allUsersSuccess) > 0) {
+		$users = "";
+		foreach($allUsersSuccess as $value)
+			$users .= $value . ", ";
+
+		$users = substr($users, 0, -2);
+	        printqn("
+	               var divContainer = document.getElementById('{$divContainer}');
+	               divContainer.innerHTML += '<div class=\"success\">User(s) <b>$users</b> are now disabled.</div>';
+	        ");
+	}
+
+	if (count($allUsersFailure) > 0) {
+		$users = "";
+		foreach($allUsersFailure as $value)
+			$users .= $value . ", ";
+
+		$users = substr($users, 0, -2);
+	        printqn("
+	               var divContainer = document.getElementById('{$divContainer}');
+	               divContainer.innerHTML += '<div class=\"failure\">User(s) <b>$users</b> are already disabled.</div>';
+	        ");
+	}
 
 
         include '../../library/closedb.php';
 
 }
-
-
 
 function checkDisabled($username) {
 
@@ -126,14 +116,14 @@ function checkDisabled($username) {
 
 	$username = $dbSocket->escapeSimple($username);
 
-        $sql = "SELECT Username FROM ".$configValues['CONFIG_DB_TBL_RADUSERGROUP'].
-			" WHERE Username='$username' AND Groupname='daloRADIUS-Disabled-Users'";
+        $sql = "SELECT Attribute,Value FROM ".$configValues['CONFIG_DB_TBL_RADCHECK'].
+		" WHERE Attribute='Auth-Type' AND Value='Reject' AND Username='$username'";
 	$res = $dbSocket->query($sql);
 	if ($numrows = $res->numRows() >= 1) {
 	
 	        echo "<div class='failure'>
 	              	Please note, the user <b>$username</b> is currently disabled.<br/>
-					To enable the user, remove the user from the daloRADIUS-Disabled-Users profile <br/>
+			To enable the user, remove the Auth-Type entry set to Reject.<br/>
 	              </div>";
 
 	}
@@ -141,8 +131,6 @@ function checkDisabled($username) {
 	include 'library/closedb.php';
 
 }
-
-
 
 
 
@@ -183,12 +171,9 @@ function userRefillSessionTime($username, $divContainer) {
 		$user = $dbSocket->escapeSimple($value);                // clean username argument from harmful code
 
 		$sql = "SELECT ".
-			$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".id, ".
 			$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".username, ".
 			$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".planName, ".
-			$configValues['CONFIG_DB_TBL_DALOBILLINGPLANS'].".id as PlanID, ".
 			$configValues['CONFIG_DB_TBL_DALOBILLINGPLANS'].".planTimeRefillCost, ".
-			$configValues['CONFIG_DB_TBL_DALOBILLINGPLANS'].".planTax, ".
 			$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".paymentmethod, ".
 			$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".cash, ".
 			$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".creditcardname, ".
@@ -224,29 +209,6 @@ function userRefillSessionTime($username, $divContainer) {
 			")";
 		$res = $dbSocket->query($sql);
 
-		
-		// if the refill cost is anything beyond the amount 0, we create an invoice for it.
-		if ($refillCost > 0) {
-			
-			// if the user id indeed set in the userbillinfo table
-			if ($row['id']) {
-				include_once("userBilling.php");
-		
-				$invoiceInfo['notes'] = 'refill user account';
-				
-				// calculate tax (planTax is the numerical percentage amount) 
-				$calcTax = (float) ($row['planTimeRefillCost'] * (float)($row['planTax'] / 100) );
-				$invoiceItems[0]['plan_id'] = $row['PlanID'];
-				$invoiceItems[0]['amount'] = $row['planTimeRefillCost'];
-				$invoiceItems[0]['tax'] = $calcTax;
-				$invoiceItems[0]['notes'] = 'refill user session time';
-									
-				userInvoiceAdd($row['id'], $invoiceInfo, $invoiceItems);
-				
-			}
-		
-		}
-		
 	}
 
 
@@ -285,17 +247,14 @@ function userRefillSessionTraffic($username, $divContainer) {
 
 	}
 
-	// take care of recording the billing action in billing_history table
-	foreach ($username as $variable=>$value) {
+        // take care of recording the billing action in billing_history table
+        foreach ($username as $variable=>$value) {
 
                 $user = $dbSocket->escapeSimple($value);                // clean username argument from harmful code
 
                 $sql = "SELECT ".
-                		$configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".id, ".
                         $configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".username, ".
                         $configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".planName, ".
-						$configValues['CONFIG_DB_TBL_DALOBILLINGPLANS'].".id as PlanID, ".
-						$configValues['CONFIG_DB_TBL_DALOBILLINGPLANS'].".planTax, ".
                         $configValues['CONFIG_DB_TBL_DALOBILLINGPLANS'].".planTrafficRefillCost, ".
                         $configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".paymentmethod, ".
                         $configValues['CONFIG_DB_TBL_DALOUSERBILLINFO'].".cash, ".
@@ -331,37 +290,9 @@ function userRefillSessionTraffic($username, $divContainer) {
                                 "'$currDate', '$currBy'".
                         ")";
                 $res = $dbSocket->query($sql);
-                
-                
-        // if the refill cost is anything beyond the amount 0, we create an invoice for it.
-		if ($refillCost > 0) {
-			
-			// if the user id indeed set in the userbillinfo table
-			if ($row['id']) {
-				include_once("userBilling.php");
-		
-				$invoiceInfo['notes'] = 'refill user account';
-				
-				// calculate tax (planTax is the numerical percentage amount) 
-				$calcTax = (float) ($row['planTrafficRefillCost'] * (float)($row['planTax'] / 100) );
-				$invoiceItems[0]['plan_id'] = $row['PlanID'];
-				$invoiceItems[0]['amount'] = $row['planTrafficRefillCost'];
-				$invoiceItems[0]['tax'] = $calcTax;
-				$invoiceItems[0]['notes'] = 'refill user session traffic';
-									
-				userInvoiceAdd($row['id'], $invoiceInfo, $invoiceItems);
-				
-			}
-		
-		}
-                
 	}
 
 
-	
-	
-	
-	
 	$users = substr($allUsers, 0, -2);
 	printqn("
 		var divContainer = document.getElementById('{$divContainer}');

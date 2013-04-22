@@ -21,11 +21,13 @@
  *
  *********************************************************************************************************
  */
- 
-$l['all']['daloRADIUS'] = "daloRADIUS 0.9-9";
-$l['all']['daloRADIUSVersion'] = "versi&oacute;n 0.9-9";
+
+$l['header']['titles']="Linbox Manager V1.0 beta";
+
+$l['all']['daloRADIUS'] = "daloRADIUS 0.9-8-SVN";
+$l['all']['daloRADIUSVersion'] = "versi&oacute;n 0.9-8-SVN";
 $l['all']['copyright1'] = "Administraci&oacute;n RADIUS, Reportes, Conteo y Facturaci&oacute;n desarrollado por <a href=\"http://www.enginx.com\">Enginx</a>";
-$l['all']['copyright2'] = "daloRADIUS Copyright &copy; 2007 by Liran Tal of <a href=\"http://www.enginx.com\">Enginx</a> <br/>
+$l['all']['copyright2'] = "Derechos reservados de <a href=\"http://www.enginx.com\">Enginx</a> y Liran Tal<br/>
 Template design by <a href=\"http://www.sixshootermedia.com\">Six Shooter Media</a>.";
 $l['all']['ID'] = "ID";
 $l['all']['PoolName'] = "Pool Name";
@@ -102,12 +104,12 @@ $l['all']['Password'] = "Contrase&ntilde;a";
 $l['all']['PasswordType'] = "Tipo de contrase&ntilde;a";
 $l['all']['IPAddress'] = "Direcci&oacute;n IP";
 $l['all']['Profile'] = "Perfil";
-$l['all']['Group'] = "Grupo";
-$l['all']['Groupname'] = "Nombre del grupo";
+$l['all']['Group'] = "Perfil";
+$l['all']['Groupname'] = "Perfil";
 $l['all']['ProfilePriority'] = "Prioridad del Perfil";
-$l['all']['GroupPriority'] = "Prioridad del Grupo";
-$l['all']['CurrentGroupname'] = "Nombre actual del grupo";
-$l['all']['NewGroupname'] = "Nuevo nombre del grupo";
+$l['all']['GroupPriority'] = "Prioridad del Perfil";
+$l['all']['CurrentGroupname'] = "Perfil actual";
+$l['all']['NewGroupname'] = "Nuevo Perfil";
 $l['all']['Priority'] = "Prioridad";
 $l['all']['Attribute'] = "Atributo";
 $l['all']['Operator'] = "Operador";
@@ -120,6 +122,7 @@ $l['all']['Usage'] = "Uso";
 $l['all']['StartTime'] = "Hora de inicio";
 $l['all']['StopTime'] = "Hora de finalizaci&oacute;n";
 $l['all']['TotalTime'] = "Tiempo total";
+$l['all']['TotalTraffic'] = "Total";
 $l['all']['Bytes'] = "Bytes";
 $l['all']['Upload'] = "Subida";
 $l['all']['Download'] = "Descarga";
@@ -216,7 +219,7 @@ $l['all']['UsernameLength'] = "Largo del nombre del usuario";
 $l['all']['PasswordLength'] = "Largo de la contrase&ntilde;a";
 
 $l['all']['Expiration'] = "Expiraci&oacute;n";
-$l['all']['MaxAllSession'] = "Max-All-Session";
+$l['all']['MaxAllSession'] = "Tiempo Total";
 $l['all']['SessionTimeout'] = "Plazo de expiraci&oacute;n de la sesi&oacute;n";
 $l['all']['IdleTimeout'] = "Tiempo m&aacute;ximo de inactividad";
 
@@ -241,6 +244,14 @@ $l['all']['billingpaypal'] = "Cobros por Paypal";
 $l['all']['billingplans'] = "Planes de facturaci&oacute;n";
 $l['all']['billinghistory'] = "Hist&oacute;rico de cobros";
 $l['all']['billinginfo'] = "Informaci&oacute;n de facturaci&oacute;n del usuario";
+
+$l['all']['batchName'] = "Nombre/ID del lote";
+$l['all']['batchDescription'] = "Descripción del lote";
+$l['all']['CreateRandomUsers'] = "Crear usuarios aleatorios";
+$l['all']['CreateIncrementingUsers'] = "Crear usuarios incrementales";
+$l['all']['StartingIndex'] = "Indice de inicio";
+$l['all']['BatchName'] = "Nombre del lote";
+
 
 
 $l['all'][''] = "";
@@ -311,6 +322,18 @@ $l['all']['BusinessWebsite'] = "Sitio web de la empresa";
 $l['all']['BusinessEmail'] = "Email de la empresa";
 $l['all']['BusinessContactPerson'] = "Persona contacto en la empresa";
 $l['all']['DBPasswordEncryption'] = "Tipo de cifrado de las contrase&ntilde;as en la base de datos";
+
+
+ $l['all']['Daily']="Diario";
+ $l['all']['Monthly']="Mensual";
+ $l['all']['Yearly']="Anual";
+
+ $l['all']['Megabytes']="Megabytes";
+ $l['all']['Gigabytes']="Gigabytes";
+
+
+ $l['all']['Month']="Mes";
+ $l['all']['Users']="Usuarios";
 
 
 /* **********************************************************************************
@@ -494,7 +517,8 @@ $l['button']['DeleteAccountingRecords'] = "Eliminar registros de conteo";
 $l['button']['ListUsers'] = "Listado de usuarios";
 $l['button']['NewUser'] = "Nuevo usuario";
 $l['button']['NewUserQuick'] = "Nuevo usuario - Modo expreso";
-$l['button']['BatchAddUsers'] = "Agregar usuarios por lotes";
+
+$l['button']['BatchAddUsers'] = "Crear lote";
 $l['button']['EditUser'] = "Editar usuario";
 $l['button']['SearchUsers'] = "Buscar usuarios";
 $l['button']['RemoveUsers'] = "Eliminar usuarios";
@@ -513,11 +537,11 @@ $l['button']['NewNAS'] = "Nuevo NAS";
 $l['button']['EditNAS'] = "Editar NAS";
 $l['button']['RemoveNAS'] = "Eliminar NAS";
 
-$l['button']['ListUserGroup'] = "Listado de mapeos Usuario-Grupo";
-$l['button']['ListUsersGroup'] = "Listado de los grupos de un usuario";
-$l['button']['NewUserGroup'] = "Nuevo mapeo Usuario-Grupo";
-$l['button']['EditUserGroup'] = "Editar mapeo Usuario-Grupo";
-$l['button']['RemoveUserGroup'] = "Eliminar mapeo Usuario-Grupo";
+$l['button']['ListUserGroup'] = "Listado de asociaciones";
+$l['button']['ListUsersGroup'] = "Asociaciones por usuario";
+$l['button']['NewUserGroup'] = "Nueva asociación";
+$l['button']['EditUserGroup'] = "Editar asociación";
+$l['button']['RemoveUserGroup'] = "Eliminar asociación";
 
 $l['button']['ListProfiles'] = "Listado de perfiles";
 $l['button']['NewProfile'] = "Nuevo perfil";
@@ -537,16 +561,16 @@ $l['button']['NewGroupCheck'] = "Nuevo grupo de verificaciones";
 $l['button']['EditGroupCheck'] = "Editar grupo de verificaciones";
 $l['button']['RemoveGroupCheck'] = "Eliminar grupo de verificaciones";
 
-$l['button']['UserAccounting'] = "Conteo por usuario";
+$l['button']['UserAccounting'] = "Registros por usuario";
 $l['button']['IPAccounting'] = "Conteo por IP";
 $l['button']['NASIPAccounting'] = "Conteo por IP de NAS";
-$l['button']['DateAccounting'] = "Conteo por fecha";
+$l['button']['DateAccounting'] = "Registros por fecha";
 $l['button']['AllRecords'] = "Todos los registros";
 $l['button']['ActiveRecords'] = "Registros activos";
 
 $l['button']['OnlineUsers'] = "Usuarios en l&iacute;nea";
-$l['button']['LastConnectionAttempts'] = "Ultimos intentos de conexi&oacute;n";
-$l['button']['TopUser'] = "Usuario tope";
+$l['button']['LastConnectionAttempts'] = "Últimos intentos de conexi&oacute;n";
+$l['button']['TopUser'] = "Usuarios Top";
 $l['button']['History'] = "Historial";
 
 $l['button']['ServerStatus'] = "Estado del servidor";
@@ -585,7 +609,14 @@ $l['button']['RemoveOperator'] = "Eliminar operador";
 
 $l['button']['ProcessQuery'] = "Procesar consulta";
 
- 
+
+$l['button']['ListBatches'] = "Listado de lotes";
+$l['button']['RemoveBatch'] = "Borrrar lote";
+$l['button']['ImportUsers'] = "Importar Usuarios";
+
+$l['button']['LoggedUsers']="Usuarios Logueados";
+
+$l['button']['NewUsers']="Usuarios nuevos";
  
 /* ********************************************************************************** */
 
@@ -595,6 +626,7 @@ $l['button']['ProcessQuery'] = "Procesar consulta";
  * The text related to all the title headers in captions,tables and tabbed layout text
  ************************************************************************************/
 
+$l['title']['ImportUsers'] = "Importar Usuarios";
 $l['title']['RateInfo'] = "Infomaci&oacute;n de tarifa";
 $l['title']['PlanInfo'] = "Informaci&oacute;n de plan";
 $l['title']['TimeSettings'] = "Ajustes de tiempo";
@@ -624,7 +656,7 @@ $l['title']['AccountInfo'] = "Informaci&oacute;n de la cuenta";
 $l['title']['Profiles'] = "Perfiles";
 $l['title']['ProfileInfo'] = "Informaci&oacute;n del perfil";
 
-$l['title']['GroupInfo'] = "Informaci&oacute;n del grupo";
+$l['title']['GroupInfo'] = "Informaci&oacute;n del perfil";
 $l['title']['GroupAttributes'] = "Atributos del grupo";
 
 $l['title']['NASInfo'] = "Informaci&oacute;n del NAS";
@@ -644,7 +676,7 @@ $l['title']['ContactInfo'] = "Informaci&oacute;n de contacto";
 $l['title']['Plan'] = "Plan";
 
 $l['title']['Profile'] = "Perfil";
-$l['title']['Groups'] = "Grupos";
+$l['title']['Groups'] = "Perfil";
 $l['title']['RADIUSCheck'] = "Atributos a verificar";
 $l['title']['RADIUSReply'] = "Atributos de respuesta";
 
@@ -655,6 +687,8 @@ $l['title']['AdvancedSettings'] = "Configuraci&oacute;n avanzada";
 
 $l['title']['Advanced'] = "Avanzado";
 $l['title']['Optional'] = "Opcional";
+$l['title']['BatchRemoval'] = "Borrar lote";
+$l['title']['lote'] = "Informaci&oacute;n del lote";
 
 /* ********************************************************************************** */
 
@@ -741,15 +775,15 @@ $l['Intro']['mngradattributesdel.php'] = "Remover atributos";
 $l['Intro']['mngradattributesimport.php'] = "Importar diccionario";
 
 
-$l['Intro']['acctactive.php'] = "Informaci&oacute;n de registros activos";
-$l['Intro']['acctall.php'] = "Informaci&oacute;n de todos los usuarios";
-$l['Intro']['acctdate.php'] = "Informaci&oacute;n ordenado por fecha";
+$l['Intro']['acctactive.php'] = "Registros activos";
+$l['Intro']['acctall.php'] = "Todos los registros";
+$l['Intro']['acctdate.php'] = "Registros por fecha";
 $l['Intro']['accthotspot.php'] = "Informaci&oacute;n de Hotspots";
 $l['Intro']['acctipaddress.php'] = "Informaci&oacute;n de IPs";
 $l['Intro']['accthotspotcompare.php'] = "Comparaci&oacite;n entre Hotspots";
 $l['Intro']['acctmain.php'] = "Informaci&oacute;n";
 $l['Intro']['acctnasipaddress.php'] = "NAS IP Accounting";
-$l['Intro']['acctusername.php'] = "Informaci&oacute;n de usuarios";
+$l['Intro']['acctusername.php'] = "Registros por usuario";
 $l['Intro']['acctcustom.php'] = "Informaci&oacute;n personalizado";
 $l['Intro']['acctcustomquery.php'] = "Consulta personalizada";
 $l['Intro']['acctmaintenance.php'] = "Mantenimiento de informaci&oacute;n de registros";
@@ -786,17 +820,17 @@ $l['Intro']['gismain.php'] = "Mapeo GIS";
 $l['Intro']['gisviewmap.php'] = "Ver modo MAP";
 
 $l['Intro']['graphmain.php'] = "Gr&aacute;ficos de uso";
-$l['Intro']['graphsalltimetrafficcompare.php'] = "Total Traffic Comparison Usage";
-$l['Intro']['graphsalltimelogins.php'] = "Total accesos";
+$l['Intro']['graphsalltimetrafficcompare.php'] = "Comparación del tráfico total usado";
+$l['Intro']['graphsalltimelogins.php'] = "Accesos totales";
 $l['Intro']['graphsoveralldownload.php'] = "Descargas por usuario";
 $l['Intro']['graphsoveralllogins.php'] = "Acceso por usuario";
 $l['Intro']['graphsoverallupload.php'] = "Subidas por usuario";
 
-$l['Intro']['rephistory.php'] = "iHistorial de acciones";
-$l['Intro']['replastconnect.php'] = "Ultimos 50 intentos de conexi&oacute;n";
+$l['Intro']['rephistory.php'] = "Historial de acciones";
+$l['Intro']['replastconnect.php'] = "Últimos 50 intentos de conexi&oacute;n";
 $l['Intro']['repstatradius.php'] = "Informaci&oacute;n de los servicios (daemons)";
 $l['Intro']['repstatserver.php'] = "Informaci&oacute;n y estado del servidor";
-$l['Intro']['reponline.php'] = "Listado de usuarios en l&iacute;nea";
+$l['Intro']['reponline.php'] = "Usuarios en l&iacute;nea";
 $l['Intro']['replogssystem.php'] = "Registro del sistema";
 $l['Intro']['replogsradius.php'] = "Registro del servidor RADIUS";
 $l['Intro']['replogsdaloradius.php'] = "Registro de daloRADIUS";
@@ -807,16 +841,17 @@ $l['Intro']['rephsall.php'] = "Listado de Hotspots";
 $l['Intro']['repmain.php'] = "Reportes";
 $l['Intro']['repstatus.php'] = "Estado";
 $l['Intro']['replogs.php'] = "Registros";
-$l['Intro']['reptopusers.php'] = "Top de usuarios";
+$l['Intro']['reptopusers.php'] = "Usuarios top";
 $l['Intro']['repusername.php'] = "Listado de usuarios";
 
-$l['Intro']['mngbatch.php'] = "Crear usuarios por lotes";
+$l['Intro']['mngbatch.php'] = "Crear lote";
+$l['Intro']['mngbatchdel.php'] = "Borrar lote";
 $l['Intro']['mngdel.php'] = "Eliminar usuario";
-$l['Intro']['mngedit.php'] = "Editar detalles del usuario";
+$l['Intro']['mngedit.php'] = "Editar usuario";
 $l['Intro']['mnglistall.php'] = "Listado de usuarios";
 $l['Intro']['mngmain.php'] = "Administraci&oacute;n de Hotspots y de usuarios";
 $l['Intro']['mngnew.php'] = "Nuevo usuario";
-$l['Intro']['mngnewquick.php'] = "Agregar usuario (modo r&aacute;pido)";
+$l['Intro']['mngnewquick.php'] = "Nuevo usuario";
 $l['Intro']['mngsearch.php'] = "Buscar usuario";
 
 $l['Intro']['mnghsdel.php'] = "Eliminar Hotspots";
@@ -824,12 +859,12 @@ $l['Intro']['mnghsedit.php'] = "Editar detalles de Hotspot";
 $l['Intro']['mnghslist.php'] = "Listado de Hotspots";
 $l['Intro']['mnghsnew.php'] = "Nuevo Hotspot";
 
-$l['Intro']['mngradusergroupdel.php'] = "Eliminar Mapeo Usuario-Grupo";
-$l['Intro']['mngradusergroup.php'] = "Configuraci&oacute;n Usuario-Grupo";
-$l['Intro']['mngradusergroupnew.php'] = "Nuevo mapeo Usuario-Grupo";
-$l['Intro']['mngradusergrouplist'] = "Listado de los mapeos Usuario-Grupo";
-$l['Intro']['mngradusergrouplistuser'] = "Listado de los usuarios de un mapeo Usuario-Grupo";
-$l['Intro']['mngradusergroupedit'] = "Editar mapeo Usuario-Grupo para el Usuario:";
+$l['Intro']['mngradusergroupdel.php'] = "Eliminar asociación";
+$l['Intro']['mngradusergroup.php'] = "Listado de asociaciones";
+$l['Intro']['mngradusergroupnew.php'] = "Nueva asociación";
+$l['Intro']['mngradusergrouplist'] = "Listado de asociaciones";
+$l['Intro']['mngradusergrouplistuser'] = "Asociaciones por usuario";
+$l['Intro']['mngradusergroupedit'] = "Editar asociación usuario:";
 
 $l['Intro']['mngradippool.php'] = "Configuraci&oacute;n de los pool de IPs";
 $l['Intro']['mngradippoolnew.php'] = "Nuevo pool de IPs";
@@ -863,6 +898,7 @@ $l['Intro']['mngradgroupchecklist.php'] = "Listado de grupos de verificaciones";
 $l['Intro']['mngradgroupcheckedit.php'] = "Editar grupos de verificaciones para un Grupo:";
 $l['Intro']['mngradgroupcheckdel.php'] = "Eliminar grupo de verificaciones";
 $l['Intro']['mngradgroupchecksearch.php'] = "Buscar grupo de verificaciones";
+$l['Intro']['mngimportusers.php'] = "Importar Usuarios";
 
 $l['Intro']['configdb.php'] = "Configuraci&oacute;n de la base de datos";
 $l['Intro']['configlang.php'] = "Configuraci&oacute;n de idioma";
@@ -885,6 +921,11 @@ $l['Intro']['configoperatorsnew.php'] = "Nuevo operador";
 $l['Intro']['configoperatorslist.php'] = "Listado de operadores";
 
 $l['Intro']['login.php'] = "Acceso";
+
+$l['Intro']['repnewusers.php']="Usuarios nuevos";
+$l['Intro']['graphsloggedusers.php']= "Usuarios logueados";
+$l['Intro']['mngbatchlist.php'] = "Listado de lotes";
+
 
 $l['captions']['providebillratetodel'] = "Escriba el tipo de tarifa que desea eliminar";
 $l['captions']['detailsofnewrate'] = "Ahora complete los detelles de la nueva tarifa";
@@ -1203,13 +1244,11 @@ able to send a STOP accounting packet to the RADIUS server.
 $l['helpPage']['mnglistall'] = "Listado de users in database";
 $l['helpPage']['mngsearch'] = "Searching for user: ";
 $l['helpPage']['mngnew'] = "You may fill below details for new user addition to database<br/>";
-$l['helpPage']['mngedit'] = "Editar the user details below.<br/>";
+$l['helpPage']['mngedit'] = "Editar los parámetros del usuario.<br/>";
 $l['helpPage']['mngdel'] = "To remove a user entry from the database you must provide the username of the account<br/>";
 $l['helpPage']['mngbatch'] = "You may fill below details for new user addition to database.<br/>
 Note that these settings will apply for all the users that you are creating.<br/>";
-$l['helpPage']['mngnewquick'] = "The following user/card is of type prepaid.<br/>
-The amount of time specified in Time Credit will be used as the Session-Timeout and Max-All-Session
-radius attributes";
+$l['helpPage']['mngnewquick'] = "";
 
 // accounting section
 $l['helpPage']['acctactive'] = "
@@ -1378,7 +1417,21 @@ Then you may be able to use Google Maps services. <br/><br/>";
 
 /* ********************************************************************************** */
 
-
+$l['graphs']['Day']="Día";
+$l['graphs']['Month']="Mes";
+$l['graphs']['Year']="Año";
+$l['graphs']['Jan'] = "Enero";
+$l['graphs']['Feb'] = "Febrero";
+$l['graphs']['Mar'] = "Marzo";
+$l['graphs']['Apr'] = "Abril";
+$l['graphs']['May'] = "Mayo";
+$l['graphs']['Jun'] = "Junio";
+$l['graphs']['Jul'] = "Julio";
+$l['graphs']['Aug'] = "Agosto";
+$l['graphs']['Sep'] = "Septiembre";
+$l['graphs']['Oct'] = "Octubre";
+$l['graphs']['Nov'] = "Noviembre";
+$l['graphs']['Dec'] = "Decimbre";
 
 $l['messages']['noCheckAttributesForUser'] = "This user has no check attributes associated with it";
 $l['messages']['noReplyAttributesForUser'] = "This user has no reply attributes associated with it";
@@ -1417,9 +1470,9 @@ $l['buttons']['savesettings'] = "Guardar valores";
 $l['buttons']['apply'] = "Aplicar";
 
 $l['menu']['Home'] = "<em>I</em>nicio</a>";
-$l['menu']['Managment'] = "<em>G</em>esti&oacute;n</a>";
-$l['menu']['Reports'] = "<em>R</em>eportes</a>";
-$l['menu']['Accounting'] = "<em>C</em>onteo</a>";
+$l['menu']['Managment'] = "<em>A</em>dministraci&oacute;n</a>";
+$l['menu']['Reports'] = "<em>I</em>nformes</a>";
+$l['menu']['Accounting'] = "<em>R</em>egistro</a>";
 $l['menu']['Billing'] = "<em>C</em>obros</a>";
 $l['menu']['Gis'] = "<em>G</em>IS</a>";
 $l['menu']['Graphs'] = "<em>G</em>r&aacute;ficos</a>";
